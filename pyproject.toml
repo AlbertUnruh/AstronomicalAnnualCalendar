@@ -22,8 +22,8 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line-length = 120
-target-version = ['py312']
-include = '\.pyi?$'
+target-version = ["py312"]
+include = "\\.pyi?$"
 
 [tool.isort]
 profile = "black"
