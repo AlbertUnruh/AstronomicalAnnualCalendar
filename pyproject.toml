@@ -32,7 +32,7 @@ skip = ["__init__.py"]
 [tool.ruff]
 line-length = 120
 target-version = "py312"
-#output-format = "concise" # set to full if you want to see the source of the error/warning
+output-format = "concise" # set to full if you want to see the source of the error/warning
 
 [tool.ruff.lint]
 task-tags = ["TODO", "FIXME", "NOTE"]
@@ -72,6 +72,7 @@ select = [
 ]
 ignore = [
     "D100", # Missing docstring in public module
+    "N999", # Invalid module name: '{name}'  # I know, it should be snake_case, but who cares? I don't :P  ~AlbertUnruh
 ]
 
 [tool.ruff.lint.pydocstyle]
