@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "AstronomicalAnnualCalendar"
+version = "0.1.0"
+description = ""
+license = "MIT"
+authors = ["AlbertUnruh <AlbertUnruh@pm.me>"]
+readme = "README.md"
+repository = "https://github.com/AlbertUnruh/AstronomicalAnnualCalendar/"
+
+
+[tool.poetry.dependencies]
+python = "^3.12"
+click = "^8.1.7"
+
+
+[tool.poetry.dev-dependencies]
+black = "^24.10.0"
+
+
+[tool.black]
+line-length = 120
+target-version = ['py312']
+include = '\.pyi?$'
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
