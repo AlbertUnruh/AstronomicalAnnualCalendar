@@ -1,7 +1,7 @@
 import click
 
 
-def main():
+def main():  # noqa: D103
     click.secho("Not implemented yet...", err=True, fg="red")
 
 
