@@ -22,6 +22,12 @@ repos:
       - id: autoflake
         args: [--remove-all-unused-imports, --in-place, --ignore-init-module-imports]
 
+  - repo: https://github.com/pycqa/isort
+    rev: '5.13.2'
+    hooks:
+      - id: isort
+        language: python
+
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: 'v0.6.9'
     hooks:
