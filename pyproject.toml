@@ -82,9 +82,10 @@ select = [
     "RUF",  # Ruff-specific rules
 ]
 ignore = [
-    "D100", # Missing docstring in public module
-    "D104", # Missing docstring in public package
-    "N999", # Invalid module name: '{name}'  # I know, it should be snake_case, but who cares? I don't :P  ~AlbertUnruh
+    "ANN101", # Missing type annotation for `self` in method
+    "D100",   # Missing docstring in public module
+    "D104",   # Missing docstring in public package
+    "N999",   # Invalid module name: '{name}' # I know, it should be snake_case, but who cares? I don't :P  ~AlbertUnruh
 ]
 
 [tool.ruff.lint.pydocstyle]
