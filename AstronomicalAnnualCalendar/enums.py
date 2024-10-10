@@ -2,7 +2,8 @@
 from typing import TypeVar
 
 # third party
-from aenum import EnumMeta, NoAliasEnum, auto
+from aenum import EnumMeta, NoAliasEnum
+from pydantic_extra_types.color import Color
 
 # local
 from .models import ObservableObjectModel
@@ -38,12 +39,14 @@ class ObservableObjectEnum(NoAliasEnum, metaclass=DirectValueMeta):
     *in case the download gets removed:  TODO: add link from archive.org
     """
 
-    SUN: ObservableObjectModel = ObservableObjectModel(internal_id="sun")
-    MERCURY: ObservableObjectModel = auto()
-    VENUS: ObservableObjectModel = auto()
-    MOON: ObservableObjectModel = auto()  # EXPERIMENTAL; may get excluded if it's to wonky
-    MARS: ObservableObjectModel = auto()
-    JUPITER: ObservableObjectModel = auto()
-    SATURN: ObservableObjectModel = auto()
-    URANUS: ObservableObjectModel = auto()  # rename to "Urectum" in 2620 (https://futurama.fandom.com/wiki/Urectum)
-    NEPTUNE: ObservableObjectModel = auto()
+    SUN: ObservableObjectModel = ObservableObjectModel(internal_id="sun", line_color=Color("orange"))
+    MERCURY: ObservableObjectModel = ObservableObjectModel(internal_id="mercury", line_color=Color("black"))
+    VENUS: ObservableObjectModel = ObservableObjectModel(internal_id="venus", line_color=Color("green"))
+    MOON: ObservableObjectModel = ObservableObjectModel(internal_id="moon", line_color=Color("violet"))
+    # ^^^ EXPERIMENTAL; may get excluded if it's to wonky ^^^
+    MARS: ObservableObjectModel = ObservableObjectModel(internal_id="mars", line_color=Color("red"))
+    JUPITER: ObservableObjectModel = ObservableObjectModel(internal_id="jupiter", line_color=Color("blue"))
+    SATURN: ObservableObjectModel = ObservableObjectModel(internal_id="saturn", line_color=Color("pink"))
+    URANUS: ObservableObjectModel = ObservableObjectModel(internal_id="uranus", line_color=Color("turquoise"))
+    #  ^^^ rename to "Urectum" in 2620 (https://futurama.fandom.com/wiki/Urectum) ^^^
+    NEPTUNE: ObservableObjectModel = ObservableObjectModel(internal_id="neptune", line_color=Color("gold"))
