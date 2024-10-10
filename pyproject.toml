@@ -18,6 +18,9 @@ pydantic-extra-types = "^2.9.0"
 pre-commit = "^4.0.1"
 black = "^24.10.0"
 
+[tool.poetry.group.tests.dependencies]
+pytest = "^8.3.3"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
@@ -87,6 +90,7 @@ ignore = [
     "D104",   # Missing docstring in public package
     "N999",   # Invalid module name: '{name}' # I know, it should be snake_case, but who cares? I don't :P  ~AlbertUnruh
 ]
+per-file-ignores = {"tests/*.py" = ["D103", "S101", "FBT001"]}
 
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"
