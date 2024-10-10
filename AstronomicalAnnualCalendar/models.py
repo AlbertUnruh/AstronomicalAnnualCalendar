@@ -16,7 +16,7 @@ _SUN_LINE_STRENGTH_MULTIPLIER: float = 2
 class ObservableObjectModel(BaseModel):  # noqa: D101  # ToDo: add documentation
     model_config = ConfigDict(frozen=True)
 
-    internal_id: LowerCase
+    internal_id: LowerCase = Field(alias="id")
     line_color: Color
     is_sun_: bool = Field(default=None, alias="is_sun")
     line_strength_: PositiveFloat = Field(default=2, alias="line_strength")
@@ -24,7 +24,7 @@ class ObservableObjectModel(BaseModel):  # noqa: D101  # ToDo: add documentation
 
     @property
     def name(self) -> str:
-        """Returns the name of the object (should be equivalent to ``.internal_id``)."""
+        """Returns the name of the object (is equivalent to ``.internal_id``)."""
         return self.internal_id
 
     @property

@@ -39,14 +39,14 @@ class ObservableObjectEnum(NoAliasEnum, metaclass=DirectValueMeta):
     *in case the download gets removed:  TODO: add link from archive.org
     """
 
-    SUN: ObservableObjectModel = ObservableObjectModel(internal_id="sun", line_color=Color("orange"))
-    MERCURY: ObservableObjectModel = ObservableObjectModel(internal_id="mercury", line_color=Color("black"))
-    VENUS: ObservableObjectModel = ObservableObjectModel(internal_id="venus", line_color=Color("green"))
-    MOON: ObservableObjectModel = ObservableObjectModel(internal_id="moon", line_color=Color("violet"))
+    SUN: ObservableObjectModel = ObservableObjectModel(id="sun", line_color=Color("orange"))
+    MERCURY: ObservableObjectModel = ObservableObjectModel(id="mercury", line_color=Color("black"))
+    VENUS: ObservableObjectModel = ObservableObjectModel(id="venus", line_color=Color("green"))
+    MOON: ObservableObjectModel = ObservableObjectModel(id="moon", line_color=Color("violet"))
     # ^^^ EXPERIMENTAL; may get excluded if it's to wonky ^^^
-    MARS: ObservableObjectModel = ObservableObjectModel(internal_id="mars", line_color=Color("red"))
-    JUPITER: ObservableObjectModel = ObservableObjectModel(internal_id="jupiter", line_color=Color("blue"))
-    SATURN: ObservableObjectModel = ObservableObjectModel(internal_id="saturn", line_color=Color("pink"))
-    URANUS: ObservableObjectModel = ObservableObjectModel(internal_id="uranus", line_color=Color("turquoise"))
+    MARS: ObservableObjectModel = ObservableObjectModel(id="mars", line_color=Color("red"))
+    JUPITER: ObservableObjectModel = ObservableObjectModel(id="jupiter", line_color=Color("blue"))
+    SATURN: ObservableObjectModel = ObservableObjectModel(id="saturn", line_color=Color("pink"))
+    URANUS: ObservableObjectModel = ObservableObjectModel(id="uranus", line_color=Color("turquoise"))
     #  ^^^ rename to "Urectum" in 2620 (https://futurama.fandom.com/wiki/Urectum) ^^^
-    NEPTUNE: ObservableObjectModel = ObservableObjectModel(internal_id="neptune", line_color=Color("gold"))
+    NEPTUNE: ObservableObjectModel = ObservableObjectModel(id="neptune", line_color=Color("gold"))
