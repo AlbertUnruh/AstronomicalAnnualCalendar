@@ -1,3 +1,7 @@
+# standard library
+import re
+from datetime import timedelta
+
 # third party
 from annotated_types import LowerCase
 from pydantic import BaseModel
@@ -7,7 +11,11 @@ from pydantic.types import PositiveFloat
 from pydantic_extra_types.color import Color
 
 
-__all__ = ("ObservableObjectModel",)
+__all__ = (
+    "ObservableObjectModel",
+    "MetaDataModel",
+    "DataModel",
+)
 
 
 _SUN_LINE_STRENGTH_MULTIPLIER: float = 2
@@ -48,3 +56,22 @@ class ObservableObjectModel(BaseModel):  # noqa: D101  # ToDo: add documentation
     def line_strength(self) -> PositiveFloat:
         """Returns the appropriate line-strength for the object."""
         return self.line_strength_ * (_SUN_LINE_STRENGTH_MULTIPLIER if self.is_sun else 1)
+
+
+class MetaDataModel(BaseModel):  # noqa: D101  # ToDo: add documentation
+    place: str
+    coordinates: str = Field(
+        pattern=re.compile(
+            r"^(\d{1,3})°(\d{1,2})'(\d{1,2}(\.\d+)?)?\"?\s?([NS])(\s*,\s*)?\s+(\d{1,3})°(\d{1,2})'(\d{1,2}(\.\d+)?)?\"?\s?([WEO])$",
+            flags=re.IGNORECASE,
+        ),
+        description="Accepts the DMS-format for coordinates.\n"
+        "Supported are N (EN: north; DE: Norden), S (EN: south; DE: Süden), "
+        "W (EN: west; DE: Westen), E (EN: east) and O (DE: Osten).",
+    )
+    equinox: float
+    delta_t: timedelta
+
+
+class DataModel(BaseModel):  # noqa: D101  # ToDo: add documentation
+    metadata: MetaDataModel
