@@ -1,8 +1,8 @@
 # third party
 import click
 
-# local
-from .enums import ObservableObjectEnum
+# first party
+from AstronomicalAnnualCalendar.enums import ObservableObjectEnum
 
 
 def main():  # noqa: D103
