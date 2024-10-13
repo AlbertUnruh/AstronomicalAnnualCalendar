@@ -1,5 +1,4 @@
 # standard library
-import re
 from datetime import timedelta
 
 # third party
@@ -15,6 +14,7 @@ __all__ = (
     "ObservableObjectModel",
     "MetaDataModel",
     "DataModel",
+    "CoordinateModel",
 )
 
 
@@ -58,20 +58,23 @@ class ObservableObjectModel(BaseModel):  # noqa: D101  # ToDo: add documentation
         return self.line_strength_ * (_SUN_LINE_STRENGTH_MULTIPLIER if self.is_sun else 1)
 
 
+class CoordinateModel(BaseModel):  # noqa: D101  # ToDo: add documentation
+    lat: str
+    lon: str
+
+    @property
+    def coordinate(self) -> str:
+        """Returns combined latitude and longitude."""
+        return " ".join([self.lat, self.lon])
+
+
 class MetaDataModel(BaseModel):  # noqa: D101  # ToDo: add documentation
     place: str
-    coordinates: str = Field(
-        pattern=re.compile(
-            r"^(\d{1,3})°(\d{1,2})'(\d{1,2}(\.\d+)?)?\"?\s?([NS])(\s*,\s*)?\s+(\d{1,3})°(\d{1,2})'(\d{1,2}(\.\d+)?)?\"?\s?([WEO])$",
-            flags=re.IGNORECASE,
-        ),
-        description="Accepts the DMS-format for coordinates.\n"
-        "Supported are N (EN: north; DE: Norden), S (EN: south; DE: Süden), "
-        "W (EN: west; DE: Westen), E (EN: east) and O (DE: Osten).",
-    )
-    equinox: float
+    coordinate: CoordinateModel
+    equinox: float | None
     delta_t: timedelta
 
 
 class DataModel(BaseModel):  # noqa: D101  # ToDo: add documentation
     metadata: MetaDataModel
+    bound_object_id: ObservableObjectModel

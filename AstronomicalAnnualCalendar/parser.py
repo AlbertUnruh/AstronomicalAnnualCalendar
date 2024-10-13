@@ -3,8 +3,11 @@ from pydantic import BaseModel
 from pydantic.fields import Field
 from pydantic.types import FilePath
 
-# first party
-from AstronomicalAnnualCalendar.models import MetaDataModel
+# local
+from .enums import ObservableObjectEnum
+from .models import CoordinateModel, DataModel, MetaDataModel
+from .regex import METADATA_REGEX
+from .utils import raw_delta_t_to_timedelta
 
 
 __all__ = ("Parser",)
@@ -26,4 +29,17 @@ class Parser(BaseModel):  # noqa: D101  # ToDo: add documentation
         self.populate_metadata()
 
     def populate_metadata(self) -> None:  # noqa: D102  # ToDo: add documentation
-        ...
+        with self.file.open("r", encoding="utf-8") as f:
+            first_file = f.readline()
+
+        metadata = METADATA_REGEX.match(first_file)
+
+        self._cached_metadata = MetaDataModel(
+            place=metadata.group("place"),
+            coordinate=CoordinateModel(lat=metadata.group("lat"), lon=metadata.group("lon")),
+            equinox=metadata.group("equinox"),
+            delta_t=raw_delta_t_to_timedelta(metadata.group("delta_t"), metadata.group("delta_t_unit")),
+        )
+
+    def parse(self) -> dict[ObservableObjectEnum, DataModel]:  # noqa: D102  # ToDo: add documentation
+        raise NotImplementedError
