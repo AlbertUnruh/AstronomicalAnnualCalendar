@@ -42,5 +42,5 @@ class ObservableObjectEnum(NoAliasEnum, metaclass=DirectValueMeta):
     JUPITER: ObservableObjectModel = ObservableObjectModel(id="jupiter", line_color=Color("blue"))
     SATURN: ObservableObjectModel = ObservableObjectModel(id="saturn", line_color=Color("pink"))
     URANUS: ObservableObjectModel = ObservableObjectModel(id="uranus", line_color=Color("turquoise"))
-    #  ^^^ rename to "Urectum" in 2620 (https://futurama.fandom.com/wiki/Urectum) ^^^
+    # ^^^ rename to "Urectum" in 2620 (https://futurama.fandom.com/wiki/Urectum) ^^^
     NEPTUNE: ObservableObjectModel = ObservableObjectModel(id="neptune", line_color=Color("gold"))
