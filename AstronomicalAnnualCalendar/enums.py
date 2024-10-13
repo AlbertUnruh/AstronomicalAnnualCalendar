@@ -1,6 +1,3 @@
-# standard library
-from typing import TypeVar
-
 # third party
 from aenum import EnumMeta, NoAliasEnum
 from pydantic_extra_types.color import Color
@@ -12,13 +9,10 @@ from .models import ObservableObjectModel
 __all__ = ("ObservableObjectEnum",)
 
 
-T = TypeVar("T")
-
-
 class DirectValueMeta(EnumMeta):
     """Metaclass to allow direct access to an enum-members value without the need to call ``.value`` beforehand."""
 
-    def __getattribute__(cls, name: str) -> T:  # noqa: N805
+    def __getattribute__[T](cls, name: str) -> T:  # noqa: N805
         """Return ``.value.<name>`` after the enum-member is fully initialized."""
         value = super().__getattribute__(name)
         if isinstance(value, cls):  # if it's an Enum-class
