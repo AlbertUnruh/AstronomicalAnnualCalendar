@@ -30,7 +30,7 @@ class ObservableObjectEnum(NoAliasEnum, metaclass=DirectValueMeta):
     excludes it.
 
     [1]: https://sternwarte-papenburg.de/jahreskalender/download/ajk_2024.pdf
-    *in case the download gets removed:  TODO: add link from archive.org
+    *in case the download gets removed: https://web.archive.org/web/20240531110805/https://sternwarte-papenburg.de/jahreskalender/download/ajk_2024.pdf
     """
 
     SUN: ObservableObjectModel = ObservableObjectModel(id="sun", line_color=Color("orange"))
