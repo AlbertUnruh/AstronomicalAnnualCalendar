@@ -2,12 +2,31 @@
 import re
 
 # local
-from .utils import extract_pattern_from_regex
+from .utils import append_name_to_all_pattern_groups, extract_pattern_from_regex
 
 
 __all__ = (
+    "HMS_ANGLE_REGEX",
+    "DMS_ANGLE_90_REGEX",
+    "DMS_ANGLE_360_REGEX",
     "DMS_COORDINATE_REGEX",
     "METADATA_REGEX",
+)
+
+
+HMS_ANGLE_REGEX: re.Pattern[str] = re.compile(
+    r"^(?P<hour>[01]?\d|2[0-3])h(?P<minute>[0-5]\d)m(?P<second>[0-5]\d(\.\d+)?)s$",
+    flags=re.IGNORECASE,
+)
+
+DMS_ANGLE_90_REGEX: re.Pattern[str] = re.compile(
+    r"^(?P<sign>[+\-])(?P<degree>[0-8 ]?\d|90)°((?P<minute>\s?([0-5 ])?\d)'(\s?(?P<second>(([0-5 ])?\d|60)(\.\d+)?)\")?)?$",  # noqa: E501
+    flags=re.IGNORECASE,
+)
+
+DMS_ANGLE_360_REGEX: re.Pattern[str] = re.compile(
+    r"^(?P<degree>[0-2 ]?[\d ]?\d|3[0-5]\d|360)°((?P<minute>\s?([0-5 ])?\d)'(\s?(?P<second>(([0-5 ])?\d|60)(\.\d+)?)\")?)?$",  # noqa: E501
+    flags=re.IGNORECASE,
 )
 
 
@@ -26,8 +45,13 @@ _ALLOWED_LON = frozenset[str](
 )
 
 DMS_COORDINATE_REGEX: re.Pattern[str] = re.compile(
-    r"^(?P<lat>(\d{1,3})°(\d{1,2})'(\d{1,2}(\.\d+)?)?\"?\s?([%s]))(\s*,\s*)?\s+(?P<lon>(\d{1,3})°(\d{1,2})'(\d{1,2}(\.\d+)?)?\"?\s?([%s]))$"  # noqa: UP031
-    % ("".join(_ALLOWED_LAT), "".join(_ALLOWED_LON)),
+    r"^(?P<lat>(%s\s?([%s])))(\s*,\s*)?\s+(?P<lon>(%s\s?([%s])))$"  # noqa: UP031
+    % (
+        append_name_to_all_pattern_groups("_lat", extract_pattern_from_regex(DMS_ANGLE_360_REGEX)),
+        "".join(_ALLOWED_LAT),
+        append_name_to_all_pattern_groups("_lon", extract_pattern_from_regex(DMS_ANGLE_360_REGEX)),
+        "".join(_ALLOWED_LON),
+    ),
     flags=re.IGNORECASE,
 )
 
