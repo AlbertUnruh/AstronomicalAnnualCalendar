@@ -35,6 +35,13 @@ def main():  # noqa: D103
         f"\n{METADATA_REGEX.pattern=!r}",
         fg="yellow",
     )
+    # first party
+    from AstronomicalAnnualCalendar.enums import Flags
+
+    click.secho(
+        f"Flags:\n{"\n".join(f"{flag!r}" for flag in Flags)}",  # type: ignore
+        fg="blue",
+    )
 
 
 if __name__ == "__main__":
