@@ -139,7 +139,7 @@ class HeaderModel(BoundToObservableObjectBaseModel, BaseModel):  # noqa: D101  #
     moon_specific_lib_latitude: str = Field(default=None)  # [2]  # "[Lib ]Br."
     moon_specific_colong: str = Field(default=None)  # [2]  # "Colong."
     moon_specific_br: str = Field(default=None)  # [2]  # "Br."
-    # [1]: This was the online (remotely) helpful page I've found: https://ssp.imcce.fr/forms/physical-ephemeris
+    # [1]: This was the only (remotely) helpful page I've found: https://ssp.imcce.fr/forms/physical-ephemeris
     # [2]: When and if they are used these specific arguments will get deprecated and replaced
 
     @property
