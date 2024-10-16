@@ -151,7 +151,7 @@ class HeaderModel(BoundToObservableObjectBaseModel, BaseModel):  # noqa: D101  #
 
     @property
     def diameter_unit(self) -> str | None:
-        """Returns the unit of ``diameter`` if ``unit`` is set."""
+        """Returns the unit of ``diameter`` if ``diameter`` is set."""
         if self.diameter is None:  # no diameter set
             return None
         return self.diameter_unit_
