@@ -6,8 +6,70 @@ from datetime import timedelta
 import pytest
 
 # first party
-from AstronomicalAnnualCalendar.regex import DMS_COORDINATE_REGEX, METADATA_REGEX
+from AstronomicalAnnualCalendar.regex import DMS_COORDINATE_REGEX, HM_TIME_REGEX, METADATA_REGEX, OPTIONAL_HM_TIME_REGEX
 from AstronomicalAnnualCalendar.utils import raw_delta_t_to_timedelta
+
+
+@pytest.mark.parametrize(
+    "time, hour, minute",
+    [
+        ("0h0m", "0", "0"),
+        ("24h59m", "24", "59"),
+        ("24h60m", "24", "60"),
+        ("0h60m", "0", "60"),
+    ],
+)
+def test_hh_time_regex(time: str, hour: str, minute: str):
+    match: re.Match | None = HM_TIME_REGEX.match(time)
+    assert isinstance(match, re.Match)
+    assert match.string == time
+    assert match.group("hour") == hour
+    assert match.group("minute") == minute
+
+
+@pytest.mark.parametrize(
+    "time",
+    [
+        "0h 0m",
+        "30h0m",
+        "0h61m",
+        "-",
+        "-----",
+    ],
+)
+def test_hh_time_regex_fail(time: str):
+    assert HM_TIME_REGEX.match(time) is None
+
+
+@pytest.mark.parametrize(
+    "time, hour, minute",
+    [
+        ("0h0m", "0", "0"),
+        ("24h59m", "24", "59"),
+        ("24h60m", "24", "60"),
+        ("0h60m", "0", "60"),
+        ("-", None, None),
+        ("-----", None, None),
+    ],
+)
+def test_optional_hh_time_regex(time: str, hour: str | None, minute: str | None):
+    match: re.Match | None = OPTIONAL_HM_TIME_REGEX.match(time)
+    assert isinstance(match, re.Match)
+    assert match.string == time
+    assert match.group("hour") == hour
+    assert match.group("minute") == minute
+
+
+@pytest.mark.parametrize(
+    "time",
+    [
+        "0h 0m",
+        "30h0m",
+        "0h61m",
+    ],
+)
+def test_hh_optional_time_regex_fail(time: str):
+    assert OPTIONAL_HM_TIME_REGEX.match(time) is None
 
 
 @pytest.mark.parametrize(

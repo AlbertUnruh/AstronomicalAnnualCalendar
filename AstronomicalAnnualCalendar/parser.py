@@ -4,8 +4,7 @@ from pydantic.fields import Field
 from pydantic.types import FilePath
 
 # local
-from .enums import ObservableObjectEnum
-from .models import CoordinateModel, DataModel, MetaDataModel
+from .models import CoordinateModel, DataModel, HeaderModel, MetaDataModel, ObservableObjectModel
 from .regex import METADATA_REGEX
 from .utils import raw_delta_t_to_timedelta
 
@@ -41,5 +40,11 @@ class Parser(BaseModel):  # noqa: D101  # ToDo: add documentation
             delta_t=raw_delta_t_to_timedelta(metadata.group("delta_t"), metadata.group("delta_t_unit")),
         )
 
-    def parse(self) -> dict[ObservableObjectEnum, DataModel]:  # noqa: D102  # ToDo: add documentation
+    def parse(self) -> dict[ObservableObjectModel, DataModel]:  # noqa: D102  # ToDo: add documentation
+        raise NotImplementedError
+
+    def _parse_observable_objects(self):
+        raise NotImplementedError
+
+    def _extract_header(self) -> dict[ObservableObjectModel, HeaderModel]:
         raise NotImplementedError
