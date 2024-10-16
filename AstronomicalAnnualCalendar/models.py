@@ -131,7 +131,7 @@ class HeaderModel(BoundToObservableObjectBaseModel, BaseModel):  # noqa: D101  #
     elongation: float = Field(default=None)  # "Elong"  # planet only
 
     # Unclear *what* they really are...
-    physical_ephemeris__np__or__pa_n: str = Field(default=None)  # NP | PA_N in degrees (°) [1]  # [2]  # "POS.W."
+    physical_ephemeris__np__or__pa_n: str = Field(default=None)  # NP | PA_N in degrees (°) [1]  # [2]  # "Pos.W."
     physical_ephemeris__sep_delta: str = Field(default=None)  # SEP(δ) in degrees (°) [1]  # [2]  # "BrErde"
     physical_ephemeris__sep_omega: str = Field(default=None)  # SEP(ω) in degrees (°) [1]  # [2]  # "ZM"
     moon_specific_phas_w: str = Field(default=None)  # [2]  # "Phas.W."
