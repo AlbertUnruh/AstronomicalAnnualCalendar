@@ -4,7 +4,7 @@ from pydantic.fields import Field
 from pydantic.types import FilePath
 
 # local
-from .models import CoordinateModel, DataModel, HeaderModel, MetaDataModel, ObservableObjectModel
+from .models import CoordinateModel, DataModel, MetaDataModel, ObservableObjectModel
 from .regex import METADATA_REGEX
 from .utils import raw_delta_t_to_timedelta
 
@@ -44,7 +44,4 @@ class Parser(BaseModel):  # noqa: D101  # ToDo: add documentation
         raise NotImplementedError
 
     def _parse_observable_objects(self):
-        raise NotImplementedError
-
-    def _extract_header(self) -> dict[ObservableObjectModel, HeaderModel]:
         raise NotImplementedError
