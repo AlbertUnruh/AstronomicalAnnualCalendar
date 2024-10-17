@@ -6,7 +6,15 @@ from datetime import timedelta
 import pytest
 
 # first party
-from AstronomicalAnnualCalendar.regex import DMS_COORDINATE_REGEX, HM_TIME_REGEX, METADATA_REGEX, OPTIONAL_HM_TIME_REGEX
+from AstronomicalAnnualCalendar.regex import (
+    DEGREE_180_REGEX,
+    DEGREE_360_REGEX,
+    DEGREE_SIGNED_90_REGEX,
+    DMS_COORDINATE_REGEX,
+    HM_TIME_REGEX,
+    METADATA_REGEX,
+    OPTIONAL_HM_TIME_REGEX,
+)
 from AstronomicalAnnualCalendar.utils import raw_delta_t_to_timedelta
 
 
@@ -70,6 +78,75 @@ def test_optional_hh_time_regex(time: str, hour: str | None, minute: str | None)
 )
 def test_hh_optional_time_regex_fail(time: str):
     assert OPTIONAL_HM_TIME_REGEX.match(time) is None
+
+
+@pytest.mark.parametrize(
+    "angle, sign, degree",
+    [
+        ("+0°", "+", "0"),
+        ("-0°", "-", "0"),
+        ("+90°", "+", "90"),
+        ("-90°", "-", "90"),
+        ("+00°", "+", "00"),
+        ("-00°", "-", "00"),
+        ("+69°", "+", "69"),
+        ("-69°", "-", "69"),
+        ("+ 0°", "+", "0"),
+        ("- 0°", "-", "0"),
+        ("+ 90°", "+", "90"),
+        ("- 90°", "-", "90"),
+        ("+ 00°", "+", "00"),
+        ("- 00°", "-", "00"),
+        ("+ 69°", "+", "69"),
+        ("- 69°", "-", "69"),
+    ],
+)
+def test_degree_signed_90_regex_match(angle: str, sign: str, degree: str):
+    match: re.Match | None = DEGREE_SIGNED_90_REGEX.match(angle)
+    assert isinstance(match, re.Match)
+    assert match.string == angle
+    assert match.group("sign") == sign
+    assert match.group("degree") == degree
+
+
+@pytest.mark.parametrize(
+    "angle, degree",
+    [
+        ("0°", "0"),
+        ("00°", "00"),
+        ("000°", "000"),
+        ("100°", "100"),
+        ("170°", "170"),
+        ("179°", "179"),
+        ("180°", "180"),
+    ],
+)
+def test_degree_180_regex_match(angle: str, degree: str):
+    match: re.Match | None = DEGREE_180_REGEX.match(angle)
+    assert isinstance(match, re.Match)
+    assert match.string == angle
+    assert match.group("degree") == degree
+
+
+@pytest.mark.parametrize(
+    "angle, degree",
+    [
+        ("0°", "0"),
+        ("00°", "00"),
+        ("000°", "000"),
+        ("100°", "100"),
+        ("200°", "200"),
+        ("300°", "300"),
+        ("350°", "350"),
+        ("359°", "359"),
+        ("360°", "360"),
+    ],
+)
+def test_degree_360_regex_match(angle: str, degree: str):
+    match: re.Match | None = DEGREE_360_REGEX.match(angle)
+    assert isinstance(match, re.Match)
+    assert match.string == angle
+    assert match.group("degree") == degree
 
 
 @pytest.mark.parametrize(
