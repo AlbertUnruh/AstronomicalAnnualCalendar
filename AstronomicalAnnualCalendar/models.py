@@ -25,7 +25,7 @@ __all__ = (
     "MetaDataModel",
     "DataModel",
     "CoordinateModel",
-    "HeaderModel",
+    "RowModel",
 )
 
 
@@ -107,8 +107,9 @@ class DataModel(BoundToObservableObjectBaseModel, BaseModel):  # noqa: D101  # T
     metadata: MetaDataModel
 
 
-# "header" refers to the top of the table/csv
-class HeaderModel(BoundToObservableObjectBaseModel, BaseModel):  # noqa: D101  # ToDo: add documentation
+class RowModel(BoundToObservableObjectBaseModel, BaseModel):
+    """Represents a single row from the csv-like data/table."""
+
     date_and_time: datetime  # "Datum" & "MEZ" *or other timezone*
     right_ascension: str = Field(default=None, pattern=HMS_ANGLE_REGEX)  # "Rektasz."
     declination: str = Field(default=None, pattern=DMS_ANGLE_90_REGEX)  # "Deklin."
