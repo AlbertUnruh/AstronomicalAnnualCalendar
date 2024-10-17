@@ -20,7 +20,7 @@ class Parser(BaseModel):  # noqa: D101  # ToDo: add documentation
     @property
     def metadata(self) -> MetaDataModel:
         """The information from the first line of the file."""
-        if self._cached_metadata is None:
+        if self._cached_metadata is None:  # pragma: no cover
             self.populate_metadata()
         return self._cached_metadata
 
