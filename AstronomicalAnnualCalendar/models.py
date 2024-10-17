@@ -39,6 +39,7 @@ class ObservableObjectModel(BaseModel):  # noqa: D101  # ToDo: add documentation
     line_color: Color
     is_sun_: bool = Field(default=None, alias="is_sun")
     is_moon_: bool = Field(default=None, alias="is_moon")
+    is_planet_: bool = Field(default=None, alias="is_planet")
     line_strength_: PositiveFloat = Field(default=2, alias="line_strength")
     """NOTE: if the object is a sun the line_strength will get modified!"""
 
@@ -75,6 +76,18 @@ class ObservableObjectModel(BaseModel):  # noqa: D101  # ToDo: add documentation
         if self.is_moon_ is None:
             return self.internal_id == "moon"
         return self.is_moon_
+
+    @property
+    def is_planet(self) -> bool:
+        """
+        Returns whether it's a planet.
+
+        It's determined by setting ``is_planet`` to either True or False.
+        If not set will check whether it's already the sun or moon.
+        """
+        if self.is_planet_ is None:
+            return not (self.is_sun or self.is_moon)
+        return self.is_planet_
 
     @property
     def line_strength(self) -> PositiveFloat:
