@@ -16,6 +16,7 @@ __all__ = (
     "DMS_ANGLE_360_REGEX",
     "DMS_COORDINATE_REGEX",
     "METADATA_REGEX",
+    "OBJECT_DATA_BODY_REGEX",
 )
 
 
@@ -102,3 +103,8 @@ METADATA_REGEX: re.Pattern[str] = re.compile(
     % extract_pattern_from_regex(DMS_COORDINATE_REGEX),
     flags=re.IGNORECASE | re.MULTILINE,
 )
+
+OBJECT_DATA_BODY_REGEX: re.Pattern[str] = re.compile(
+    r"^(?P<name>\S+)\n(?P<header>[^\n]+)\n(?P<body>([\s\S]*?(?=\n$)))",
+    flags=re.MULTILINE,
+)  # the text requires a new-line ("\n") at the end of the input data/text
