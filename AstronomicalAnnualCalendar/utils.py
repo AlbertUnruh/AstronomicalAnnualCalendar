@@ -4,13 +4,46 @@ from datetime import timedelta
 from typing import Literal, SupportsFloat
 
 # local
-from .errors import UnitNotSupportedError
+from .errors import AliasNotAssignedError, UnitNotSupportedError
+
+
+# I'm fully aware that the following try-except is a war-crime, but this was the easiest solution I could think of...
+# Should you have a better solution please open a pull-request over on GitHub
+# (https://github.com/AlbertUnruh/AstronomicalAnnualCalendar/pulls)
+# ~AlbertUnruh
+
+try:  # pragma: no cover
+    """
+    The following imports will raise an ImportError due to circular imports.
+    I still import them to get type-hints support from the IDE.
+    """
+
+    # local
+    from .enums import ObservableObjectEnum
+    from .models import ObservableObjectModel
+
+    def _fix_imports():
+        pass
+
+except ImportError:
+    ObservableObjectModel = None
+    ObservableObjectEnum = None
+
+    def _fix_imports():
+        global ObservableObjectModel, ObservableObjectEnum, _fix_imports
+        # local
+        from .enums import ObservableObjectEnum
+        from .models import ObservableObjectModel
+
+        def _fix_imports():
+            pass
 
 
 __all__ = (
     "extract_pattern_from_regex",
     "append_name_to_all_pattern_groups",
     "raw_delta_t_to_timedelta",
+    "observable_object_from_alias",
 )
 
 
@@ -57,3 +90,14 @@ def raw_delta_t_to_timedelta(delta_t: SupportsFloat, unit: Literal["s"]) -> time
             return timedelta(seconds=delta_t)
         case _:
             raise UnitNotSupportedError(unit)
+
+
+def observable_object_from_alias(alias: str) -> ObservableObjectModel:
+    """Retrieve desired ObservableObjectModel based on a given alias."""
+    _fix_imports()
+    model: ObservableObjectModel
+    aliases: set[str]
+    for model, aliases in [(e.value, e.value.aliases) for e in ObservableObjectEnum]:  # type: ignore
+        if alias in aliases:
+            return model
+    raise AliasNotAssignedError(alias)
