@@ -36,6 +36,7 @@ class ObservableObjectModel(BaseModel):  # noqa: D101  # ToDo: add documentation
     model_config = ConfigDict(frozen=True)
 
     internal_id: LowerCase = Field(alias="id")
+    aliases_: set[str] = Field(default_factory=set, alias="aliases")
     line_color: Color
     is_sun_: bool = Field(default=None, alias="is_sun")
     is_moon_: bool = Field(default=None, alias="is_moon")
@@ -52,6 +53,16 @@ class ObservableObjectModel(BaseModel):  # noqa: D101  # ToDo: add documentation
     def localized_name(self) -> str:
         """Returns the localized name of the object."""
         return self.name  # ToDo: use gettext() aka _()
+
+    @property
+    def aliases(self) -> set[str]:
+        """Returns given aliases including the name.
+
+        This comes in handy when dealing with the raw (localized) data.
+        """
+        ret = {self.name}
+        ret.update(self.aliases_)
+        return ret
 
     @property
     def is_sun(self) -> bool:
