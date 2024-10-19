@@ -13,6 +13,7 @@ from AstronomicalAnnualCalendar.regex import (
     DMS_COORDINATE_REGEX,
     HM_TIME_REGEX,
     METADATA_REGEX,
+    OBJECT_DATA_BODY_REGEX,
     OPTIONAL_HM_TIME_REGEX,
 )
 from AstronomicalAnnualCalendar.utils import raw_delta_t_to_timedelta
@@ -283,3 +284,167 @@ def test_metadata_regex_match(
     else:
         assert float(match.group("equinox")) == equinox
     assert raw_delta_t_to_timedelta(match.group("delta_t"), match.group("delta_t_unit")) == delta_t
+
+
+@pytest.mark.parametrize(
+    "data, name, header, body",
+    [
+        (  # with leading new-line
+            """
+Random-Name
+some header values that can be any string on this line...
+content line #1 with data...
+content line #2 with data...
+content line #3 with data...
+content line #4 with data...
+""",
+            "Random-Name",
+            "some header values that can be any string on this line...",
+            """\
+content line #1 with data...
+content line #2 with data...
+content line #3 with data...
+content line #4 with data...\
+""",
+        ),
+        (  # without leading new-line
+            """\
+Random-Name
+some header values that can be any string on this line...
+content line #1 with data...
+content line #2 with data...
+content line #3 with data...
+content line #4 with data...
+""",
+            "Random-Name",
+            "some header values that can be any string on this line...",
+            """\
+content line #1 with data...
+content line #2 with data...
+content line #3 with data...
+content line #4 with data...\
+""",
+        ),
+    ],
+)
+def test_object_data_body_regex_1(data: str, name: str, header: str, body: str):
+    matches: list[re.Match[str]] = list(OBJECT_DATA_BODY_REGEX.finditer(data))
+    assert len(matches) == 1
+    assert matches[0].group("name") == name
+    assert matches[0].group("header") == header
+    assert matches[0].group("body") == body
+
+
+@pytest.mark.parametrize(
+    "data, names, headers, bodies",
+    [
+        (  # with leading new-line
+            """
+Random-Name
+some header values that can be any string on this line...
+content line #1 with data...
+content line #2 with data...
+content line #3 with data...
+content line #4 with data...
+
+Another-Random-Name
+some more header values that can be any string on this line...
+content line #1 with even more data...
+content line #2 with even more data...
+content line #3 with even more data...
+content line #4 with even more data...
+""",
+            (
+                "Random-Name",
+                "Another-Random-Name",
+            ),
+            (
+                "some header values that can be any string on this line...",
+                "some more header values that can be any string on this line...",
+            ),
+            (
+                """\
+content line #1 with data...
+content line #2 with data...
+content line #3 with data...
+content line #4 with data...\
+""",
+                """\
+content line #1 with even more data...
+content line #2 with even more data...
+content line #3 with even more data...
+content line #4 with even more data...\
+""",
+            ),
+        ),
+        (  # without leading new-line
+            """\
+Random-Name
+some header values that can be any string on this line...
+content line #1 with data...
+content line #2 with data...
+content line #3 with data...
+content line #4 with data...
+
+Another-Random-Name
+some more header values that can be any string on this line...
+content line #1 with even more data...
+content line #2 with even more data...
+content line #3 with even more data...
+content line #4 with even more data...
+""",
+            (
+                "Random-Name",
+                "Another-Random-Name",
+            ),
+            (
+                "some header values that can be any string on this line...",
+                "some more header values that can be any string on this line...",
+            ),
+            (
+                """\
+content line #1 with data...
+content line #2 with data...
+content line #3 with data...
+content line #4 with data...\
+""",
+                """\
+content line #1 with even more data...
+content line #2 with even more data...
+content line #3 with even more data...
+content line #4 with even more data...\
+""",
+            ),
+        ),
+    ],
+)
+def test_object_data_body_regex_2(data: str, names: tuple[str, str], headers: tuple[str, str], bodies: tuple[str, str]):
+    matches: list[re.Match[str]] = list(OBJECT_DATA_BODY_REGEX.finditer(data))
+    assert len(matches) == 2
+    assert matches[0].group("name") == names[0]
+    assert matches[0].group("header") == headers[0]
+    assert matches[0].group("body") == bodies[0]
+    assert matches[1].group("name") == names[1]
+    assert matches[1].group("header") == headers[1]
+    assert matches[1].group("body") == bodies[1]
+
+
+@pytest.mark.parametrize(
+    "data",
+    [
+        """
+Random-Name
+some header values that can be any string on this line...\
+""",
+        """\
+Random-Name
+some header values that can be any string on this line...\
+""",
+        """\
+Random-Name
+
+""",
+    ],
+)
+def test_object_data_body_regex_fail(data: str):
+    assert len(OBJECT_DATA_BODY_REGEX.findall(data)) == 0

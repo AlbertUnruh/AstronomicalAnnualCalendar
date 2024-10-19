@@ -7,10 +7,13 @@ from typing import Literal, SupportsFloat
 import pytest
 
 # first party
-from AstronomicalAnnualCalendar.errors import UnitNotSupportedError
+from AstronomicalAnnualCalendar.enums import ObservableObjectEnum
+from AstronomicalAnnualCalendar.errors import AliasNotAssignedError, UnitNotSupportedError
+from AstronomicalAnnualCalendar.models import ObservableObjectModel
 from AstronomicalAnnualCalendar.utils import (
     append_name_to_all_pattern_groups,
     extract_pattern_from_regex,
+    observable_object_from_alias,
     raw_delta_t_to_timedelta,
 )
 
@@ -114,3 +117,43 @@ def test_extract_pattern_from_regex[T: str | bytes](pattern: T, expected: T):
 )
 def test_append_name_to_all_pattern_groups[T: str | bytes](pattern: T, name: T, expected: T):
     assert append_name_to_all_pattern_groups(name, pattern) == expected
+
+
+@pytest.mark.parametrize(
+    "alias, expected",
+    [
+        # by id
+        ("sun", ObservableObjectEnum.SUN),
+        ("mercury", ObservableObjectEnum.MERCURY),
+        ("venus", ObservableObjectEnum.VENUS),
+        ("moon", ObservableObjectEnum.MOON),
+        ("mars", ObservableObjectEnum.MARS),
+        ("jupiter", ObservableObjectEnum.JUPITER),
+        ("saturn", ObservableObjectEnum.SATURN),
+        ("uranus", ObservableObjectEnum.URANUS),
+        ("neptune", ObservableObjectEnum.NEPTUNE),
+        # by alias
+        ("Sonne", ObservableObjectEnum.SUN),
+        ("Merkur", ObservableObjectEnum.MERCURY),
+        ("Venus", ObservableObjectEnum.VENUS),
+        ("Mond", ObservableObjectEnum.MOON),
+        ("Mars", ObservableObjectEnum.MARS),
+        ("Jupiter", ObservableObjectEnum.JUPITER),
+        ("Saturn", ObservableObjectEnum.SATURN),
+        ("Uranus", ObservableObjectEnum.URANUS),
+        ("Neptun", ObservableObjectEnum.NEPTUNE),
+    ],
+)
+def test_observable_object_from_alias(alias: str, expected: ObservableObjectModel):
+    model = observable_object_from_alias(alias)
+    assert isinstance(model, ObservableObjectModel)
+    assert model == expected
+
+
+@pytest.mark.parametrize(
+    "alias",
+    ["SUN", "MERCURY", "VENUS", "MOON", "MARS", "JUPITER", "SATURN", "URANUS", "NEPTUNE"],
+)
+def test_observable_object_from_alias_fail(alias: str):
+    with pytest.raises(AliasNotAssignedError):
+        observable_object_from_alias(alias)
