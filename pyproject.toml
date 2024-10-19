@@ -34,7 +34,7 @@ target-version = ["py312"]
 include = "\\.pyi?$"
 
 [tool.pytest.ini_options]
-addopts = "--cov=AstronomicalAnnualCalendar --cov-report html tests/"
+addopts = "--cov=AstronomicalAnnualCalendar --cov-report html"
 
 [tool.coverage.report]
 omit = [
