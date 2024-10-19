@@ -1,12 +1,16 @@
+# standard library
+from collections.abc import Iterator
+
 # third party
 from pydantic import BaseModel
 from pydantic.fields import Field
 from pydantic.types import FilePath
 
 # local
+from .enums import ObservableObjectEnum
 from .models import CoordinateModel, DataModel, MetaDataModel, ObservableObjectModel
-from .regex import METADATA_REGEX
-from .utils import raw_delta_t_to_timedelta
+from .regex import METADATA_REGEX, OBJECT_DATA_BODY_REGEX
+from .utils import observable_object_from_alias, raw_delta_t_to_timedelta
 
 
 __all__ = ("Parser",)
@@ -45,3 +49,7 @@ class Parser(BaseModel):  # noqa: D101  # ToDo: add documentation
 
     def _parse_observable_objects(self):
         raise NotImplementedError
+
+    def _iter_observable_objects(self) -> Iterator[tuple[ObservableObjectEnum, str, str]]:
+        for match in OBJECT_DATA_BODY_REGEX.finditer(self.file.read_text("utf-8")):
+            yield observable_object_from_alias(match.group("name")), match.group("header"), match.group("body")
