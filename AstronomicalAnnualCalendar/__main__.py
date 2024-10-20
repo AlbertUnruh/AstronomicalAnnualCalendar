@@ -36,10 +36,10 @@ def main():  # noqa: D103
         fg="yellow",
     )
     # first party
-    from AstronomicalAnnualCalendar.enums import Flags
+    from AstronomicalAnnualCalendar.enums import CLIFlags
 
     click.secho(
-        f"Flags:\n{"\n".join(f"{flag!r}" for flag in Flags)}",  # type: ignore
+        f"Flags:\n{"\n".join(f"{flag!r}" for flag in CLIFlags)}",  # type: ignore
         fg="blue",
     )
 

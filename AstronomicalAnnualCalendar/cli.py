@@ -2,10 +2,10 @@
 from contextvars import ContextVar
 
 # local
-from .enums import Flags
+from .enums import CLIFlags
 
 
 __all__ = ("flags",)
 
 
-flags: ContextVar[Flags] = ContextVar("flags", default=Flags.DEFAULT)
+flags: ContextVar[CLIFlags] = ContextVar("flags", default=CLIFlags.DEFAULT)

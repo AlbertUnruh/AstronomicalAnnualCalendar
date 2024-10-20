@@ -1,4 +1,5 @@
 # standard library
+import re
 from datetime import datetime, timedelta
 
 # third party
@@ -23,9 +24,10 @@ from .regex import (
 __all__ = (
     "ObservableObjectModel",
     "MetaDataModel",
-    "DataModel",
     "CoordinateModel",
+    "HeaderModel",
     "RowModel",
+    "DataModel",
 )
 
 
@@ -41,7 +43,7 @@ class ObservableObjectModel(BaseModel):  # noqa: D101  # ToDo: add documentation
     is_sun_: bool = Field(default=None, alias="is_sun")
     is_moon_: bool = Field(default=None, alias="is_moon")
     is_planet_: bool = Field(default=None, alias="is_planet")
-    line_strength_: PositiveFloat = Field(default=2, alias="line_strength")
+    line_strength_: float = Field(default=2, alias="line_strength", gt=0)
     """NOTE: if the object is a sun the line_strength will get modified!"""
 
     @property
@@ -127,14 +129,21 @@ class MetaDataModel(BaseModel):  # noqa: D101  # ToDo: add documentation
     delta_t: timedelta
 
 
-class DataModel(BoundToObservableObjectBaseModel, BaseModel):  # noqa: D101  # ToDo: add documentation
-    metadata: MetaDataModel
+class HeaderModel(BaseModel):  # noqa: D101  # ToDo: add documentation
+    regex: re.Pattern[str]
+    length: int = Field(ge=1)
+    offset: int = Field(default=0)
+    # Note: length and offset are relative to endpos of the match
+
+    def search(self, header: str) -> re.Match[str] | None:
+        """Shortcut for ``self.regex.search``."""
+        return self.regex.search(header)
 
 
 class RowModel(BoundToObservableObjectBaseModel, BaseModel):
     """Represents a single row from the csv-like data/table."""
 
-    date_and_time: datetime  # "Datum" & "MEZ" *or other timezone*
+    date_and_time: datetime  # "Datum" & "MEZ"/"MESZ"/"UTC"
     right_ascension: str = Field(default=None, pattern=HMS_ANGLE_REGEX)  # "Rektasz."
     declination: str = Field(default=None, pattern=DMS_ANGLE_90_REGEX)  # "Deklin."
     ecliptic_longitude: str = Field(default=None, pattern=DMS_ANGLE_360_REGEX)  # "Ekl. Lg."
@@ -153,16 +162,16 @@ class RowModel(BoundToObservableObjectBaseModel, BaseModel):
     dusk: str = Field(default=None, pattern=OPTIONAL_HM_TIME_REGEX)  # "EDämm"  # sun only
     phase: float = Field(default=None, ge=-1, le=1)  # "Phase"  # moon only
     age: float = Field(default=None)  # "Alter"  # moon only
-    elongation: float = Field(default=None)  # "Elong"  # planet only
+    elongation: float = Field(default=None)  # "Elong"  # planet only  # -180° <-> 180°
 
     # Unclear *what* they really are...
     phas_w: str = Field(default=None)  # [2]  # "Phas.W."  # unit appears to be 180° signed
     physical_ephemeris__np__or__pa_n: str = Field(default=None)  # NP | PA_N in degrees (°) [1]  # [2]  # "Pos.W."
     physical_ephemeris__sep_delta: str = Field(default=None)  # SEP(δ) in degrees (°) [1]  # [2]  # "BrErde"
-    physical_ephemeris__sep_omega: str = Field(default=None)  # SEP(ω) in degrees (°) [1]  # [2]  # "ZM"
+    physical_ephemeris__sep_omega: str = Field(default=None)  # SEP(ω) in degrees (°) [1]  # [2]  # "ZM"  # 0° <-> 360°
     moon_specific_lib_longitude: str = Field(default=None)  # [2]  # "Lib Lg."
     moon_specific_lib_latitude: str = Field(default=None)  # [2]  # "[Lib ]Br."
-    moon_specific_colong: str = Field(default=None)  # [2]  # "Colong."
+    moon_specific_colong: str = Field(default=None)  # [2]  # "Colong."  # 0° <-> 360°
     moon_specific_br: str = Field(default=None)  # [2]  # "Br."
     # [1]: This was the only (remotely) helpful page I've found: https://ssp.imcce.fr/forms/physical-ephemeris
     # [2]: When and if they are used these specific arguments will get deprecated and replaced
@@ -180,3 +189,10 @@ class RowModel(BoundToObservableObjectBaseModel, BaseModel):
         if self.diameter is None:  # no diameter set
             return None
         return self.diameter_unit_
+
+
+class DataModel(BoundToObservableObjectBaseModel, BaseModel):
+    """Represents all data connected to an observable object."""
+
+    metadata: MetaDataModel
+    rows: list[RowModel]
