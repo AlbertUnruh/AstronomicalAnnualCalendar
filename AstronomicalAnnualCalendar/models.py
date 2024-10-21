@@ -34,7 +34,9 @@ __all__ = (
 _SUN_LINE_STRENGTH_MULTIPLIER: float = 2
 
 
-class ObservableObjectModel(BaseModel):  # noqa: D101  # ToDo: add documentation
+class ObservableObjectModel(BaseModel):
+    """Model to hold basic information about observable objects."""
+
     model_config = ConfigDict(frozen=True)
 
     internal_id: LowerCase = Field(alias="id")
@@ -112,7 +114,9 @@ class BoundToObservableObjectBaseModel(BaseModel):
     bound_object: ObservableObjectModel = Field(frozen=True)
 
 
-class CoordinateModel(BaseModel):  # noqa: D101  # ToDo: add documentation
+class CoordinateModel(BaseModel):
+    """Model to hold basic information about coordinates."""
+
     model_config = ConfigDict(frozen=True)
 
     lat: str
@@ -124,7 +128,9 @@ class CoordinateModel(BaseModel):  # noqa: D101  # ToDo: add documentation
         return " ".join([self.lat, self.lon])
 
 
-class MetaDataModel(BaseModel):  # noqa: D101  # ToDo: add documentation
+class MetaDataModel(BaseModel):
+    """Model to hold information about the metadata from the data."""
+
     model_config = ConfigDict(frozen=True)
 
     place: str
@@ -133,7 +139,9 @@ class MetaDataModel(BaseModel):  # noqa: D101  # ToDo: add documentation
     delta_t: timedelta
 
 
-class HeaderModel(BaseModel):  # noqa: D101  # ToDo: add documentation
+class HeaderModel(BaseModel):
+    """Model to store basic information about."""
+
     model_config = ConfigDict(frozen=True)
 
     regex: re.Pattern[str]
