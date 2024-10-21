@@ -113,6 +113,8 @@ class BoundToObservableObjectBaseModel(BaseModel):
 
 
 class CoordinateModel(BaseModel):  # noqa: D101  # ToDo: add documentation
+    model_config = ConfigDict(frozen=True)
+
     lat: str
     lon: str
 
@@ -123,6 +125,8 @@ class CoordinateModel(BaseModel):  # noqa: D101  # ToDo: add documentation
 
 
 class MetaDataModel(BaseModel):  # noqa: D101  # ToDo: add documentation
+    model_config = ConfigDict(frozen=True)
+
     place: str
     coordinate: CoordinateModel
     equinox: float | None
@@ -130,6 +134,8 @@ class MetaDataModel(BaseModel):  # noqa: D101  # ToDo: add documentation
 
 
 class HeaderModel(BaseModel):  # noqa: D101  # ToDo: add documentation
+    model_config = ConfigDict(frozen=True)
+
     regex: re.Pattern[str]
     length: int = Field(ge=1)
     offset: int = Field(default=0)
@@ -142,6 +148,8 @@ class HeaderModel(BaseModel):  # noqa: D101  # ToDo: add documentation
 
 class RowModel(BoundToObservableObjectBaseModel, BaseModel):
     """Represents a single row from the csv-like data/table."""
+
+    model_config = ConfigDict(frozen=True)
 
     date_and_time: datetime  # "Datum" & "MEZ"/"MESZ"/"UTC"
     right_ascension: str = Field(default=None, pattern=HMS_ANGLE_REGEX)  # "Rektasz."
@@ -193,6 +201,8 @@ class RowModel(BoundToObservableObjectBaseModel, BaseModel):
 
 class DataModel(BoundToObservableObjectBaseModel, BaseModel):
     """Represents all data connected to an observable object."""
+
+    model_config = ConfigDict(frozen=True)
 
     metadata: MetaDataModel
     rows: list[RowModel]
