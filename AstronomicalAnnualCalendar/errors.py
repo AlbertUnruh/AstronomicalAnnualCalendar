@@ -13,7 +13,7 @@ class AstronomicalAnnualCalendarException(Exception):  # noqa: N818
         "(https://github.com/AlbertUnruh/AstronomicalAnnualCalendar/issues)."
     )
 
-    def __init__(self, message: str, /, *, gh: bool):
+    def __init__(self, message: str, /, *, gh: bool = False):
         info = " " + self.gh_message.strip() if gh else ""
         super().__init__(message + info)
 
