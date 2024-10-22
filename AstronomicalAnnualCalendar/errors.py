@@ -19,7 +19,8 @@ class AstronomicalAnnualCalendarException(Exception):  # noqa: N818
 
 
 class UnitNotSupportedError(AstronomicalAnnualCalendarException, NotImplementedError):
-    """Error for ``utils.raw_delta_t_to_timedelta``.
+    """
+    Error for ``utils.raw_delta_t_to_timedelta``.
 
     It's used to signify, that an unknown unit was passed as a parameter.
     """
@@ -29,7 +30,8 @@ class UnitNotSupportedError(AstronomicalAnnualCalendarException, NotImplementedE
 
 
 class AliasNotAssignedError(AstronomicalAnnualCalendarException, ValueError):
-    """Error for ``utils.observable_object_from_alias``.
+    """
+    Error for ``utils.observable_object_from_alias``.
 
     It's used to signify, that an unknown alias was passed to look up an ObservableObjectModel.
     """
