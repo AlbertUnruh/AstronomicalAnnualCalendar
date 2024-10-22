@@ -1,16 +1,19 @@
 # standard library
 import re
 from datetime import datetime, timedelta
+from typing import Self
 
 # third party
 from annotated_types import LowerCase
 from pydantic import BaseModel
 from pydantic.config import ConfigDict
 from pydantic.fields import Field
+from pydantic.functional_validators import model_validator
 from pydantic.types import PositiveFloat
 from pydantic_extra_types.color import Color
 
 # local
+from .errors import EvaluatedHeaderValidationError
 from .regex import (
     DEGREE_180_REGEX,
     DEGREE_360_REGEX,
@@ -26,6 +29,7 @@ __all__ = (
     "MetaDataModel",
     "CoordinateModel",
     "HeaderModel",
+    "EvaluatedHeaderModel",
     "RowModel",
     "DataModel",
 )
@@ -152,6 +156,42 @@ class HeaderModel(BaseModel):
     def search(self, header: str) -> re.Match[str] | None:
         """Shortcut for ``self.regex.search``."""
         return self.regex.search(header)
+
+
+class EvaluatedHeaderModel(BoundToObservableObjectBaseModel, BaseModel):
+    """Model to store information about a headers position."""
+
+    model_config = ConfigDict(frozen=True)
+
+    bound_header: HeaderModel
+    endpos: int = Field(ge=0)
+
+    @property
+    def length(self) -> int:
+        """Shortcut for ``self.bound_header.length``."""
+        return self.bound_header.length
+
+    @property
+    def offset(self) -> int:
+        """Shortcut for ``self.bound_header.offset``."""
+        return self.bound_header.offset
+
+    def get_value(self, raw_line: str) -> str:
+        """Get value referred to by header."""
+        end = self.endpos + self.offset
+        start = end - self.length
+        return raw_line[start:end]
+
+    @model_validator(mode="after")
+    def _validate_endpos(self) -> Self:
+        if (startpos := self.endpos + self.offset - self.length) < 0:
+            raise EvaluatedHeaderValidationError(
+                endpos=self.endpos,
+                offset=self.offset,
+                length=self.length,
+                startpos=startpos,
+            )
+        return self
 
 
 class RowModel(BoundToObservableObjectBaseModel, BaseModel):

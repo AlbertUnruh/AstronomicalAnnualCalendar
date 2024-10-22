@@ -2,6 +2,7 @@ __all__ = (
     "AstronomicalAnnualCalendarException",
     "UnitNotSupportedError",
     "AliasNotAssignedError",
+    "EvaluatedHeaderValidationError",
 )
 
 
@@ -38,3 +39,13 @@ class AliasNotAssignedError(AstronomicalAnnualCalendarException, ValueError):
 
     def __init__(self, alias: str):
         super().__init__(f"The alias {alias!r} is not set for any `ObservableObjectModel`", gh=True)
+
+
+class EvaluatedHeaderValidationError(AstronomicalAnnualCalendarException, ValueError):
+    """Error for ``models.EvaluatedHeaderModel``."""
+
+    def __init__(self, *, endpos: int, offset: int, length: int, startpos: int):
+        super().__init__(
+            f"The combination of `endpos` ({endpos}) and retrieved `offset` ({offset}) and "
+            f"`length` ({length}) is invalid! Starting index would be {startpos}!"
+        )
