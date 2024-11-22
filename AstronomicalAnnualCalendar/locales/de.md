@@ -1,4 +1,9 @@
 # diff report for ``DE``
+
+> *Any changes to this file will be lost as it will be overridden.*</br>
+> *Furthermore, any changes to this file won't do anything as the sole
+> reason for it's existence is to aid the translation process.*
+
 ```diff
   sha1,message
   # sun
@@ -20,3 +25,5 @@
   # mercury
   f3aa85ef72957869464b16e655dc3632217bb8d4,"TRANSLATION"
 ```
+
+> Time of creation: 2024-11-22 22:40:07+00:00

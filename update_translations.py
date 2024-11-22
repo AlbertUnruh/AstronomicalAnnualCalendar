@@ -1,6 +1,7 @@
 # standard library
 import re
 from collections.abc import Iterable
+from datetime import UTC, datetime
 from difflib import Differ
 from hashlib import sha1  # only used for key/id generation
 from logging import basicConfig, debug, info
@@ -85,10 +86,18 @@ def remove_values_from_translations(raw: str) -> list[str]:
     return clean.splitlines(keepends=True)
 
 
-report: str = """# diff report for ``{lang}``
+report: str = """\
+# diff report for ``{lang}``
+
+> *Any changes to this file will be lost as it will be overridden.*</br>
+> *Furthermore, any changes to this file won't do anything as the sole
+> reason for it's existence is to aid the translation process.*
+
 ```diff
 {diff}\
 ```
+
+> Time of creation: {time}
 """
 
 differ = Differ()
@@ -104,6 +113,12 @@ for file in iter_files(LOCALES_PATH, ".csv"):
     diff = differ.compare(valueless_template, valueless_translation)
 
     with (report_file := file.with_suffix(".md")).open("w") as f:
-        f.write(report.format(lang=file.stem.upper(), diff="".join(diff)))
+        f.write(
+            report.format(
+                lang=file.stem.upper(),
+                diff="".join(diff),
+                time=datetime.now(UTC).isoformat(sep=" ", timespec="seconds"),
+            )
+        )
 
     debug(f"Wrote diff report into {report_file.as_posix()!r}")
