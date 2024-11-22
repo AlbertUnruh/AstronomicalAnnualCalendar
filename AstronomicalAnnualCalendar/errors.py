@@ -60,6 +60,6 @@ class TranslationsDirNotADirectoryError(AstronomicalAnnualCalendarException, Val
 
     def __init__(self, *, translations_dir: Path):
         super().__init__(
-            f"The path {translations_dir.absolute()} is not a directory! "
+            f"The path {translations_dir.as_posix()} is not a directory! "
             f"A directory is required as translations are stored in separate files!"
         )
