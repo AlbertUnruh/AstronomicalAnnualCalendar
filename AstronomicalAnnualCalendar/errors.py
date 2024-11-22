@@ -3,7 +3,11 @@ __all__ = (
     "UnitNotSupportedError",
     "AliasNotAssignedError",
     "EvaluatedHeaderValidationError",
+    "TranslationsDirNotADirectoryError",
 )
+
+# standard library
+from pathlib import Path
 
 
 class AstronomicalAnnualCalendarException(Exception):  # noqa: N818
@@ -48,4 +52,14 @@ class EvaluatedHeaderValidationError(AstronomicalAnnualCalendarException, ValueE
         super().__init__(
             f"The combination of `endpos` ({endpos}) and retrieved `offset` ({offset}) and "
             f"`length` ({length}) is invalid! Starting index would be {startpos}!"
+        )
+
+
+class TranslationsDirNotADirectoryError(AstronomicalAnnualCalendarException, ValueError, NotADirectoryError):
+    """Error for ``translations._Translations``."""
+
+    def __init__(self, *, translations_dir: Path):
+        super().__init__(
+            f"The path {translations_dir.absolute()} is not a directory! "
+            f"A directory is required as translations are stored in separate files!"
         )
