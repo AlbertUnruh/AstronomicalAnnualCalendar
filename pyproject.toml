@@ -13,7 +13,7 @@ python = "^3.12"
 click = "^8.1.7"
 aenum = "^3.1.15"
 pydantic = "^2.9.2"
-pydantic-extra-types = "^2.9.0"
+pydantic-extra-types = "^2.10.0"
 matplotlib = "^3.9.2"
 
 [tool.poetry.group.dev.dependencies]
@@ -22,7 +22,7 @@ black = "^24.10.0"
 
 [tool.poetry.group.tests.dependencies]
 pytest = "^8.3.3"
-pytest-cov = "^5.0.0"
+pytest-cov = "^6.0.0"
 
 [build-system]
 requires = ["poetry-core"]
