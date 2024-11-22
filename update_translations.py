@@ -91,7 +91,7 @@ report: str = """\
 
 > *Any changes to this file will be lost as it will be overridden.*</br>
 > *Furthermore, any changes to this file won't do anything as the sole
-> reason for it's existence is to aid the translation process.*
+> reason for its existence is to aid the translation process.*
 
 ```diff
 {diff}\
