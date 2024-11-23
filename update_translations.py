@@ -109,16 +109,12 @@ for file in iter_files(LOCALES_PATH, ".csv"):
 
     valueless_translation = remove_values_from_translations(file.read_text("utf-8"))
 
-    info(f"Creating diff for {file.name}...")
-    diff = differ.compare(valueless_template, valueless_translation)
+    diff_report = report.format(
+        lang=file.stem.upper(),
+        diff="".join(differ.compare(valueless_template, valueless_translation)),
+        time=datetime.now(UTC).isoformat(sep=" ", timespec="seconds"),
+    )
 
-    with (report_file := file.with_suffix(".md")).open("w") as f:
-        f.write(
-            report.format(
-                lang=file.stem.upper(),
-                diff="".join(diff),
-                time=datetime.now(UTC).isoformat(sep=" ", timespec="seconds"),
-            )
-        )
-
-    debug(f"Wrote diff report into {report_file.as_posix()!r}")
+    info(f"Writing diff report into {(report_file := file.with_suffix(".md")).as_posix()!r}")
+    with report_file.open("w") as f:
+        f.write(diff_report)
