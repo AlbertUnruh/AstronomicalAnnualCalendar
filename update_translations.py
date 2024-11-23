@@ -51,13 +51,13 @@ messages: set[str] = {
 }
 debug(f"Following messages are pre-set: {", ".join(sorted(messages))}")
 
-GETTEXT_RE: re.Pattern[str] = re.compile(r"(get_text|_)\(([\"\'])(?P<message>.+)\2\)")
+GETTEXT_RE: re.Pattern[str] = re.compile(r"(?P<call>get_text|_)\(([\"\'])(?P<message>.+)\2\)")
 
 for file in iter_files(AAC_PATH, ".py"):
     info(f"Searching in {file.as_posix()!r}...")
     for match in GETTEXT_RE.finditer(file.read_text("utf-8")):
         msg = match.group("message")
-        debug(f"Found {msg!r}")
+        debug(f"Found {msg!r} via ``{match.group("call")}()``")
         messages.add(msg)
 
 
