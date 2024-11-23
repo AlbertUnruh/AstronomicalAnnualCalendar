@@ -29,7 +29,7 @@ if not LOCALES_PATH.is_dir():
 # find translatable messages
 #
 def iter_files(_dir: Path, suffix: str) -> Iterable[Path]:
-    """Recursively iter over every .py-file in the given directory."""
+    """Recursively iter over every file (with the specified suffix) in the given directory."""
     for path in _dir.iterdir():
         if path.is_dir():
             yield from iter_files(path, suffix)
