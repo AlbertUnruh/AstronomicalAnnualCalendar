@@ -110,11 +110,11 @@ for file in iter_files(LOCALES_PATH, ".csv"):
     valueless_translation = remove_values_from_translations(file.read_text("utf-8"))
 
     diff_report = report.format(
-        lang=file.stem.upper(),
+        lang=(lang := file.stem.upper()),
         diff="".join(differ.compare(valueless_template, valueless_translation)),
         time=datetime.now(UTC).isoformat(sep=" ", timespec="seconds"),
     )
 
-    info(f"Writing diff report into {(report_file := file.with_suffix(".md")).as_posix()!r}")
+    info(f"Writing diff report for {lang} into {(report_file := file.with_suffix(".md")).as_posix()!r}")
     with report_file.open("w") as f:
         f.write(diff_report)
