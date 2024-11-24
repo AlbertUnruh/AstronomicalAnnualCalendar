@@ -1,4 +1,5 @@
 # standard library
+from collections.abc import Callable
 from pathlib import Path
 
 # third party
@@ -42,3 +43,16 @@ def path_sun_10d() -> Path:
 def path_sun_moon_mercury_10d_everything() -> Path:
     """Sun, moon and mercury; 10-day interval; all calculations;"""
     return _BASE_PATH / Path("sample_data/sun,moon,mercury-10d-everything.txt")
+
+
+@fixture(scope="session")
+def get_text() -> Callable[..., str]:
+    """
+    Equivalent to ``get_text()`` (aka. ``_()``) from AstronomicalAnnualCalendar.
+
+    This functions refers to static translations for testing and is independent on translations for the actual project.
+    """
+    # first party
+    import AstronomicalAnnualCalendar.translations as translations
+
+    return translations._Translations(_BASE_PATH / Path("test_locales")).get_text  # noqa: SLF001
