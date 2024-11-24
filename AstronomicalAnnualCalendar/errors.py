@@ -1,3 +1,7 @@
+# standard library
+from pathlib import Path
+
+
 __all__ = (
     "AstronomicalAnnualCalendarException",
     "UnitNotSupportedError",
@@ -5,9 +9,6 @@ __all__ = (
     "EvaluatedHeaderValidationError",
     "TranslationsDirNotADirectoryError",
 )
-
-# standard library
-from pathlib import Path
 
 
 class AstronomicalAnnualCalendarException(Exception):  # noqa: N818
