@@ -9,7 +9,10 @@ from pathlib import Path
 from AstronomicalAnnualCalendar.errors import TranslationsDirNotADirectoryError
 
 
-__all__ = ("get_text",)
+__all__ = (
+    "get_text",
+    "locale",
+)
 
 
 locale: ContextVar[str] = ContextVar("locale", default="en")
@@ -56,4 +59,4 @@ class _Translations:
         return self.get_translation(message, lang=lang) or message
 
 
-get_text: Callable[[str], str] = _Translations(Path(__file__).parent / "locales").get_text
+get_text: Callable[[str], str] = _Translations(Path(__file__).parent / Path("locales")).get_text
