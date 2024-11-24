@@ -1,0 +1,11 @@
+sha1,message
+# Hello World!
+2ef7bde608ce5404e97d5f042f95f89f1c232871,"Hallo Welt!"
+# Test with single 'quotes'
+a9e0d10d47591c49ca7e5ef4cf4213cceed1d1d1,"Test mit einfachen 'Anführungszeichen'"
+# Test with double "quotes"
+5c062276b129aadb885cb7399ba6c630a789869c,"Test mit doppelten "Anführungszeichen""
+## Only translated in `en`
+#30022421a2996f3191b1cd28ddb30567df70b19c,"Nur in `en` übersetzt"
+# Only translated in `de`
+dd0bcb7a583e3642457674408dabf2215c406eba,"Nur in `de` übersetzt"
