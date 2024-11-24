@@ -1,3 +1,22 @@
+"""
+Simple script to update the translation-template and generate a diff-report for existing translations.
+
+This script belongs to the AstronomicalAnnualCalendar-project by me (AlbertUnruh) and is intended to aid the translation
+process.
+I didn't encounter this method (csv-files with `sha1(message) <-> message`-pairs) to translate a project and just threw
+this code together.
+There may (*will) be more efficient and elegant ways to handle multiple languages but this was the simplest for me.
+Use at your own risk!
+
+---
+
+Version: 1.0.0
+License: MIT (more over at https://github.com/AlbertUnruh/AstronomicalAnnualCalendar/blob/develop/LICENSE)
+Authors:
+    - AlbertUnruh <AlbertUnruh@pm.me>
+Repository: https://github.com/AlbertUnruh/AstronomicalAnnualCalendar/
+"""
+
 # standard library
 import re
 from collections.abc import Iterable
