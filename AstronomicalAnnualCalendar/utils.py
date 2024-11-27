@@ -40,10 +40,10 @@ except ImportError:
 
 
 __all__ = (
-    "extract_pattern_from_regex",
     "append_name_to_all_pattern_groups",
-    "raw_delta_t_to_timedelta",
+    "extract_pattern_from_regex",
     "observable_object_from_alias",
+    "raw_delta_t_to_timedelta",
 )
 
 

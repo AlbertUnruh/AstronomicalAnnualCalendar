@@ -6,17 +6,17 @@ from .utils import append_name_to_all_pattern_groups, extract_pattern_from_regex
 
 
 __all__ = (
-    "HM_TIME_REGEX",
-    "OPTIONAL_HM_TIME_REGEX",
-    "DEGREE_SIGNED_90_REGEX",
     "DEGREE_180_REGEX",
     "DEGREE_360_REGEX",
-    "HMS_ANGLE_REGEX",
+    "DEGREE_SIGNED_90_REGEX",
     "DMS_ANGLE_90_REGEX",
     "DMS_ANGLE_360_REGEX",
     "DMS_COORDINATE_REGEX",
+    "HMS_ANGLE_REGEX",
+    "HM_TIME_REGEX",
     "METADATA_REGEX",
     "OBJECT_DATA_BODY_REGEX",
+    "OPTIONAL_HM_TIME_REGEX",
 )
 
 

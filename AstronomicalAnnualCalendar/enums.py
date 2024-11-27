@@ -13,9 +13,9 @@ from .models import ObservableObjectModel as OOModel
 
 
 __all__ = (
-    "ObservableObjectEnum",
     "CLIFlags",
     "HeaderEnum",
+    "ObservableObjectEnum",
 )
 
 
