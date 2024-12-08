@@ -105,7 +105,6 @@ select = [
     "RUF",  # Ruff-specific rules
 ]
 ignore = [
-    "ANN101", # Missing type annotation for `self` in method
     "D100",   # Missing docstring in public module
     "D104",   # Missing docstring in public package
     "G004",   # Logging statement uses f-string
