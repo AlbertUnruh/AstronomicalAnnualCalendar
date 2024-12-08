@@ -66,7 +66,7 @@ class Parser(BaseModel):  # noqa: D101  # ToDo: add documentation
         present_headers: list[EvaluatedHeaderModel] = get_present_headers(bound_object, header)
 
         # I know that this is filthy...
-        tz = timezone(timedelta(hours={"MEZ ": 1, "MESZ": 2, "UTC ": 0}[HeaderEnum.TIME.search(header).string]))
+        tz = timezone(timedelta(hours={"MEZ ": 1, "MESZ": 2, "UTC ": 0}[HeaderEnum.TIME.search(header)[0]]))
 
         for row in body.splitlines():
 
