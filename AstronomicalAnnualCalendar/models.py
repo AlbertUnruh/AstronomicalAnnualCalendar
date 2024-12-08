@@ -145,10 +145,11 @@ class MetaDataModel(BaseModel):
 
 
 class HeaderModel(BaseModel):
-    """Model to store basic information about."""
+    """Model to store basic information about a header."""
 
     model_config = ConfigDict(frozen=True)
 
+    name: str
     regex: re.Pattern[str]
     length: int = Field(ge=1)
     offset: int = Field(default=0)

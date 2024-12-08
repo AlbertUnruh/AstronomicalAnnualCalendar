@@ -19,21 +19,23 @@ try:  # pragma: no cover
     """
 
     # local
-    from .enums import ObservableObjectEnum
-    from .models import ObservableObjectModel
+    from .enums import HeaderEnum, ObservableObjectEnum
+    from .models import EvaluatedHeaderModel, ObservableObjectModel
 
     def _fix_imports():
         pass
 
 except ImportError:
+    EvaluatedHeaderModel = None
+    HeaderEnum = None
     ObservableObjectModel = None
     ObservableObjectEnum = None
 
     def _fix_imports():
-        global ObservableObjectModel, ObservableObjectEnum, _fix_imports
+        global EvaluatedHeaderModel, HeaderEnum, ObservableObjectModel, ObservableObjectEnum, _fix_imports
         # local
-        from .enums import ObservableObjectEnum
-        from .models import ObservableObjectModel
+        from .enums import HeaderEnum, ObservableObjectEnum
+        from .models import EvaluatedHeaderModel, ObservableObjectModel
 
         def _fix_imports():
             pass
@@ -42,6 +44,7 @@ except ImportError:
 __all__ = (
     "append_name_to_all_pattern_groups",
     "extract_pattern_from_regex",
+    "get_present_headers",
     "observable_object_from_alias",
     "raw_delta_t_to_timedelta",
 )
@@ -101,3 +104,13 @@ def observable_object_from_alias(alias: str) -> ObservableObjectModel:
         if alias in aliases:
             return model
     raise AliasNotAssignedError(alias)
+
+
+def get_present_headers(bound_object: ObservableObjectModel, header: str) -> list[EvaluatedHeaderModel]:
+    """Retrieve every header that is present in the given header."""
+    _fix_imports()
+    return [
+        EvaluatedHeaderModel(bound_object=bound_object, bound_header=enum.value, endpos=match.endpos)
+        for enum in HeaderEnum  # type: ignore
+        if (match := enum.value.search(header)) is not None
+    ]
