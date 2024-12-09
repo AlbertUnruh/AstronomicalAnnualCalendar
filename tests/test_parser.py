@@ -1,5 +1,4 @@
 # standard library
-from datetime import datetime, timedelta, timezone
 from typing import TYPE_CHECKING
 
 # third party
@@ -7,11 +6,17 @@ import pytest
 
 # first party
 from AstronomicalAnnualCalendar.enums import ObservableObjectEnum
-from AstronomicalAnnualCalendar.models import DataModel, MetaDataModel, ObservableObjectModel, RowModel
+from AstronomicalAnnualCalendar.models import DataModel, MetaDataModel, ObservableObjectModel
 from AstronomicalAnnualCalendar.parser import Parser
 
 # local
-from .constants import sample_data_metadata_w_equinox, sample_data_metadata_wo_equinox
+from .constants import (
+    sample_data_metadata_w_equinox,
+    sample_data_metadata_wo_equinox,
+    sample_data_moon,
+    sample_data_saturn,
+    sample_data_sun,
+)
 
 
 if TYPE_CHECKING:
@@ -33,38 +38,22 @@ def test_model_post_init(path_fixture: str, metadata: MetaDataModel, request: py
     assert parser.metadata == metadata
 
 
-_saturn = {
-    ObservableObjectEnum.SATURN: DataModel(
-        bound_object=ObservableObjectEnum.SATURN,
-        metadata=sample_data_metadata_w_equinox,
-        rows=[
-            RowModel(
-                bound_object=ObservableObjectEnum.SATURN,
-                date_and_time=datetime(2024, 1, 1, 0, 0, 0, tzinfo=timezone(timedelta(hours=1))),
-                right_ascension="22h21m50.2s",
-                declination="-11°57'39\"",
-                ecliptic_longitude="332°54'29\"",
-                ecliptic_latitude="- 1°37'58\"",
-                rise="11h21m",
-                culmination="16h16m",
-                set="12h10m",
-                azimut_rise="110°",
-                azimut_set="250°",
-            ),
-        ],
-    )
-}
-
-
 @pytest.mark.parametrize(
     "path_fixture, expected",
     [
-        ("path_sun_d1_2_everything", _sun := {}),
+        (
+            "path_sun_d1_2_everything",
+            _sun := {ObservableObjectEnum.SUN: sample_data_sun},
+        ),
+        (
+            "path_moon_d1_2_everything",
+            _moon := {ObservableObjectEnum.MOON: sample_data_moon},
+        ),
         (
             "path_saturn_d1_2_everything",
-            _saturn,
+            _saturn := {ObservableObjectEnum.SATURN: sample_data_saturn},
         ),
-        ("path_sun_saturn_d1_2_everything", _sun | _saturn),
+        ("path_sun_moon_saturn_d1_2_everything", _sun | _moon | _saturn),
     ],
 )
 def test_parse(path_fixture: str, expected: dict[ObservableObjectModel, DataModel], request: pytest.FixtureRequest):

@@ -1,0 +1,6 @@
+Ort: Papenburg,     53°05' N    7°25' O   Äquin:   2000.0, geozentrisch,  DeltaT = 73.9 s
+
+Mond
+      Datum     MEZ         Rektasz.     Deklin.      Ekl. Lg.     Ekl. Br   Aufg.  Kulm. Unterg  Az Auf Unt.  Phase  Alter   Entf.   Hell.   Ø ["] Phas.W. Lib Lg.  Br. Colong.  Br.
+Mo 01.01.2024  0:00:00   10h33m21.6s  +12°57'52"    155°09'37"  + 3°35'50"  22h19m  4h28m 11h39m     68° 292°  -0.69  -10.2   404636  -11.0  1772.1   -55.5    0.9  -4.7   144.6 -1.5
+Di 02.01.2024  0:00:00   11h16m29.2s  + 7°43'11"    166°58'50"  + 2°47'59"  23h31m  5h07m 11h48m     77° 283°  -0.63   -9.3   404850  -10.8  1771.1   -66.3   -0.5  -3.6   156.7 -1.5

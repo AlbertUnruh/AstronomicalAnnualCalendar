@@ -51,13 +51,18 @@ def path_sun_d1_2_everything() -> Path:
 
 
 @fixture
+def path_moon_d1_2_everything() -> Path:
+    return _BASE_PATH / Path("sample_data/moon-d1+2-everything.txt")
+
+
+@fixture
 def path_saturn_d1_2_everything() -> Path:
     return _BASE_PATH / Path("sample_data/saturn-d1+2-everything.txt")
 
 
 @fixture
-def path_sun_saturn_d1_2_everything() -> Path:
-    return _BASE_PATH / Path("sample_data/sun,saturn-d1+2-everything.txt")
+def path_sun_moon_saturn_d1_2_everything() -> Path:
+    return _BASE_PATH / Path("sample_data/sun,moon,saturn-d1+2-everything.txt")
 
 
 @fixture(scope="session")

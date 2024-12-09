@@ -77,13 +77,13 @@ class HeaderEnum(UniqueEnum, metaclass=DirectValueMeta):
     AZIMUT_RIZE: HModel = HModel(name="azimut_rise", regex=re.compile(r"(?<=Az )Auf"), length=4)
     AZIMUT_SET: HModel = HModel(name="azimut_set", regex=re.compile(r"(?<=Az Auf )Unt\."), length=4)
     DISTANCE: HModel = HModel(name="distance", regex=re.compile(r"Entf\."), length=8, offset=1)
-    BRIGHTNESS: HModel = HModel(name="distance_unit", regex=re.compile(r"Hell\."), length=5)
-    DIAMETER: HModel = HModel(name="brightness", regex=re.compile(r"Ø \[\"]"), length=6)
-    DAWN: HModel = HModel(name="diameter", regex=re.compile(r"ADämm"), length=6)
-    DUSK: HModel = HModel(name="diameter_unit", regex=re.compile(r"EDämm"), length=6)
-    PHASE: HModel = HModel(name="dawn", regex=re.compile(r"Phase"), length=5)
-    AGE: HModel = HModel(name="dusk", regex=re.compile(r"Alter"), length=5)
-    ELONGATION: HModel = HModel(name="phase", regex=re.compile(r"Elong"), length=6)
+    BRIGHTNESS: HModel = HModel(name="brightness", regex=re.compile(r"Hell\."), length=5)
+    DIAMETER: HModel = HModel(name="diameter", regex=re.compile(r"Ø \[\"]"), length=6)
+    DAWN: HModel = HModel(name="dawn", regex=re.compile(r"ADämm"), length=6)
+    DUSK: HModel = HModel(name="dusk", regex=re.compile(r"EDämm"), length=6)
+    PHASE: HModel = HModel(name="phase", regex=re.compile(r"Phase"), length=5)
+    AGE: HModel = HModel(name="age", regex=re.compile(r"Alter"), length=5)
+    ELONGATION: HModel = HModel(name="elongation", regex=re.compile(r"Elong"), length=6)
 
     # following attribute-names aren't worked out yet -> they may get deprecated and replaced
     # *see AstronomicalAnnualCalendar.models.RowModel for more
