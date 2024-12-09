@@ -12,7 +12,7 @@ homepage = "https://github.com/AlbertUnruh/AstronomicalAnnualCalendar/"
 python = "^3.12"
 click = "^8.1.7"
 aenum = "^3.1.15"
-pydantic = "^2.10.2"
+pydantic = "^2.10.3"
 pydantic-extra-types = "^2.10.1"
 matplotlib = "^3.9.3"
 
