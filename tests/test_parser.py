@@ -41,22 +41,15 @@ def test_model_post_init(path_fixture: str, metadata: MetaDataModel, request: py
 @pytest.mark.parametrize(
     "path_fixture, expected",
     [
-        (
-            "path_sun_d1_2_everything",
-            _sun := {ObservableObjectEnum.SUN: sample_data_sun},
-        ),
-        (
-            "path_moon_d1_2_everything",
-            _moon := {ObservableObjectEnum.MOON: sample_data_moon},
-        ),
-        (
-            "path_saturn_d1_2_everything",
-            _saturn := {ObservableObjectEnum.SATURN: sample_data_saturn},
-        ),
+        ("path_sun_d1_2_everything", _sun := {ObservableObjectEnum.SUN: sample_data_sun}),
+        ("path_moon_d1_2_everything", _moon := {ObservableObjectEnum.MOON: sample_data_moon}),
+        ("path_saturn_d1_2_everything", _saturn := {ObservableObjectEnum.SATURN: sample_data_saturn}),
         ("path_sun_moon_saturn_d1_2_everything", _sun | _moon | _saturn),
     ],
 )
 def test_parse(path_fixture: str, expected: dict[ObservableObjectModel, DataModel], request: pytest.FixtureRequest):
     path: Path = request.getfixturevalue(path_fixture)
     parser = Parser(file_path=path)
+    for v in expected.values():  # find programmer mistakes before it tests the parser
+        assert parser.metadata == v.metadata, "Metadata doesn't match with all expected results!"
     assert parser.parse() == expected
