@@ -114,6 +114,9 @@ class ObservableObjectModel(BaseModel):
         """Returns the appropriate line-strength for the object."""
         return self.line_strength_ * (_SUN_LINE_STRENGTH_MULTIPLIER if self.is_sun else 1)
 
+    def __hash__(self) -> int:  # noqa: D105
+        return hash(self.name)
+
 
 class BoundToObservableObjectBaseModel(BaseModel):
     bound_object: ObservableObjectModel = Field(frozen=True)
@@ -182,7 +185,7 @@ class EvaluatedHeaderModel(BoundToObservableObjectBaseModel, BaseModel):
         """Get value referred to by header."""
         end = self.endpos + self.offset
         start = end - self.length
-        return raw_line[start:end]
+        return raw_line[start:end].strip()
 
     @model_validator(mode="after")
     def _validate_endpos(self) -> Self:
@@ -208,7 +211,7 @@ class RowModel(BoundToObservableObjectBaseModel, BaseModel):
     ecliptic_latitude: str = Field(default=None, pattern=DMS_ANGLE_90_REGEX)  # "Ekl. Br"
     rise: str = Field(default=None, pattern=OPTIONAL_HM_TIME_REGEX)  # "Aufg."
     culmination: str = Field(default=None, pattern=OPTIONAL_HM_TIME_REGEX)  # "Kulm."
-    set: str = Field(default=None, pattern=OPTIONAL_HM_TIME_REGEX)  # "Unterg"
+    set_: str = Field(default=None, alias="set", pattern=OPTIONAL_HM_TIME_REGEX)  # "Unterg"
     azimut_rise: str = Field(default=None, pattern=DEGREE_180_REGEX)  # "Az Auf"
     azimut_set: str = Field(default=None, pattern=DEGREE_360_REGEX)  # "[Az ]Unt."
     distance: float = Field(default=None)  # "Entf."

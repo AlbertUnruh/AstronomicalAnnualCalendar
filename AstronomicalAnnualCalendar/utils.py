@@ -110,7 +110,7 @@ def get_present_headers(bound_object: ObservableObjectModel, header: str) -> lis
     """Retrieve every header that is present in the given header."""
     _fix_imports()
     return [
-        EvaluatedHeaderModel(bound_object=bound_object, bound_header=enum.value, endpos=match.endpos)
+        EvaluatedHeaderModel(bound_object=bound_object, bound_header=enum.value, endpos=match.span()[1])
         for enum in HeaderEnum  # type: ignore
         if (match := enum.value.search(header)) is not None
     ]

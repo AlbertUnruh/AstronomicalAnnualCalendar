@@ -56,7 +56,7 @@ class ObservableObjectEnum(NoAliasEnum, metaclass=DirectValueMeta):
     NEPTUNE: OOModel = OOModel(id="neptune", aliases={"Neptun"}, line_color=Color("gold"))
 
 
-class HeaderEnum(UniqueEnum):
+class HeaderEnum(UniqueEnum, metaclass=DirectValueMeta):
     """
     An enum to store every header that may be present in the observable object's data.
 

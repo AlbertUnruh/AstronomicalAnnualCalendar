@@ -54,8 +54,7 @@ class Parser(BaseModel):  # noqa: D101  # ToDo: add documentation
 
     def parse(self) -> dict[ObservableObjectModel, DataModel]:  # noqa: D102  # ToDo: add documentation
         data: dict[ObservableObjectModel, DataModel] = {}
-        for name, header, body in self._iter_observable_objects():
-            bound_object = observable_object_from_alias(name)
+        for bound_object, header, body in self._iter_observable_objects():
             rows = self._parse_rows(bound_object, header, body)
             data[bound_object] = DataModel(bound_object=bound_object, metadata=self.metadata, rows=rows)
         return data
@@ -77,7 +76,7 @@ class Parser(BaseModel):  # noqa: D101  # ToDo: add documentation
             row_data.pop("weekday")  # not needed, can be discarded
 
             date = row_data.pop("date")
-            time = row_data.pop("time")
+            time = f"{row_data.pop("time"):0>8}"  # add leading zeros
             row_data["date_and_time"] = datetime(
                 year=int(date[6:]),
                 month=int(date[3:5]),
