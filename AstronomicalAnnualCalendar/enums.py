@@ -79,6 +79,7 @@ class HeaderEnum(UniqueEnum, metaclass=DirectValueMeta):
     DISTANCE: HModel = HModel(name="distance", regex=re.compile(r"Entf\."), length=8, offset=1)
     BRIGHTNESS: HModel = HModel(name="brightness", regex=re.compile(r"Hell\."), length=5)
     DIAMETER: HModel = HModel(name="diameter", regex=re.compile(r"Ø \[\"]"), length=6)
+    DIAMETER_RING: HModel = HModel(name="diameter_ring", regex=re.compile(r"Ø Ring"), length=4)
     DAWN: HModel = HModel(name="dawn", regex=re.compile(r"ADämm"), length=6)
     DUSK: HModel = HModel(name="dusk", regex=re.compile(r"EDämm"), length=6)
     PHASE: HModel = HModel(name="phase", regex=re.compile(r"Phase"), length=5)

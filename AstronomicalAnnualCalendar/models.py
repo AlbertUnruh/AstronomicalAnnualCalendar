@@ -219,6 +219,8 @@ class RowModel(BoundToObservableObjectBaseModel, BaseModel):
     brightness: float = Field(default=None)  # "Hell."
     diameter: float = Field(default=None, gt=0)  # "Ø [\"]"
     diameter_unit_: str = Field(default="arc second", alias="diameter_unit")  # provided as "[\"]"
+    diameter_ring: float = Field(default=None, gt=0)  # "Ø Ring"
+    diameter_ring_unit_: str = Field(default="arc second", alias="diameter_ring_unit")  # should be like ``diameter``
     dawn: str = Field(default=None, pattern=OPTIONAL_HM_TIME_REGEX)  # "ADämm"  # sun only
     dusk: str = Field(default=None, pattern=OPTIONAL_HM_TIME_REGEX)  # "EDämm"  # sun only
     phase: float = Field(default=None, ge=-1, le=1)  # "Phase"  # moon only
@@ -250,6 +252,13 @@ class RowModel(BoundToObservableObjectBaseModel, BaseModel):
         if self.diameter is None:  # no diameter set
             return None
         return self.diameter_unit_
+
+    @property
+    def diameter_ring_unit(self) -> str | None:
+        """Returns the unit of ``diameter_ring`` if ``diameter_ring`` is set."""
+        if self.diameter_ring is None:  # no diameter set
+            return None
+        return self.diameter_ring_unit_
 
 
 class DataModel(BoundToObservableObjectBaseModel, BaseModel):
