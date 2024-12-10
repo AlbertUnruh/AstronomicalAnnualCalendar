@@ -1,9 +1,11 @@
 # standard library
-from collections.abc import Callable
 from pathlib import Path
 
 # third party
 from pytest import fixture
+
+# first party
+from tests.typehints import GetTextCallable
 
 
 _BASE_PATH: Path = Path(__file__).parent
@@ -66,7 +68,7 @@ def path_sun_moon_saturn_d1_2_everything() -> Path:
 
 
 @fixture(scope="session")
-def get_text() -> Callable[..., str]:
+def get_text() -> GetTextCallable:
     """
     Equivalent to ``get_text()`` (aka. ``_()``) from AstronomicalAnnualCalendar.
 
@@ -75,4 +77,4 @@ def get_text() -> Callable[..., str]:
     # first party
     import AstronomicalAnnualCalendar.translations as translations
 
-    return translations._Translations(_BASE_PATH / Path("test_locales")).get_text  # noqa: SLF001
+    return translations._Translations(_BASE_PATH / Path("test_locales")).get_text  # type:ignore  # noqa: SLF001

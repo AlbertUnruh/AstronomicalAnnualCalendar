@@ -1,5 +1,4 @@
 # standard library
-from collections.abc import Callable
 from pathlib import Path
 
 # third party
@@ -8,6 +7,9 @@ import pytest
 # first party
 import AstronomicalAnnualCalendar.translations as translations
 from AstronomicalAnnualCalendar.errors import TranslationsDirNotADirectoryError
+
+# local
+from .typehints import GetTextCallable
 
 
 def test_fail_on_not_a_directory():
@@ -32,13 +34,13 @@ _translations: list[tuple[str, str, str]] = [  # locale/lang, message, expected
 
 
 @pytest.mark.parametrize("locale, message, expected", _translations)
-def test_locale(get_text: Callable[..., str], locale: str, message: str, expected: str):
+def test_locale(get_text: GetTextCallable, locale: str, message: str, expected: str):
     translations.locale.set(locale)
     assert get_text(message) == expected
 
 
 @pytest.mark.parametrize("lang, message, expected", _translations)
-def test_lang(get_text: Callable[..., str], lang: str, message: str, expected: str):
+def test_lang(get_text: GetTextCallable, lang: str, message: str, expected: str):
     assert get_text(message, lang=lang) == expected
 
 
@@ -51,5 +53,5 @@ def test_lang(get_text: Callable[..., str], lang: str, message: str, expected: s
         ("unknown locale", __import__("secrets").token_urlsafe()),  # can't be translated beforehand :D
     ],
 )
-def test_message_not_translated(get_text: Callable[..., str], lang: str, message: str):
+def test_message_not_translated(get_text: GetTextCallable, lang: str, message: str):
     assert get_text(message, lang=lang) == message
