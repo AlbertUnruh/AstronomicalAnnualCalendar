@@ -1,10 +1,15 @@
+# standard library
+from functools import partial
+
 # third party
 import pytest
 from pydantic_core import ValidationError
 from pydantic_extra_types.color import Color
 
 # first party
+from AstronomicalAnnualCalendar import models
 from AstronomicalAnnualCalendar.models import ObservableObjectModel
+from tests.typehints import GetTextCallable
 
 
 def test_oom_internal_id():
@@ -72,3 +77,18 @@ def test_oom_is_moon(oom: ObservableObjectModel, expected: bool):
 )
 def test_oom_is_planet(oom: ObservableObjectModel, expected: bool):
     assert oom.is_planet == expected
+
+
+@pytest.mark.parametrize(
+    ("lang", "oom", "expected"),
+    [
+        ("en", ObservableObjectModel(id="id #1", line_color=Color("000")), "id number one"),
+        ("en", ObservableObjectModel(id="id #2", line_color=Color("000")), "id number two"),
+        ("de", ObservableObjectModel(id="id #1", line_color=Color("000")), "ID Nummer eins"),
+        ("de", ObservableObjectModel(id="id #2", line_color=Color("000")), "ID Nummer zwei"),
+    ],
+)
+def test_oom_localized_name(lang: str, oom: ObservableObjectModel, expected: str, get_text: GetTextCallable):
+    with pytest.MonkeyPatch().context() as mp:
+        mp.setattr(models, "_", partial(get_text, lang=lang))  # use test-translations
+        assert oom.localized_name == expected
