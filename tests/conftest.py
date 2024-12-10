@@ -75,6 +75,6 @@ def get_text() -> GetTextCallable:
     This functions refers to static translations for testing and is independent on translations for the actual project.
     """
     # first party
-    import AstronomicalAnnualCalendar.translations as translations
+    from AstronomicalAnnualCalendar import translations
 
     return translations._Translations(_BASE_PATH / Path("test_locales")).get_text  # type:ignore  # noqa: SLF001

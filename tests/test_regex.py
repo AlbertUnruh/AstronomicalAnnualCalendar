@@ -419,7 +419,7 @@ content line #4 with even more data...\
 )
 def test_object_data_body_regex_2(data: str, names: tuple[str, str], headers: tuple[str, str], bodies: tuple[str, str]):
     matches: list[re.Match[str]] = list(OBJECT_DATA_BODY_REGEX.finditer(data))
-    assert len(matches) == 2
+    assert len(matches) == 2  # noqa: PLR2004
     assert matches[0].group("name") == names[0]
     assert matches[0].group("header") == headers[0]
     assert matches[0].group("body") == bodies[0]

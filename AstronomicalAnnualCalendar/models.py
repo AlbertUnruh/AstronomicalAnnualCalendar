@@ -133,7 +133,7 @@ class CoordinateModel(BaseModel):
     @property
     def coordinate(self) -> str:
         """Returns combined latitude and longitude."""
-        return " ".join([self.lat, self.lon])
+        return f"{self.lat} {self.lon}"
 
 
 class MetaDataModel(BaseModel):

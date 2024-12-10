@@ -32,7 +32,7 @@ except ImportError:
     ObservableObjectEnum = None
 
     def _fix_imports():
-        global EvaluatedHeaderModel, HeaderEnum, ObservableObjectModel, ObservableObjectEnum, _fix_imports
+        global EvaluatedHeaderModel, HeaderEnum, ObservableObjectModel, ObservableObjectEnum, _fix_imports  # noqa: PLW0603
         # local
         from .enums import HeaderEnum, ObservableObjectEnum
         from .models import EvaluatedHeaderModel, ObservableObjectModel

@@ -73,10 +73,12 @@ task-tags = ["TODO", "FIXME", "NOTE"]
 select = [
     "F",    # Pyflakes
     "E",    # pycodestyle
+    "W",    # pycodestyle
     "C90",  # mccabe
     "N",    # pep8-naming
     "D",    # pydocstyle
     "UP",   # pyudpgrade
+    "YTT",  # flake8-2020
     "ANN",  # flake8-annotations
     "S",    # flake8-bandit
     "BLE",  # flake8-blind-except
@@ -87,6 +89,8 @@ select = [
     "DTZ",  # flake8-datetimez
     "T10",  # flake8-debugger
     "EM",   # flake8-errmsg
+    "ISC",  # flake8-implicit-str-concat
+    "ICN",  # flake8-import-conventions
     "LOG",  # flake8-logging
     "G",    # flake8-logging-format
     "INP",  # flake8-no-pep420
@@ -99,8 +103,16 @@ select = [
     "SLF",  # flake8-self
     "SIM",  # flake8-simplify
     "TCH",  # flake8-type-checking
+    "TC",   # flake8-type-checking
     "INT",  # flake8-gettext
+    "ARG",  # flake8-unused-arguments
     "PTH",  # flake8-use-pathlib
+    "PLC",  # Pylint Convention
+    "PLE",  # Pylint Error
+    "PLR",  # Pylint Refactor
+    "PLW",  # Pylint Warning
+    "TRY",  # tryceratops
+    "FLY",  # flynt
     "PERF", # Perflint
     "FURB", # refurb
     "RUF",  # Ruff-specific rules

@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 # first party
-import AstronomicalAnnualCalendar.translations as translations
+from AstronomicalAnnualCalendar import translations
 from AstronomicalAnnualCalendar.errors import TranslationsDirNotADirectoryError
 
 # local
