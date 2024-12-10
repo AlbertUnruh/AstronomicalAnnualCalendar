@@ -17,13 +17,13 @@ def test_fail_on_not_a_directory():
 
 _translations: list[tuple[str, str, str]] = [  # locale/lang, message, expected
     # en
-    ("en", "Hello World!", "Hello World!"),
+    ("en", "Hello, World!", "Hello, World!"),
     ("en", "Test with single 'quotes'", "Test with single 'quotes'"),
     ("en", 'Test with double "quotes"', 'Test with double "quotes"'),
     ("en", "Only translated in `en`", "Only translated in `en`"),
     # ("en", "Only translated in `de`", "Only translated in `de`"),
     # de
-    ("de", "Hello World!", "Hallo Welt!"),
+    ("de", "Hello, World!", "Hallo, Welt!"),
     ("de", "Test with single 'quotes'", "Test mit einfachen 'Anführungszeichen'"),
     ("de", 'Test with double "quotes"', 'Test mit doppelten "Anführungszeichen"'),
     # ("de", "Only translated in `en`", "Nur in `en` übersetzt"),
