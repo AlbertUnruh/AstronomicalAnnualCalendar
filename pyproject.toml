@@ -113,12 +113,6 @@ ignore = [
 ]
 per-file-ignores = {"AstronomicalAnnualCalendar/regex.py" = ["UP031"], "tests/*.py" = ["D103", "S101", "FBT001"], "tests/conftest.py" = ["D400"]}
 
-[tool.ruff.lint.pydocstyle]
-convention = "numpy"
-
-[tool.ruff.lint.flake8-quotes]
-docstring-quotes = "double"
-
 [tool.ruff.lint.flake8-annotations]
 mypy-init-return = true
 suppress-dummy-args = true
@@ -127,5 +121,14 @@ suppress-none-returning = true
 [tool.ruff.lint.flake8-errmsg]
 max-string-length = 20
 
+[tool.ruff.lint.flake8-gettext]
+extend-function-names = ["get_text"]
+
+[tool.ruff.lint.flake8-quotes]
+docstring-quotes = "double"
+
 [tool.ruff.lint.mccabe]
 max-complexity = 13
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
