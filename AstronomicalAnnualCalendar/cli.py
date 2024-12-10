@@ -2,7 +2,7 @@
 from contextvars import ContextVar
 
 # local
-from .enums import CLIFlags
+from .flags import CLIFlags
 
 
 __all__ = ("flags",)
