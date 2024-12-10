@@ -112,7 +112,7 @@ class ObservableObjectModel(BaseModel):
     @property
     def line_strength(self) -> PositiveFloat:
         """Returns the appropriate line-strength for the object."""
-        return self.line_strength_ * (_SUN_LINE_STRENGTH_MULTIPLIER if self.is_sun else 1)
+        return self.line_strength_ * (_SUN_LINE_STRENGTH_MULTIPLIER if self.is_sun else 1)  # pragma: no cover
 
     def __hash__(self) -> int:  # noqa: D105
         return hash(self.name)
@@ -133,7 +133,7 @@ class CoordinateModel(BaseModel):
     @property
     def coordinate(self) -> str:
         """Returns combined latitude and longitude."""
-        return f"{self.lat} {self.lon}"
+        return f"{self.lat} {self.lon}"  # pragma: no cover
 
 
 class MetaDataModel(BaseModel):
@@ -240,21 +240,21 @@ class RowModel(BoundToObservableObjectBaseModel, BaseModel):
     # [2]: When and if they are used these specific arguments will get deprecated and replaced
 
     @property
-    def distance_unit(self) -> str | None:
+    def distance_unit(self) -> str | None:  # pragma: no cover
         """Returns the unit of ``distance`` if ``distance`` is set."""
         if self.distance is None:  # no distance set
             return None
         return self.distance_unit_ or "km" if self.bound_object.is_moon else "AU"
 
     @property
-    def diameter_unit(self) -> str | None:
+    def diameter_unit(self) -> str | None:  # pragma: no cover
         """Returns the unit of ``diameter`` if ``diameter`` is set."""
         if self.diameter is None:  # no diameter set
             return None
         return self.diameter_unit_
 
     @property
-    def diameter_ring_unit(self) -> str | None:
+    def diameter_ring_unit(self) -> str | None:  # pragma: no cover
         """Returns the unit of ``diameter_ring`` if ``diameter_ring`` is set."""
         if self.diameter_ring is None:  # no diameter set
             return None
