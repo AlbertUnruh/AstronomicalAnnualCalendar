@@ -2,7 +2,7 @@
 from pathlib import Path
 
 # third party
-from pytest import fixture
+import pytest
 
 # first party
 from tests.typehints import GetTextCallable
@@ -11,63 +11,63 @@ from tests.typehints import GetTextCallable
 _BASE_PATH: Path = Path(__file__).parent
 
 
-@fixture
+@pytest.fixture
 def path_complete_10d() -> Path:
     """Every object; 10-day interval; limited calculations;"""
     return _BASE_PATH / Path("sample_data/10d/complete.txt")
 
 
-@fixture
+@pytest.fixture
 def path_mercury_10d() -> Path:
     """Mercury; 10-day interval; limited calculations;"""
     return _BASE_PATH / Path("sample_data/10d/mercury.txt")
 
 
-@fixture
+@pytest.fixture
 def path_neptune_1d() -> Path:
     """Neptune; 1-day interval; limited calculations;"""
     return _BASE_PATH / Path("sample_data/1d/neptune.txt")
 
 
-@fixture
+@pytest.fixture
 def path_neptune_10d() -> Path:
     """Neptune; 10-day interval; limited calculations;"""
     return _BASE_PATH / Path("sample_data/10d/neptune.txt")
 
 
-@fixture
+@pytest.fixture
 def path_sun_10d() -> Path:
     """Sun; 10-day interval; limited calculations;"""
     return _BASE_PATH / Path("sample_data/10d/sun.txt")
 
 
-@fixture
+@pytest.fixture
 def path_sun_moon_mercury_10d_everything() -> Path:
     """Sun, moon and mercury; 10-day interval; all calculations;"""
     return _BASE_PATH / Path("sample_data/10d/sun,moon,mercury-everything.txt")
 
 
-@fixture
+@pytest.fixture
 def path_sun_d1_2_everything() -> Path:
     return _BASE_PATH / Path("sample_data/d1+2/sun-d1+2.txt")
 
 
-@fixture
+@pytest.fixture
 def path_moon_d1_2_everything() -> Path:
     return _BASE_PATH / Path("sample_data/d1+2/moon-d1+2.txt")
 
 
-@fixture
+@pytest.fixture
 def path_saturn_d1_2_everything() -> Path:
     return _BASE_PATH / Path("sample_data/d1+2/saturn-d1+2.txt")
 
 
-@fixture
+@pytest.fixture
 def path_sun_moon_saturn_d1_2_everything() -> Path:
     return _BASE_PATH / Path("sample_data/d1+2/sun,moon,saturn-d1+2.txt")
 
 
-@fixture(scope="session")
+@pytest.fixture(scope="session")
 def get_text() -> GetTextCallable:
     """
     Equivalent to ``get_text()`` (aka. ``_()``) from AstronomicalAnnualCalendar.

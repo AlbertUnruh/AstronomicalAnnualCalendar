@@ -33,19 +33,19 @@ _translations: list[tuple[str, str, str]] = [  # locale/lang, message, expected
 ]
 
 
-@pytest.mark.parametrize("locale, message, expected", _translations)
+@pytest.mark.parametrize(("locale", "message", "expected"), _translations)
 def test_locale(get_text: GetTextCallable, locale: str, message: str, expected: str):
     translations.locale.set(locale)
     assert get_text(message) == expected
 
 
-@pytest.mark.parametrize("lang, message, expected", _translations)
+@pytest.mark.parametrize(("lang", "message", "expected"), _translations)
 def test_lang(get_text: GetTextCallable, lang: str, message: str, expected: str):
     assert get_text(message, lang=lang) == expected
 
 
 @pytest.mark.parametrize(
-    "lang, message",
+    ("lang", "message"),
     [
         ("en", "Only translated in `de`"),  # `en` doesn't really need any translation as it's already correct
         ("de", "Only translated in `en`"),  # though translated in a comment

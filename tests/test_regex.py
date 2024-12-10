@@ -20,7 +20,7 @@ from AstronomicalAnnualCalendar.utils import raw_delta_t_to_timedelta
 
 
 @pytest.mark.parametrize(
-    "time, hour, minute",
+    ("time", "hour", "minute"),
     [
         ("0h0m", "0", "0"),
         ("24h59m", "24", "59"),
@@ -51,7 +51,7 @@ def test_hh_time_regex_fail(time: str):
 
 
 @pytest.mark.parametrize(
-    "time, hour, minute",
+    ("time", "hour", "minute"),
     [
         ("0h0m", "0", "0"),
         ("24h59m", "24", "59"),
@@ -82,7 +82,7 @@ def test_hh_optional_time_regex_fail(time: str):
 
 
 @pytest.mark.parametrize(
-    "angle, sign, degree",
+    ("angle", "sign", "degree"),
     [
         ("+0°", "+", "0"),
         ("-0°", "-", "0"),
@@ -111,7 +111,7 @@ def test_degree_signed_90_regex_match(angle: str, sign: str, degree: str):
 
 
 @pytest.mark.parametrize(
-    "angle, degree",
+    ("angle", "degree"),
     [
         ("0°", "0"),
         ("00°", "00"),
@@ -130,7 +130,7 @@ def test_degree_180_regex_match(angle: str, degree: str):
 
 
 @pytest.mark.parametrize(
-    "angle, degree",
+    ("angle", "degree"),
     [
         ("0°", "0"),
         ("00°", "00"),
@@ -151,7 +151,7 @@ def test_degree_360_regex_match(angle: str, degree: str):
 
 
 @pytest.mark.parametrize(
-    "coordinate, lat, lon",
+    ("coordinate", "lat", "lon"),
     [
         ("53°05' N    7°25' O", "53°05' N", "7°25' O"),
         ("53°05' n    7°25' o", "53°05' n", "7°25' o"),
@@ -159,7 +159,6 @@ def test_degree_360_regex_match(angle: str, degree: str):
         ("53°05' s    7°25' O", "53°05' s", "7°25' O"),
         ("53°05' S    7°25' E", "53°05' S", "7°25' E"),
         ("53°05' S    7°25' e", "53°05' S", "7°25' e"),
-        ("53°05' S    7°25' E", "53°05' S", "7°25' E"),
         ("53°05' S    7°25' W", "53°05' S", "7°25' W"),
         ("53°05' S    7°25' w", "53°05' S", "7°25' w"),
         ("53°05' N 7°25' O", "53°05' N", "7°25' O"),
@@ -213,7 +212,7 @@ def test_dms_coordinate_regex_fail(coordinate: str):
 
 
 @pytest.mark.parametrize(
-    "coordinate, lat, lon",
+    ("coordinate", "lat", "lon"),
     [
         ("53°05' N    7°25' O", "53°05' N", "7°25' O"),
         ("53°05' N 7°25' O", "53°05' N", "7°25' O"),
@@ -228,7 +227,7 @@ def test_dms_coordinate_regex_match_group_lat_lon(coordinate: str, lat: str, lon
 
 
 @pytest.mark.parametrize(
-    "raw_metadata, place, coordinate, equinox, delta_t",
+    ("raw_metadata", "place", "coordinate", "equinox", "delta_t"),
     [
         (
             "Ort: Papenburg,     53°05' N    7°25' O   Äquin:   2000.0, geozentrisch,  DeltaT = 73.9 s",
@@ -287,7 +286,7 @@ def test_metadata_regex_match(
 
 
 @pytest.mark.parametrize(
-    "data, name, header, body",
+    ("data", "name", "header", "body"),
     [
         (  # with leading new-line
             """
@@ -336,7 +335,7 @@ def test_object_data_body_regex_1(data: str, name: str, header: str, body: str):
 
 
 @pytest.mark.parametrize(
-    "data, names, headers, bodies",
+    ("data", "names", "headers", "bodies"),
     [
         (  # with leading new-line
             """

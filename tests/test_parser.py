@@ -25,7 +25,7 @@ if TYPE_CHECKING:
 
 
 @pytest.mark.parametrize(
-    "path_fixture, metadata",
+    ("path_fixture", "metadata"),
     [
         ("path_sun_10d", sample_data_metadata_wo_equinox),
         ("path_sun_moon_mercury_10d_everything", sample_data_metadata_w_equinox),
@@ -39,7 +39,7 @@ def test_model_post_init(path_fixture: str, metadata: MetaDataModel, request: py
 
 
 @pytest.mark.parametrize(
-    "path_fixture, expected",
+    ("path_fixture", "expected"),
     [
         ("path_sun_d1_2_everything", _sun := {ObservableObjectEnum.SUN: sample_data_sun}),
         ("path_moon_d1_2_everything", _moon := {ObservableObjectEnum.MOON: sample_data_moon}),

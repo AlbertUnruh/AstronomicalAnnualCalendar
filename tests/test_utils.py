@@ -19,7 +19,7 @@ from AstronomicalAnnualCalendar.utils import (
 
 
 @pytest.mark.parametrize(
-    "delta_t, unit, expected",
+    ("delta_t", "unit", "expected"),
     [
         ("1", "s", timedelta(seconds=1)),
         ("1.0", "s", timedelta(seconds=1)),
@@ -32,7 +32,7 @@ def test_raw_delta_t_to_timedelta(delta_t: SupportsFloat, unit: Literal["s"], ex
 
 
 @pytest.mark.parametrize(
-    "delta_t, unit, error",
+    ("delta_t", "unit", "error"),
     [
         (1, "m", UnitNotSupportedError),
         (1, "h", UnitNotSupportedError),
@@ -47,7 +47,7 @@ def test_raw_delta_t_to_timedelta_fail(delta_t: SupportsFloat, unit: str, error:
 
 
 @pytest.mark.parametrize(
-    "pattern, expected",
+    ("pattern", "expected"),
     [
         (r"", r""),
         (r"^", r""),
@@ -64,7 +64,7 @@ def test_extract_pattern_from_regex[T: str | bytes](pattern: T, expected: T):
 
 
 @pytest.mark.parametrize(
-    "pattern, name, expected",
+    ("pattern", "name", "expected"),
     [
         # A regex to check for a's
         ("a+", "", "a+"),
@@ -120,7 +120,7 @@ def test_append_name_to_all_pattern_groups[T: str | bytes](pattern: T, name: T, 
 
 
 @pytest.mark.parametrize(
-    "alias, expected",
+    ("alias", "expected"),
     [
         # by id
         ("sun", ObservableObjectEnum.SUN),

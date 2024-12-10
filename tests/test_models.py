@@ -22,7 +22,7 @@ def test_oom_name():
 
 
 @pytest.mark.parametrize(
-    "oom, expected",
+    ("oom", "expected"),
     [
         (ObservableObjectModel(id="oom", line_color=Color("000")), False),
         (ObservableObjectModel(id="oom", line_color=Color("000"), is_sun=False), False),
@@ -38,7 +38,7 @@ def test_oom_is_sun(oom: ObservableObjectModel, expected: bool):
 
 
 @pytest.mark.parametrize(
-    "oom, expected",
+    ("oom", "expected"),
     [
         (ObservableObjectModel(id="oom", line_color=Color("000")), False),
         (ObservableObjectModel(id="oom", line_color=Color("000"), is_moon=False), False),
@@ -54,7 +54,7 @@ def test_oom_is_moon(oom: ObservableObjectModel, expected: bool):
 
 
 @pytest.mark.parametrize(
-    "oom, expected",
+    ("oom", "expected"),
     [
         (ObservableObjectModel(id="oom", line_color=Color("000")), True),
         (ObservableObjectModel(id="oom", line_color=Color("000"), is_planet=False), False),
