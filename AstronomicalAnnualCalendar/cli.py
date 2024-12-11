@@ -11,6 +11,7 @@ import click
 # local
 from .flags import CLIFlags
 from .translations import get_text as _
+from .translations import locale
 
 
 if TYPE_CHECKING:
@@ -28,11 +29,21 @@ flags: ContextVar[CLIFlags] = ContextVar("flags", default=CLIFlags.DEFAULT)
 
 
 @click.group()
-def cli():  # noqa: D103
-    pass
+@click.help_option()
+@click.version_option()
+@click.option(
+    "--language",
+    "-l",
+    "lang",
+    default=locale.get(),  # uses the default
+    show_default=False,
+    help="Sets the language for the command and media output.",
+)
+def cli(lang: str) -> None:  # noqa: D103
+    locale.set(lang)
 
 
-@cli.command()
+@cli.command(help="Displays version info (current/latest)")
 def info():
     package = __import__(__package__)
 
@@ -44,9 +55,11 @@ def info():
 
     try:
         response: HTTPResponse = urlopen(latest_release_url)  # noqa: S310
-    except HTTPError:
+    except HTTPError as e:
         latest_version = "0.0.0"
         click.secho(_("Unable to load latest release-data from GitHub..."), err=True, fg="red")
+        if e.code == 404:  # noqa: PLR2004
+            click.secho(_("Are you using this project as an early bird? -> nothing released yet..."), fg="magenta")
     else:
         latest_version = load(response)["tag_name"].lstrip("v")
 

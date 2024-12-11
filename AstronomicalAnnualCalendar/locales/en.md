@@ -16,6 +16,8 @@
   46dcd4dd65b63d106b8cfb4aad906b23716cc613,"TRANSLATION"
   # Unable to load latest release-data from GitHub...
   6c610b3e5291e89e763f7b422f8d21b8d04b8413,"TRANSLATION"
+  # Are you using this project as an early bird? -> nothing released yet...
+  89c691b76bbb3460b89ade32887dbcd16306a6fd,"TRANSLATION"
   # uranus
   8c572ab1e875c52d2e75ec4c7c5231854860b383,"TRANSLATION"
   # jupiter
@@ -38,5 +40,5 @@
   f77be3faff9e5f518fcda68621906d34e0fc4bbe,"TRANSLATION"
 ```
 
-> Time of creation: 2024-12-11 13:57:02+00:00</br>
+> Time of creation: 2024-12-11 14:35:52+00:00</br>
 > Version: `1.2.1`
