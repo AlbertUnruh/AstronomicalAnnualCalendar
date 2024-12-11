@@ -10,7 +10,7 @@ Use at your own risk!
 
 ---
 
-Version: 1.2.0
+Version: 1.2.1
 License: MIT (more over at https://github.com/AlbertUnruh/AstronomicalAnnualCalendar/blob/develop/LICENSE)
 Authors:
     - AlbertUnruh <AlbertUnruh@pm.me>
@@ -105,18 +105,19 @@ def remove_values_from_translations(raw: str) -> list[str]:
     return clean.splitlines(keepends=True)
 
 
-report: str = """\
-# diff report for ``{lang}``
+report: str = f"""\
+# diff report for ``{{lang}}``
 
 > *Any changes to this file will be lost as it will be overridden.*</br>
 > *Furthermore, any changes to this file won't do anything as the sole
 > reason for its existence is to aid the translation process.*
 
 ```diff
-{diff}\
+{{diff}}\
 ```
 
-> Time of creation: {time}
+> Time of creation: {{time}}</br>
+> Version: `{re.search(r"^Version: (?P<version>[.\d]+)$", __doc__, re.MULTILINE).group("version")}`
 """
 
 differ = Differ()
