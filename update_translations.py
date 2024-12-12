@@ -10,7 +10,7 @@ Use at your own risk!
 
 ---
 
-Version: 1.2.1
+Version: 1.3.0
 License: MIT (more over at https://github.com/AlbertUnruh/AstronomicalAnnualCalendar/blob/develop/LICENSE)
 Authors:
     - AlbertUnruh <AlbertUnruh@pm.me>
@@ -70,7 +70,7 @@ messages: set[str] = {
 }
 debug(f"Following messages are pre-set: {", ".join(sorted(messages))}")
 
-GETTEXT_RE: re.Pattern[str] = re.compile(r"(?P<call>get_text|_)\(([\"\'])(?P<message>.+?[^\\])\2\)")
+GETTEXT_RE: re.Pattern[str] = re.compile(r"(?P<call>get_text|_)\(([\"\'])(?P<message>.+?([^\\]|\\\\))\2\)")
 
 for file in iter_files(AAC_PATH, ".py"):
     info(f"Searching in {file.as_posix()!r}...")
