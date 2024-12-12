@@ -73,7 +73,7 @@ class Parser(BaseModel):  # noqa: D101  # ToDo: add documentation
             for h in present_headers:
                 row_data[h.bound_header.name] = h.get_value(row)
 
-            row_data.pop("weekday")  # not needed, can be discarded
+            row_data.pop("weekday", None)  # not needed, can be discarded
 
             date = row_data.pop("date")
             time = f"{row_data.pop("time"):0>8}"  # add leading zeros
