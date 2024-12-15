@@ -40,5 +40,5 @@
   f77be3faff9e5f518fcda68621906d34e0fc4bbe,"TRANSLATION"
 ```
 
-> Time of creation: 2024-12-11 14:35:52+00:00</br>
-> Version: `1.2.1`
+> Time of creation: 2024-12-15 12:36:56+00:00</br>
+> Version: `1.3.0`

@@ -15,7 +15,7 @@ __all__ = (
 )
 
 
-locale: ContextVar[str] = ContextVar("locale", default="en")
+locale: ContextVar[str] = ContextVar("locale", default="en")  # no translation-file required
 
 _SHA1_MESSAGE_PAIRS_REGEX: re.Pattern[str] = re.compile(r"^(?P<sha1>[\da-f]{40}),\"(?P<message>.+)\"$", re.MULTILINE)
 

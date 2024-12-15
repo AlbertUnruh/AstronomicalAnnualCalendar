@@ -22,14 +22,10 @@ _translations: list[tuple[str, str, str]] = [  # locale/lang, message, expected
     ("en", "Hello, World!", "Hello, World!"),
     ("en", "Test with single 'quotes'", "Test with single 'quotes'"),
     ("en", 'Test with double "quotes"', 'Test with double "quotes"'),
-    ("en", "Only translated in `en`", "Only translated in `en`"),
-    # ("en", "Only translated in `de`", "Only translated in `de`"),
     # de
     ("de", "Hello, World!", "Hallo, Welt!"),
     ("de", "Test with single 'quotes'", "Test mit einfachen 'Anführungszeichen'"),
     ("de", 'Test with double "quotes"', 'Test mit doppelten "Anführungszeichen"'),
-    # ("de", "Only translated in `en`", "Nur in `en` übersetzt"),
-    ("de", "Only translated in `de`", "Nur in `de` übersetzt"),
 ]
 
 
@@ -47,9 +43,7 @@ def test_lang(get_text: GetTextCallable, lang: str, message: str, expected: str)
 @pytest.mark.parametrize(
     ("lang", "message"),
     [
-        ("en", "Only translated in `de`"),  # `en` doesn't really need any translation as it's already correct
-        ("de", "Only translated in `en`"),  # though translated in a comment
-        ("en", "Why should this be translated? XOXO :D"),
+        ("de", "Not translated in `de`"),
         ("unknown locale", __import__("secrets").token_urlsafe()),  # can't be translated beforehand :D
     ],
 )
