@@ -14,7 +14,7 @@ click = "^8.1.7"
 aenum = "^3.1.15"
 pydantic = "^2.10.3"
 pydantic-extra-types = "^2.10.1"
-matplotlib = "^3.9.3"
+matplotlib = "^3.10.0"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^4.0.1"
