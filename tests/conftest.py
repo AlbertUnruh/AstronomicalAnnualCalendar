@@ -49,22 +49,22 @@ def path_sun_moon_mercury_10d_everything() -> Path:
 
 @pytest.fixture
 def path_sun_d1_2_everything() -> Path:
-    return _BASE_PATH / Path("sample_data/d1+2/sun-d1+2.txt")
+    return _BASE_PATH / Path("sample_data/d1+2/sun.txt")
 
 
 @pytest.fixture
 def path_moon_d1_2_everything() -> Path:
-    return _BASE_PATH / Path("sample_data/d1+2/moon-d1+2.txt")
+    return _BASE_PATH / Path("sample_data/d1+2/moon.txt")
 
 
 @pytest.fixture
 def path_saturn_d1_2_everything() -> Path:
-    return _BASE_PATH / Path("sample_data/d1+2/saturn-d1+2.txt")
+    return _BASE_PATH / Path("sample_data/d1+2/saturn.txt")
 
 
 @pytest.fixture
 def path_sun_moon_saturn_d1_2_everything() -> Path:
-    return _BASE_PATH / Path("sample_data/d1+2/sun,moon,saturn-d1+2.txt")
+    return _BASE_PATH / Path("sample_data/d1+2/sun,moon,saturn.txt")
 
 
 @pytest.fixture(scope="session")
