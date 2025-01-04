@@ -21,7 +21,7 @@ __all__ = (
 
 
 HM_TIME_REGEX: re.Pattern[str] = re.compile(
-    r"^(?P<hour>[01]?\d|2[0-3]|24)h(?P<minute>[0-5]?\d|60)m$",
+    r"^(?P<hour>[01]?\d|2[0-3]|24)h(?P<minute>[0-5-]?\d|60)m$",
     # 60 minutes only allowed for edge-cases.
     # Even though this isn't the case for 2024 I want to be future-proof about that.
     flags=re.IGNORECASE,
@@ -48,7 +48,7 @@ DEGREE_360_REGEX: re.Pattern[str] = re.compile(
 )
 
 HMS_ANGLE_REGEX: re.Pattern[str] = re.compile(
-    r"^%s(?P<second>[0-5]\d(\.\d+)?)s$" % extract_pattern_from_regex(HM_TIME_REGEX),
+    r"^%s(?P<second>([0-5]\d|60)(\.\d+)?)s$" % extract_pattern_from_regex(HM_TIME_REGEX),
     flags=re.IGNORECASE,
 )
 
