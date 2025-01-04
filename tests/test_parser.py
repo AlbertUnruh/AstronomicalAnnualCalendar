@@ -53,3 +53,25 @@ def test_parse(path_fixture: str, expected: dict[ObservableObjectModel, DataMode
     for v in expected.values():  # find programmer mistakes before it tests the parser
         assert parser.metadata == v.metadata, "Metadata doesn't match with all expected results!"
     assert parser.parse() == expected
+
+
+@pytest.mark.parametrize(
+    "path_fixture",
+    [
+        "path_complete_1d_everything",
+        "path_complete_10d",
+        "path_mercury_10d",
+        "path_neptune_1d",
+        "path_neptune_10d",
+        "path_sun_10d",
+        "path_sun_moon_mercury_10d_everything",
+        "path_sun_d1_2_everything",
+        "path_moon_d1_2_everything",
+        "path_saturn_d1_2_everything",
+        "path_sun_moon_saturn_d1_2_everything",
+    ],
+)
+def test_parse_without_exceptions(path_fixture: str, request: pytest.FixtureRequest):
+    path: Path = request.getfixturevalue(path_fixture)
+    parser = Parser(file_path=path)
+    parser.parse()  # in case of exceptions: some edge cases went undetected

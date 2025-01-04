@@ -12,6 +12,12 @@ _BASE_PATH: Path = Path(__file__).parent
 
 
 @pytest.fixture
+def path_complete_1d_everything() -> Path:
+    """Every object; 1-day interval; all calculations;"""
+    return _BASE_PATH / Path("sample_data/1d/complete-everything.txt")
+
+
+@pytest.fixture
 def path_complete_10d() -> Path:
     """Every object; 10-day interval; limited calculations;"""
     return _BASE_PATH / Path("sample_data/10d/complete.txt")
@@ -43,27 +49,31 @@ def path_sun_10d() -> Path:
 
 @pytest.fixture
 def path_sun_moon_mercury_10d_everything() -> Path:
-    """Sun, moon and mercury; 10-day interval; all calculations;"""
+    """Sun, Moon and Mercury; 10-day interval; all calculations;"""
     return _BASE_PATH / Path("sample_data/10d/sun,moon,mercury-everything.txt")
 
 
 @pytest.fixture
 def path_sun_d1_2_everything() -> Path:
+    """Sun; days 1 & 2; all calculations;"""
     return _BASE_PATH / Path("sample_data/d1+2/sun.txt")
 
 
 @pytest.fixture
 def path_moon_d1_2_everything() -> Path:
+    """Moon; days 1 & 2; all calculations;"""
     return _BASE_PATH / Path("sample_data/d1+2/moon.txt")
 
 
 @pytest.fixture
 def path_saturn_d1_2_everything() -> Path:
+    """Saturn; days 1 & 2; all calculations;"""
     return _BASE_PATH / Path("sample_data/d1+2/saturn.txt")
 
 
 @pytest.fixture
 def path_sun_moon_saturn_d1_2_everything() -> Path:
+    """Sun, Moon and Saturn; days 1 & 2; all calculations;"""
     return _BASE_PATH / Path("sample_data/d1+2/sun,moon,saturn.txt")
 
 
