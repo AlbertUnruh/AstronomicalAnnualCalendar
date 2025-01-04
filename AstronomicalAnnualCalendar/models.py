@@ -130,9 +130,7 @@ class CoordinateModel(BaseModel):
     lat: str
     lon: str
 
-    @property
-    def coordinate(self) -> str:
-        """Returns combined latitude and longitude."""
+    def __str__(self) -> str:  # noqa: D105
         return f"{self.lat} {self.lon}"  # pragma: no cover
 
 

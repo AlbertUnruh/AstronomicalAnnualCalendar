@@ -9,6 +9,7 @@ from pydantic.types import FilePath
 
 # local
 from .enums import HeaderEnum, ObservableObjectEnum
+from .logger import get_logger
 from .models import (
     CoordinateModel,
     DataModel,
@@ -22,6 +23,9 @@ from .utils import get_present_headers, observable_object_from_alias, raw_delta_
 
 
 __all__ = ("Parser",)
+
+
+logger = get_logger("parser@core")
 
 
 class Parser(BaseModel):  # noqa: D101  # ToDo: add documentation
@@ -45,16 +49,18 @@ class Parser(BaseModel):  # noqa: D101  # ToDo: add documentation
 
         metadata = METADATA_REGEX.match(first_file)
 
-        self._cached_metadata = MetaDataModel(
+        self._cached_metadata = _m = MetaDataModel(
             place=metadata.group("place"),
             coordinate=CoordinateModel(lat=metadata.group("lat"), lon=metadata.group("lon")),
             equinox=metadata.group("equinox"),
             delta_t=raw_delta_t_to_timedelta(metadata.group("delta_t"), metadata.group("delta_t_unit")),
         )
+        logger.debug(f"metadata points to {_m.place} ({_m.coordinate}) with the equinox being {_m.equinox}")
 
     def parse(self) -> dict[ObservableObjectModel, DataModel]:  # noqa: D102  # ToDo: add documentation
         data: dict[ObservableObjectModel, DataModel] = {}
         for bound_object, header, body in self._iter_observable_objects():
+            logger.debug(f"parsing {bound_object.name}")
             rows = self._parse_rows(bound_object, header, body)
             data[bound_object] = DataModel(bound_object=bound_object, metadata=self.metadata, rows=rows)
         return data
