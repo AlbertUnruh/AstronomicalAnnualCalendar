@@ -1,10 +1,12 @@
 # standard library
 from datetime import UTC, datetime
+from itertools import chain
 from pathlib import Path
 
 # third party
 import matplotlib.pyplot as plt
-from matplotlib.dates import DateFormatter, DayLocator, HourLocator, MinuteLocator, MonthLocator
+from matplotlib.dates import HourLocator, MinuteLocator, MonthLocator, num2date
+from matplotlib.ticker import FuncFormatter, NullFormatter
 
 # local
 from .logger import get_logger
@@ -18,17 +20,36 @@ __all__ = ("generate_and_save_graph",)
 logger = get_logger("generator@core")
 
 
+def _24h_formatter(x, pos=0) -> str:  # noqa: ANN001, ARG001
+    return str(round((num2date(x, UTC) - datetime(1970, 1, 1, tzinfo=UTC)).total_seconds() / (60 * 60)))
+
+
+def _month_formatter(x, pos=None) -> str:  # noqa: ANN001, ARG001
+    return _(num2date(x, UTC).strftime("%B"))
+
+
 def generate_and_save_graph(
     data: dict[ObservableObjectModel, DataModel], destination: Path, title: str | None = None
 ) -> None:
     """Generate a graph based on the given data."""
-    logger.critical("Data not (correctly) processed yet!")
+    logger.critical("Data processing still in beta!")
 
     dates = [row.date_and_time for row in next(iter(data.values())).rows]
     x_min, x_max, y_min, y_max = 0, 1, min(dates), max(dates)
 
-    plt.xlim(x_min, x_max)
-    plt.ylim(y_min, y_max)
+    ax1 = plt.gca()
+    ax2 = ax1.twinx()
+    ax3 = ax1.twinx()
+
+    major_color, minor_color = "#3b3b3b", "#a9a9a9"
+
+    for ax in (ax1, ax2, ax3):
+        ax.set_xlim(x_min, x_max)
+        ax.set_ylim(y_min, y_max)
+        ax.grid(which="minor", color=minor_color, lw=0.4, ls="--")
+    ax1.grid(which="major", color=major_color, lw=0.4, ls="-")
+
+    logger.debug(f"detected range from {y_min.isoformat(" ")} to {y_max.isoformat(" ")}")
 
     place = next(iter(data.values())).metadata.place
     if title is not None:
@@ -41,7 +62,7 @@ def generate_and_save_graph(
 
     for o, d in data.items():
         if o.is_moon:
-            logger.info("Skipping moon!")
+            logger.info(f"Skipping {o.name}!")
             continue
 
         x, y = [], []
@@ -50,21 +71,43 @@ def generate_and_save_graph(
                 x.append(datetime(1970, 1, 1, tzinfo=UTC) + t)
                 y.append(row.date_and_time)
 
-        plt.plot_date(x, y, tz=UTC, fmt=".", color=o.line_color.as_hex(), ms=o.line_strength / 8)
+        ax1.plot_date(x, y, tz=UTC, fmt=".", color=o.line_color.as_hex(), ms=o.line_strength / 8)
 
-    ax = plt.gca()
+    # major formatter
+    ax1.xaxis.set_major_formatter(FuncFormatter(_24h_formatter))
+    # major locator
+    ax1.xaxis.set_major_locator(HourLocator())
+    # minor locator
+    ax1.xaxis.set_minor_locator(MinuteLocator(interval=30))
 
-    ax.xaxis.set_major_formatter(DateFormatter("%H"))
-    ax.xaxis.set_major_locator(HourLocator())
-    ax.xaxis.set_minor_locator(MinuteLocator(interval=30))
+    # major formatter
+    ax1.yaxis.set_major_formatter(NullFormatter())
+    ax2.yaxis.set_major_formatter(_month_formatter)
+    ax3.yaxis.set_major_formatter(NullFormatter())
+    # major locator
+    ax1.yaxis.set_major_locator(MonthLocator(bymonthday=1))  # month border
+    ax2.yaxis.set_major_locator(MonthLocator(bymonthday=16))  # place label approximately in the middle of each month
+    # minor locator
+    ax2.yaxis.set_minor_locator(MonthLocator(bymonthday=11))  # 1st 10-day marker
+    ax3.yaxis.set_minor_locator(MonthLocator(bymonthday=21))  # 2nd 10-day marker
 
-    ax.yaxis.set_major_formatter(DateFormatter("%d.%m"))
-    ax.yaxis.set_minor_locator(DayLocator(interval=10))
-    ax.yaxis.set_major_locator(MonthLocator(bymonthday=15))
+    for tick in chain(
+        ax1.xaxis.get_minor_ticks(),
+        ax1.yaxis.get_major_ticks(),
+        ax1.yaxis.get_minor_ticks(),
+        ax2.yaxis.get_major_ticks(),
+        ax2.yaxis.get_minor_ticks(),
+        ax3.yaxis.get_major_ticks(),
+        ax3.yaxis.get_minor_ticks(),
+    ):
+        tick.tick1line.set_visible(False)
+        tick.tick2line.set_visible(False)
+        tick.label1.set_visible(False)
 
-    ax.grid(which="minor", color="#a9a9a9", lw=0.4, ls="--")
-    ax.grid(which="major", color="#3b3b3b", lw=0.4, ls="-")
+    ax1.invert_xaxis()
 
-    ax.invert_xaxis()
+    ax1.set_zorder(max(ax2.get_zorder(), ax3.get_zorder()) + 1)  # move ax1 to foreground
+    for ax in (ax1, ax2, ax3):
+        ax.patch.set_visible(False)  # make background transparent
 
     plt.savefig(destination)
