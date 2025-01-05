@@ -10,7 +10,7 @@ Use at your own risk!
 
 ---
 
-Version: 1.3.0
+Version: 1.3.1
 License: MIT (more over at https://github.com/AlbertUnruh/AstronomicalAnnualCalendar/blob/develop/LICENSE)
 Authors:
     - AlbertUnruh <AlbertUnruh@pm.me>
@@ -67,6 +67,18 @@ messages: set[str] = {
     "saturn",
     "uranus",
     "neptune",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
 }
 debug(f"Following messages are pre-set: {", ".join(sorted(messages))}")
 
