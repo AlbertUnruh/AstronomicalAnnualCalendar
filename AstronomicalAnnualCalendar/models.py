@@ -55,13 +55,8 @@ class ObservableObjectModel(BaseModel):
 
     @property
     def name(self) -> str:
-        """Returns the name of the object (is equivalent to ``.internal_id``)."""
-        return self.internal_id
-
-    @property
-    def localized_name(self) -> str:
         """Returns the localized name of the object."""
-        return _(self.name)
+        return _(self.internal_id)
 
     @property
     def aliases(self) -> set[str]:
@@ -69,7 +64,7 @@ class ObservableObjectModel(BaseModel):
 
         This comes in handy when dealing with the raw (localized) data.
         """
-        ret = {self.name}
+        ret = {self.internal_id, self.name}
         ret.update(self.aliases_)
         return ret
 

@@ -91,4 +91,4 @@ def test_oom_is_planet(oom: ObservableObjectModel, expected: bool):
 def test_oom_localized_name(lang: str, oom: ObservableObjectModel, expected: str, get_text: GetTextCallable):
     with pytest.MonkeyPatch().context() as mp:
         mp.setattr(models, "_", partial(get_text, lang=lang))  # use test-translations
-        assert oom.localized_name == expected
+        assert oom.name == expected
