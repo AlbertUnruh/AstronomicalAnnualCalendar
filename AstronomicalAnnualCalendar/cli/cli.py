@@ -19,6 +19,7 @@ __all__ = (
 
 flags: ContextVar[CLIFlags] = ContextVar("flags", default=CLIFlags.DEFAULT)
 
+get_logger("matplotlib").setLevel("INFO")  # suppress debug messages from matplotlib
 logger = get_logger(None, add_handler=True)
 _log_level: dict[CLIFlags, str] = {
     CLIFlags.SHOW_WARNINGS: "WARNING",
@@ -78,6 +79,8 @@ def _set_verbosity(verbosity: CLIFlags) -> None:
     )
 
     for _logger in logging.root.manager.loggerDict.values():
+        if not hasattr(_logger, "setLevel") or "matplotlib" in _logger.name:
+            continue
         _logger.setLevel(_log_level[verbosity])
 
     logger.setLevel(_log_level[verbosity])

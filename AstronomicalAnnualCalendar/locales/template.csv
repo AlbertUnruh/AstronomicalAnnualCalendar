@@ -7,6 +7,8 @@ sha1,message
 44a07a1c8cc71de0e980dba3aca732b752fa1df5,"mars"
 # moon
 46dcd4dd65b63d106b8cfb4aad906b23716cc613,"moon"
+# astronomical annual calendar for %s
+51670c2c8382c0a8bd1ffe76891104f281732abc,"astronomical annual calendar for %s"
 # Enjoy your astronomical calendar!
 634eb6c698895ff625b86be9b0eaeff88f915247,"Enjoy your astronomical calendar!"
 # Unable to load latest release-data from GitHub...
@@ -19,8 +21,8 @@ sha1,message
 a2f7fcb5afeb7983ffbb6ce3d1a7e91edf321350,"jupiter"
 # saturn
 a684248598a590e37dd16686c8022b880a9a63d9,"saturn"
-# Writing output to %s
-a9b991f183c16bd07847297e2caed0a2ba644e4c,"Writing output to %s"
+# Output written to %s
+ac2ab36076d3472de975fcc60d7a8213b8ee78a8,"Output written to %s"
 # venus
 c8721b651877e875de2bb1e7a1f0988806e26562,"venus"
 # You have the latest version installed.

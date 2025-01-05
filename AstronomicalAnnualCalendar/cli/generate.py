@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING
 import click
 
 # local
+from ..generator import generate_and_save_graph
 from ..logger import get_logger
 from ..parser import Parser
 from ..translations import get_text as _
@@ -38,15 +39,23 @@ logger = get_logger("generate@cli")
     type=click.Path(dir_okay=False, path_type=Path),
     required=True,
 )
-def generate(source: Path, destination: Path):
+@click.option(
+    "--title",
+    "-t",
+    "title",
+    type=str,
+    default=None,
+    help="The title may include '%s' for the place to be filled in by metadata",
+)
+def generate(source: Path, destination: Path, title: str | None):
     logger.info(f"reading data from {source.resolve()}")
     parser = Parser(file_path=source)
-    data: dict[ObservableObjectModel, DataModel] = parser.parse()  # noqa: F841
+    data: dict[ObservableObjectModel, DataModel] = parser.parse()
 
-    logger.critical("Data not processed yet!")
-    logger.critical("Nothing will be saved!")
+    is_overwriting = destination.is_file()
 
-    logger.debug(f"writing output to {destination.resolve()}{" (overriding)" * destination.is_file()}")
-    click.secho(_("Writing output to %s") % destination, fg="blue")
+    generate_and_save_graph(data=data, destination=destination, title=title)
 
+    logger.debug(f"output written to {destination.resolve()}{" (overwriting)" * is_overwriting}")
+    click.secho(_("Output written to %s") % destination, fg="blue")
     click.secho(_("Enjoy your astronomical calendar!"), fg="bright_green")

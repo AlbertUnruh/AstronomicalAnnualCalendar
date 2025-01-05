@@ -14,6 +14,8 @@
   44a07a1c8cc71de0e980dba3aca732b752fa1df5,"TRANSLATION"
   # moon
   46dcd4dd65b63d106b8cfb4aad906b23716cc613,"TRANSLATION"
+  # astronomical annual calendar for %s
+  51670c2c8382c0a8bd1ffe76891104f281732abc,"TRANSLATION"
   # Enjoy your astronomical calendar!
   634eb6c698895ff625b86be9b0eaeff88f915247,"TRANSLATION"
   # Unable to load latest release-data from GitHub...
@@ -26,8 +28,8 @@
   a2f7fcb5afeb7983ffbb6ce3d1a7e91edf321350,"TRANSLATION"
   # saturn
   a684248598a590e37dd16686c8022b880a9a63d9,"TRANSLATION"
-  # Writing output to %s
-  a9b991f183c16bd07847297e2caed0a2ba644e4c,"TRANSLATION"
+  # Output written to %s
+  ac2ab36076d3472de975fcc60d7a8213b8ee78a8,"TRANSLATION"
   # venus
   c8721b651877e875de2bb1e7a1f0988806e26562,"TRANSLATION"
   # You have the latest version installed.
@@ -44,5 +46,5 @@
   f77be3faff9e5f518fcda68621906d34e0fc4bbe,"TRANSLATION"
 ```
 
-> Time of creation: 2025-01-04 22:05:17+00:00</br>
+> Time of creation: 2025-01-05 10:03:30+00:00</br>
 > Version: `1.3.0`

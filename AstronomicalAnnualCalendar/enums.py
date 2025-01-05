@@ -40,17 +40,17 @@ class ObservableObjectEnum(NoAliasEnum, metaclass=DirectValueMeta):
     *in case the download gets removed: https://web.archive.org/web/20240531110805/https://sternwarte-papenburg.de/jahreskalender/download/ajk_2024.pdf
     """
 
-    SUN: OOModel = OOModel(id="sun", aliases={"Sonne"}, line_color=Color("orange"))
-    MERCURY: OOModel = OOModel(id="mercury", aliases={"Merkur"}, line_color=Color("black"))
-    VENUS: OOModel = OOModel(id="venus", aliases={"Venus"}, line_color=Color("green"))
-    MOON: OOModel = OOModel(id="moon", aliases={"Mond"}, line_color=Color("violet"))
+    SUN: OOModel = OOModel(id="sun", aliases={"Sonne"}, line_color=Color("#ea7500"))
+    MERCURY: OOModel = OOModel(id="mercury", aliases={"Merkur"}, line_color=Color("#333333"))
+    VENUS: OOModel = OOModel(id="venus", aliases={"Venus"}, line_color=Color("#00cc00"))
+    MOON: OOModel = OOModel(id="moon", aliases={"Mond"}, line_color=Color("seagreen"))
     # ^^^ EXPERIMENTAL; may get excluded if it's to wonky ^^^
-    MARS: OOModel = OOModel(id="mars", aliases={"Mars"}, line_color=Color("red"))
-    JUPITER: OOModel = OOModel(id="jupiter", aliases={"Jupiter"}, line_color=Color("blue"))
-    SATURN: OOModel = OOModel(id="saturn", aliases={"Saturn"}, line_color=Color("pink"))
-    URANUS: OOModel = OOModel(id="uranus", aliases={"Uranus"}, line_color=Color("turquoise"))
+    MARS: OOModel = OOModel(id="mars", aliases={"Mars"}, line_color=Color("#ff0000"))
+    JUPITER: OOModel = OOModel(id="jupiter", aliases={"Jupiter"}, line_color=Color("#0000ff"))
+    SATURN: OOModel = OOModel(id="saturn", aliases={"Saturn"}, line_color=Color("#ff00ff"))
+    URANUS: OOModel = OOModel(id="uranus", aliases={"Uranus"}, line_color=Color("#99ccff"))
     # ^^^ rename to "Urectum" in 2620 (https://futurama.fandom.com/wiki/Urectum) ^^^
-    NEPTUNE: OOModel = OOModel(id="neptune", aliases={"Neptun"}, line_color=Color("gold"))
+    NEPTUNE: OOModel = OOModel(id="neptune", aliases={"Neptun"}, line_color=Color("#cc994a"))
 
 
 class HeaderEnum(UniqueEnum, metaclass=DirectValueMeta):

@@ -36,7 +36,7 @@ __all__ = (
 )
 
 
-_SUN_LINE_STRENGTH_MULTIPLIER: float = 2
+_SUN_LINE_STRENGTH_MULTIPLIER: float = 4
 
 
 class ObservableObjectModel(BaseModel):
@@ -257,6 +257,13 @@ class RowModel(BoundToObservableObjectBaseModel, BaseModel):
         if self.diameter_ring is None:  # no diameter set
             return None
         return self.diameter_ring_unit_
+
+    @property
+    def culmination_t(self) -> timedelta | None:
+        """Returns the culmination as a timedelta."""
+        if self.culmination is None or len(self.culmination) * "-" == self.culmination:
+            return None
+        return timedelta(hours=int(self.culmination[:-4]), minutes=int(self.culmination[-3:-1]))
 
 
 class DataModel(BoundToObservableObjectBaseModel, BaseModel):
