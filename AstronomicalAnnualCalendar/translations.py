@@ -23,12 +23,15 @@ _SHA1_MESSAGE_PAIRS_REGEX: re.Pattern[str] = re.compile(r"^(?P<sha1>[\da-f]{40})
 class _Translations:
     _translations_dir: Path
     _cached_translations: dict[str, dict[str, str]]  # {language: {sha1: message, ...}, ...}
+    _fallback: str
 
-    def __init__(self, translations_dir: Path):
+    def __init__(self, translations_dir: Path, fallback: str = "en"):
         if not translations_dir.is_dir():
             raise TranslationsDirNotADirectoryError(translations_dir=translations_dir)
         self._translations_dir = translations_dir
         self._cached_translations = {}
+        self._fallback = fallback
+        self.get_translations(lang=fallback)  # load fallback directly
 
     @property
     def translations_dir(self) -> Path:
@@ -52,7 +55,7 @@ class _Translations:
 
     def get_translation(self, message: str, *, lang: str | None = None) -> str | None:
         key: str = sha1(message.encode("utf-8")).hexdigest()  # noqa: S324
-        return self.get_translations(lang=lang).get(key)
+        return (self._cached_translations[self._fallback] | self.get_translations(lang=lang)).get(key)
 
     def get_text(self, message: str, *, lang: str | None = None) -> str:
         """Find the translated message and return it if available (but defaults to the given input)."""
