@@ -5,6 +5,7 @@ from pathlib import Path
 
 # third party
 import matplotlib.pyplot as plt
+from matplotlib.axes import Axes
 from matplotlib.dates import HourLocator, MinuteLocator, MonthLocator, num2date
 from matplotlib.ticker import FuncFormatter, NullFormatter
 
@@ -12,6 +13,7 @@ from matplotlib.ticker import FuncFormatter, NullFormatter
 from .logger import get_logger
 from .models import DataModel, ObservableObjectModel
 from .translations import get_text as _
+from .utils import optional_hm_str_to_timedelta
 
 
 __all__ = ("generate_and_save_graph",)
@@ -19,9 +21,11 @@ __all__ = ("generate_and_save_graph",)
 
 logger = get_logger("generator@core")
 
+_BASE_DATE = datetime(1970, 1, 1, tzinfo=UTC)
+
 
 def _24h_formatter(x, pos=0) -> str:  # noqa: ANN001, ARG001
-    return str(round((num2date(x, UTC) - datetime(1970, 1, 1, tzinfo=UTC)).total_seconds() / (60 * 60)))
+    return str(round((num2date(x, UTC) - _BASE_DATE).total_seconds() / (60 * 60)))
 
 
 def _month_formatter(x, pos=None) -> str:  # noqa: ANN001, ARG001
@@ -64,14 +68,16 @@ def generate_and_save_graph(
         if o.is_moon:
             logger.info(f"Skipping {o.name}!")
             continue
+        if o.is_sun:
+            _add_sun_visibility(ax1, d)
 
         x, y = [], []
         for row in d.rows:
-            if (t := row.culmination_t) is not None:
-                x.append(datetime(1970, 1, 1, tzinfo=UTC) + t)
+            if (t := optional_hm_str_to_timedelta(row.culmination)) is not None:
+                x.append(_BASE_DATE + t)
                 y.append(row.date_and_time)
 
-        ax1.plot_date(x, y, tz=UTC, fmt=".", color=o.line_color.as_hex(), ms=o.line_strength / 8)
+        ax1.plot_date(x, y, tz=UTC, fmt=".", color=o.line_color.as_hex(), ms=o.line_strength / 2)
 
     # major formatter
     ax1.xaxis.set_major_formatter(FuncFormatter(_24h_formatter))
@@ -104,10 +110,23 @@ def generate_and_save_graph(
         tick.tick2line.set_visible(False)
         tick.label1.set_visible(False)
 
+    ax1.tick_params(top=True, labeltop=True, bottom=True, labelbottom=True)
     ax1.invert_xaxis()
 
-    ax1.set_zorder(max(ax2.get_zorder(), ax3.get_zorder()) + 1)  # move ax1 to foreground
+    ax1.set_zorder(max(a.get_zorder() for a in (ax2, ax3)) + 1)  # move ax1 to foreground
     for ax in (ax1, ax2, ax3):
         ax.patch.set_visible(False)  # make background transparent
 
+    plt.gcf().set_size_inches(8.27, 11.69)  # A4 (vertical/portrait)
     plt.savefig(destination)
+
+
+def _add_sun_visibility(ax: Axes, data: DataModel) -> None:
+    logger.critical("Sun visibility still in alpha!")
+    for row in data.rows:
+        ax.hlines(
+            row.date_and_time,
+            _BASE_DATE + optional_hm_str_to_timedelta(row.rise),
+            _BASE_DATE + optional_hm_str_to_timedelta(row.set),
+            "#0002",
+        )

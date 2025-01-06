@@ -55,6 +55,7 @@ __all__ = (
     "get_present_headers",
     "issue19_note_on_validation_error",
     "observable_object_from_alias",
+    "optional_hm_str_to_timedelta",
     "raw_delta_t_to_timedelta",
 )
 
@@ -138,3 +139,10 @@ def issue19_note_on_validation_error():
             % "https://github.com/AlbertUnruh/AstronomicalAnnualCalendar/issues/19"
         )
         raise
+
+
+def optional_hm_str_to_timedelta(hm: str | None) -> timedelta | None:
+    """Get timedelta from ``HHhMMm`` formatted string (with HH being ``0``-``24`` and MM being ``-9``-``60``)."""
+    if hm is None or len(hm) * "-" == hm:
+        return None
+    return timedelta(hours=int(hm[:-4]), minutes=int(hm[-3:-1]))

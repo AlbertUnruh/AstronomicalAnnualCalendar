@@ -204,7 +204,7 @@ class RowModel(BoundToObservableObjectBaseModel, BaseModel):
     ecliptic_latitude: str = Field(default=None, pattern=DMS_ANGLE_90_REGEX)  # "Ekl. Br"
     rise: str = Field(default=None, pattern=OPTIONAL_HM_TIME_REGEX)  # "Aufg."
     culmination: str = Field(default=None, pattern=OPTIONAL_HM_TIME_REGEX)  # "Kulm."
-    set_: str = Field(default=None, alias="set", pattern=OPTIONAL_HM_TIME_REGEX)  # "Unterg"
+    set: str = Field(default=None, pattern=OPTIONAL_HM_TIME_REGEX)  # "Unterg"
     azimut_rise: str = Field(default=None, pattern=DEGREE_180_REGEX)  # "Az Auf"
     azimut_set: str = Field(default=None, pattern=DEGREE_360_REGEX)  # "[Az ]Unt."
     distance: float = Field(default=None)  # "Entf."
@@ -252,13 +252,6 @@ class RowModel(BoundToObservableObjectBaseModel, BaseModel):
         if self.diameter_ring is None:  # no diameter set
             return None
         return self.diameter_ring_unit_
-
-    @property
-    def culmination_t(self) -> timedelta | None:
-        """Returns the culmination as a timedelta."""
-        if self.culmination is None or len(self.culmination) * "-" == self.culmination:
-            return None
-        return timedelta(hours=int(self.culmination[:-4]), minutes=int(self.culmination[-3:-1]))
 
 
 class DataModel(BoundToObservableObjectBaseModel, BaseModel):
