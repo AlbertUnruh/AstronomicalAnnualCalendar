@@ -19,7 +19,12 @@ from .models import (
     RowModel,
 )
 from .regex import METADATA_REGEX, OBJECT_DATA_BODY_REGEX
-from .utils import get_present_headers, observable_object_from_alias, raw_delta_t_to_timedelta
+from .utils import (
+    get_present_headers,
+    issue19_note_on_validation_error,
+    observable_object_from_alias,
+    raw_delta_t_to_timedelta,
+)
 
 
 __all__ = ("Parser",)
@@ -59,10 +64,11 @@ class Parser(BaseModel):  # noqa: D101  # ToDo: add documentation
 
     def parse(self) -> dict[ObservableObjectModel, DataModel]:  # noqa: D102  # ToDo: add documentation
         data: dict[ObservableObjectModel, DataModel] = {}
-        for bound_object, header, body in self._iter_observable_objects():
-            logger.debug(f"parsing {bound_object.name}")
-            rows = self._parse_rows(bound_object, header, body)
-            data[bound_object] = DataModel(bound_object=bound_object, metadata=self.metadata, rows=rows)
+        with issue19_note_on_validation_error():
+            for bound_object, header, body in self._iter_observable_objects():
+                logger.debug(f"parsing {bound_object.name}")
+                rows = self._parse_rows(bound_object, header, body)
+                data[bound_object] = DataModel(bound_object=bound_object, metadata=self.metadata, rows=rows)
         return data
 
     @staticmethod

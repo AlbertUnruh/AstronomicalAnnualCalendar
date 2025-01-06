@@ -8,6 +8,8 @@
   sha1,message
 - # A new update is available!
 - 02b440ec9035c83248e2bd6d25846831291bd800,"TRANSLATION"
+- # For more information on the following exception follow [this](%s) link.
+- 03d3f895edbf62608e9221b2b3df8a8f66626766,"TRANSLATION"
 - # September
 - 1c542e79c9b4257e640ccf72974d61fd590a5c26,"TRANSLATION"
   # sun
@@ -70,5 +72,5 @@
 - f77be3faff9e5f518fcda68621906d34e0fc4bbe,"TRANSLATION"
 ```
 
-> Time of creation: 2025-01-05 13:29:30+00:00</br>
+> Time of creation: 2025-01-06 15:18:00+00:00</br>
 > Version: `1.3.1`

@@ -1,10 +1,16 @@
 # standard library
 import re
+from contextlib import contextmanager
 from datetime import timedelta
 from typing import Literal, SupportsFloat
 
+# third party
+from pydantic import ValidationError
+
 # local
 from .errors import AliasNotAssignedError, UnitNotSupportedError
+from .logger import get_logger
+from .translations import get_text as _
 
 
 # I'm fully aware that the following try-except is a war-crime, but this was the easiest solution I could think of...
@@ -37,6 +43,8 @@ except ImportError:
         from .enums import HeaderEnum, ObservableObjectEnum
         from .models import EvaluatedHeaderModel, ObservableObjectModel
 
+        logger.debug("imports in utils.py are now fixed")
+
         def _fix_imports():
             pass
 
@@ -45,10 +53,13 @@ __all__ = (
     "append_name_to_all_pattern_groups",
     "extract_pattern_from_regex",
     "get_present_headers",
+    "issue19_note_on_validation_error",
     "observable_object_from_alias",
     "raw_delta_t_to_timedelta",
 )
 
+
+logger = get_logger("utils@core")
 
 _PREFIX: dict[type, str | bytes] = {str: "^", bytes: b"^"}
 _SUFFIX: dict[type, str | bytes] = {str: "$", bytes: b"$"}
@@ -114,3 +125,16 @@ def get_present_headers(bound_object: ObservableObjectModel, header: str) -> lis
         for enum in HeaderEnum  # type: ignore
         if (match := enum.value.search(header)) is not None
     ]
+
+
+@contextmanager
+def issue19_note_on_validation_error():
+    """Small contextmanager to apply a note for any `ValidationError`s raised."""
+    try:
+        yield
+    except ValidationError:
+        logger.critical(
+            _("For more information on the following exception follow [this](%s) link.")  # noqa: G002
+            % "https://github.com/AlbertUnruh/AstronomicalAnnualCalendar/issues/19"
+        )
+        raise

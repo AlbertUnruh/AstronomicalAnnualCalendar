@@ -1,6 +1,8 @@
 sha1,message
 # A new update is available!
 02b440ec9035c83248e2bd6d25846831291bd800,"A new update is available!"
+# For more information on the following exception follow [this](%s) link.
+03d3f895edbf62608e9221b2b3df8a8f66626766,"For more information on the following exception follow [this](%s) link."
 # September
 1c542e79c9b4257e640ccf72974d61fd590a5c26,"September"
 # sun
