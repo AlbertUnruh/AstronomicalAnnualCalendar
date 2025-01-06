@@ -22,7 +22,7 @@ from .regex import (
     HMS_ANGLE_REGEX,
     OPTIONAL_HM_TIME_REGEX,
 )
-from .translations import get_text as _
+from .translations import get_text
 
 
 __all__ = (
@@ -56,7 +56,7 @@ class ObservableObjectModel(BaseModel):
     @property
     def name(self) -> str:
         """Returns the localized name of the object."""
-        return _(self.internal_id)
+        return get_text(self.internal_id)
 
     @property
     def aliases(self) -> set[str]:

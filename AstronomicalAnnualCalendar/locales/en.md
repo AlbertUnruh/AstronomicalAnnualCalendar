@@ -14,6 +14,10 @@
 - 1c542e79c9b4257e640ccf72974d61fd590a5c26,"TRANSLATION"
   # sun
   22fa6121da96f43a106e413e65d4f9089c53824c,"TRANSLATION"
+- # metadata points to %s (%s) with the equinox being %s
+- 2c1baebb910e3b76c76560d428c1efc70aa7ba2c,"TRANSLATION"
+- # Skipping %s!
+- 39d18071d985204de69c533fc98adcf3dbf472e6,"TRANSLATION"
 - # November
 - 3c5bf776f5efcaa22d6e0fd4839db7d2b83e52be,"TRANSLATION"
 - # March
@@ -36,6 +40,8 @@
 - 6c610b3e5291e89e763f7b422f8d21b8d04b8413,"TRANSLATION"
 - # January
 - 7a22d73d336abd6281d4dd71080220a230cb79de,"TRANSLATION"
+- # detected range from %s to %s
+- 848408f79f22f4c88ef6dac62d403c011ee8c642,"TRANSLATION"
 - # October
 - 87206ae2363483496c099f8c3aac5b4a8ae2a66a,"TRANSLATION"
 - # Are you using this project as an early bird? -> nothing released yet...
@@ -48,6 +54,8 @@
   a2f7fcb5afeb7983ffbb6ce3d1a7e91edf321350,"TRANSLATION"
   # saturn
   a684248598a590e37dd16686c8022b880a9a63d9,"TRANSLATION"
+- # parsing %s
+- a721ef580fedc893c219555fa5b2f154356bec33,"TRANSLATION"
 - # June
 - a9db906761699b31567727716eaa6fd19ae5f5d5,"TRANSLATION"
 - # Output written to %s
@@ -72,5 +80,5 @@
 - f77be3faff9e5f518fcda68621906d34e0fc4bbe,"TRANSLATION"
 ```
 
-> Time of creation: 2025-01-06 15:18:00+00:00</br>
+> Time of creation: 2025-01-06 17:50:57+00:00</br>
 > Version: `1.3.1`

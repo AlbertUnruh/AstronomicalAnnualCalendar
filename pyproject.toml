@@ -120,6 +120,7 @@ select = [
 ignore = [
     "D100",   # Missing docstring in public module
     "D104",   # Missing docstring in public package
+    "G002",   # Logging statement uses `%`
     "G004",   # Logging statement uses f-string
     "N999",   # Invalid module name: '{name}' # I know, it should be snake_case, but who cares? I don't :P  ~AlbertUnruh
 ]

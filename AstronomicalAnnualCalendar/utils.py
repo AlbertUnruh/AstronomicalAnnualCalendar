@@ -135,7 +135,7 @@ def issue19_note_on_validation_error():
         yield
     except ValidationError:
         logger.critical(
-            _("For more information on the following exception follow [this](%s) link.")  # noqa: G002
+            _("For more information on the following exception follow [this](%s) link.")
             % "https://github.com/AlbertUnruh/AstronomicalAnnualCalendar/issues/19"
         )
         raise

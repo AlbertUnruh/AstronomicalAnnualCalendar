@@ -7,6 +7,10 @@ sha1,message
 1c542e79c9b4257e640ccf72974d61fd590a5c26,"September"
 # sun
 22fa6121da96f43a106e413e65d4f9089c53824c,"Sonne"
+# metadata points to %s (%s) with the equinox being %s
+2c1baebb910e3b76c76560d428c1efc70aa7ba2c,"Metadaten verweisen auf %s (%s) mit einem Äquinoktium von %s"
+# Skipping %s!
+39d18071d985204de69c533fc98adcf3dbf472e6,"Überspringe %s!"
 # November
 3c5bf776f5efcaa22d6e0fd4839db7d2b83e52be,"November"
 # March
@@ -29,6 +33,8 @@ sha1,message
 6c610b3e5291e89e763f7b422f8d21b8d04b8413,"Konnte die Daten der letzten Veröffentlichung nicht laden..."
 # January
 7a22d73d336abd6281d4dd71080220a230cb79de,"Januar"
+# detected range from %s to %s
+848408f79f22f4c88ef6dac62d403c011ee8c642,"Zeitraum von %s bis %s erkannt"
 # October
 87206ae2363483496c099f8c3aac5b4a8ae2a66a,"Oktober"
 # Are you using this project as an early bird? -> nothing released yet...
@@ -41,6 +47,8 @@ a0393902db1f516ef5f95f6830938558a88fb23c,"April"
 a2f7fcb5afeb7983ffbb6ce3d1a7e91edf321350,"Jupiter"
 # saturn
 a684248598a590e37dd16686c8022b880a9a63d9,"Saturn"
+# parsing %s
+a721ef580fedc893c219555fa5b2f154356bec33,"analysiere %s"
 # June
 a9db906761699b31567727716eaa6fd19ae5f5d5,"Juni"
 # Output written to %s

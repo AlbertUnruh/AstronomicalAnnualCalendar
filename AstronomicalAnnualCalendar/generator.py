@@ -53,7 +53,7 @@ def generate_and_save_graph(
         ax.grid(which="minor", color=minor_color, lw=0.4, ls="--")
     ax1.grid(which="major", color=major_color, lw=0.4, ls="-")
 
-    logger.debug(f"detected range from {y_min.isoformat(" ")} to {y_max.isoformat(" ")}")
+    logger.debug(_("detected range from %s to %s") % (y_min.isoformat(" "), y_max.isoformat(" ")))
 
     place = next(iter(data.values())).metadata.place
     if title is not None:
@@ -66,7 +66,7 @@ def generate_and_save_graph(
 
     for o, d in data.items():
         if o.is_moon:
-            logger.info(f"Skipping {o.name}!")
+            logger.info(_("Skipping %s!") % o.name)
             continue
         if o.is_sun:
             _add_sun_visibility(ax1, d)

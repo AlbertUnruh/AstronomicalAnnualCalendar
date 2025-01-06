@@ -19,6 +19,7 @@ from .models import (
     RowModel,
 )
 from .regex import METADATA_REGEX, OBJECT_DATA_BODY_REGEX
+from .translations import get_text as _
 from .utils import (
     get_present_headers,
     issue19_note_on_validation_error,
@@ -60,13 +61,13 @@ class Parser(BaseModel):  # noqa: D101  # ToDo: add documentation
             equinox=metadata.group("equinox"),
             delta_t=raw_delta_t_to_timedelta(metadata.group("delta_t"), metadata.group("delta_t_unit")),
         )
-        logger.debug(f"metadata points to {_m.place} ({_m.coordinate}) with the equinox being {_m.equinox}")
+        logger.debug(_("metadata points to %s (%s) with the equinox being %s") % (_m.place, _m.coordinate, _m.equinox))
 
     def parse(self) -> dict[ObservableObjectModel, DataModel]:  # noqa: D102  # ToDo: add documentation
         data: dict[ObservableObjectModel, DataModel] = {}
         with issue19_note_on_validation_error():
             for bound_object, header, body in self._iter_observable_objects():
-                logger.debug(f"parsing {bound_object.name}")
+                logger.debug(_("parsing %s") % bound_object.name)
                 rows = self._parse_rows(bound_object, header, body)
                 data[bound_object] = DataModel(bound_object=bound_object, metadata=self.metadata, rows=rows)
         return data
