@@ -1,16 +1,20 @@
 # standard library
 import re
+import sys
 from contextlib import contextmanager
 from datetime import timedelta
 from typing import Literal, SupportsFloat
 
 # third party
+from click import get_current_context
 from pydantic import ValidationError
 
 # local
+from . import __repository__, __version__
 from .errors import AliasNotAssignedError, UnitNotSupportedError
 from .logger import get_logger
 from .translations import get_text as _
+from .translations import locale
 
 
 # I'm fully aware that the following try-except is a war-crime, but this was the easiest solution I could think of...
@@ -52,6 +56,8 @@ except ImportError:
 __all__ = (
     "append_name_to_all_pattern_groups",
     "extract_pattern_from_regex",
+    "generate_metadata",
+    "get_aac_title",
     "get_present_headers",
     "issue19_note_on_validation_error",
     "observable_object_from_alias",
@@ -146,3 +152,31 @@ def optional_hm_str_to_timedelta(hm: str | None) -> timedelta | None:
     if hm is None or len(hm) * "-" == hm:
         return None
     return timedelta(hours=int(hm[:-4]), minutes=int(hm[-3:-1]))
+
+
+def generate_metadata(title: str) -> dict:
+    """Generate metadata for generated files."""
+    py_v = ".".join(str(getattr(sys.version_info, part)) for part in ("major", "minor", "micro"))
+    aac_v = __version__
+    pkg = __package__
+    repo = __repository__
+    lang = locale.get().upper()
+    cmd = ctx.command.name if (ctx := get_current_context(silent=True)) else "*function*"
+    metadata = {
+        "Title": title,
+        "Creator": f"{pkg} v{aac_v}, {repo}",
+        "Producer": f"{pkg} --language {lang} {cmd} ({aac_v}/py{py_v})",
+    }
+    logger.debug("metadata:")
+    for entry, value in metadata.items():
+        logger.debug(f"  - {entry:9} {value}")
+    return metadata
+
+
+def get_aac_title(title: str | None, place: str) -> str:
+    """Get a title for the astronomical annual calendar."""
+    if title is None:
+        title = _("astronomical annual calendar for %s")
+    if "%s" in title:
+        title = title % place
+    return title

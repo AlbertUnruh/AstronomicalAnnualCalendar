@@ -1,18 +1,20 @@
 # standard library
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from itertools import chain
 from pathlib import Path
 
 # third party
 import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib.dates import HourLocator, MinuteLocator, MonthLocator, num2date
+from matplotlib.lines import Line2D
 from matplotlib.ticker import FuncFormatter, NullFormatter
 
 # local
 from .logger import get_logger
 from .models import DataModel, ObservableObjectModel
 from .translations import get_text as _
-from .utils import optional_hm_str_to_timedelta
+from .utils import generate_metadata, get_aac_title, optional_hm_str_to_timedelta
 
 
 __all__ = ("generate_and_save_graph",)
@@ -35,8 +37,6 @@ def generate_and_save_graph(
     data: dict[ObservableObjectModel, DataModel], destination: Path, title: str | None = None
 ) -> None:
     """Generate a graph based on the given data."""
-    logger.critical("Data processing still in beta!")
-
     dates = [row.date_and_time for row in next(iter(data.values())).rows]
     x_min, x_max, y_min, y_max = 0, 1, min(dates), max(dates)
 
@@ -54,15 +54,9 @@ def generate_and_save_graph(
 
     logger.debug(_("detected range from %s to %s") % (y_min.isoformat(" "), y_max.isoformat(" ")))
 
-    place = next(iter(data.values())).metadata.place
-    if title is not None:
-        if "%s" in title:
-            plt.title(title % place)
-        else:
-            plt.title(title)
-    else:
-        plt.title(_("astronomical annual calendar for %s") % place)
+    title = get_aac_title(title, next(iter(data.values())).metadata.place)
 
+    legend: list[Line2D] = []
     for o, d in data.items():
         if o.is_moon:
             logger.info(_("Skipping %s!") % o.name)
@@ -74,7 +68,15 @@ def generate_and_save_graph(
                 x.append(_BASE_DATE + t)
                 y.append(row.date_and_time)
 
-        ax1.plot_date(x, y, tz=UTC, fmt=".", color=o.line_color.as_hex(), ms=o.line_strength / 2)
+        # where the object jumps from 24 to 0 (and would jump across the whole plot to connect to next point)
+        jumps = np.where(np.diff(x) > timedelta(0.5))[0] + 1
+
+        for x_, y_ in zip(np.split(x, jumps), np.split(y, jumps), strict=False):
+            ax1.plot(x_, y_, "-", color=o.line_color.as_hex(), lw=o.line_strength / 2)
+
+        legend.append(Line2D([], [], color=o.line_color.as_hex(), label=o.name))
+
+    ax1.legend(handles=legend)
 
     # major formatter
     ax1.xaxis.set_major_formatter(FuncFormatter(_24h_formatter))
@@ -115,4 +117,8 @@ def generate_and_save_graph(
         ax.patch.set_visible(False)  # make background transparent
 
     plt.gcf().set_size_inches(8.27, 11.69)  # A4 (vertical/portrait)
-    plt.savefig(destination)
+    plt.savefig(
+        destination,
+        dpi=300,
+        metadata=generate_metadata(title),
+    )

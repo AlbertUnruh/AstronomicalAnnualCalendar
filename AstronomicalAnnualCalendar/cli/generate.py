@@ -59,3 +59,4 @@ def generate(source: Path, destination: Path, title: str | None):
     logger.debug(f"output written to {destination.resolve()}{" (overwriting)" * is_overwriting}")
     click.secho(_("Output written to %s") % destination, fg="blue")
     click.secho(_("Enjoy your astronomical calendar!"), fg="bright_green")
+    logger.warning("Graph alignment not final!")
