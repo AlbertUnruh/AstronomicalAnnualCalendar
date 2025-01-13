@@ -47,7 +47,7 @@ class ObservableObjectEnum(NoAliasEnum, metaclass=DirectValueMeta):
     # ^^^ EXPERIMENTAL; may get excluded if it's to wonky ^^^
     MARS: OOModel = OOModel(id="mars", aliases={"Mars"}, line_color=Color("#ff0000"))
     JUPITER: OOModel = OOModel(id="jupiter", aliases={"Jupiter"}, line_color=Color("#0000ff"))
-    SATURN: OOModel = OOModel(id="saturn", aliases={"Saturn"}, line_color=Color("#ff00ff"))
+    SATURN: OOModel = OOModel(id="saturn", aliases={"Saturn"}, line_color=Color("#ff33ff"))
     URANUS: OOModel = OOModel(id="uranus", aliases={"Uranus"}, line_color=Color("#99ccff"))
     # ^^^ rename to "Urectum" in 2620 (https://futurama.fandom.com/wiki/Urectum) ^^^
     NEPTUNE: OOModel = OOModel(id="neptune", aliases={"Neptun"}, line_color=Color("#cc994a"))
