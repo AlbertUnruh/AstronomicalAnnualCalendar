@@ -54,7 +54,7 @@ def generate_and_save_graph(
 
     logger.debug(_("detected range from %s to %s") % (y_min.isoformat(" "), y_max.isoformat(" ")))
 
-    title = get_aac_title(title, next(iter(data.values())).metadata.place)
+    plt.title(title := get_aac_title(title, next(iter(data.values())).metadata.place))
 
     legend: list[Line2D] = []
     for o, d in data.items():
@@ -74,7 +74,7 @@ def generate_and_save_graph(
         for x_, y_ in zip(np.split(x, jumps), np.split(y, jumps), strict=False):
             ax1.plot(x_, y_, "-", color=o.line_color.as_hex(), lw=o.line_strength / 2)
 
-        legend.append(Line2D([], [], color=o.line_color.as_hex(), label=o.name))
+        legend.append(Line2D([], [], color=o.line_color.as_hex(), lw=o.line_strength**0.5, label=o.name))
 
     ax1.legend(handles=legend)
 
