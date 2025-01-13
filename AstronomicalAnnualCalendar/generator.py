@@ -69,7 +69,7 @@ def generate_and_save_graph(
                 y.append(row.date_and_time)
 
         # where the object jumps from 24 to 0 (and would jump across the whole plot to connect to next point)
-        jumps = np.where(np.diff(x) > timedelta(0.5))[0] + 1
+        jumps = np.where(abs(np.diff(x)) > timedelta(0.5))[0] + 1
 
         for x_, y_ in zip(np.split(x, jumps), np.split(y, jumps), strict=False):
             ax1.plot(x_, y_, "-", color=o.line_color.as_hex(), lw=o.line_strength / 2)
