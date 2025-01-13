@@ -5,7 +5,6 @@ from pathlib import Path
 
 # third party
 import matplotlib.pyplot as plt
-from matplotlib.axes import Axes
 from matplotlib.dates import HourLocator, MinuteLocator, MonthLocator, num2date
 from matplotlib.ticker import FuncFormatter, NullFormatter
 
@@ -68,8 +67,6 @@ def generate_and_save_graph(
         if o.is_moon:
             logger.info(_("Skipping %s!") % o.name)
             continue
-        if o.is_sun:
-            _add_sun_visibility(ax1, d)
 
         x, y = [], []
         for row in d.rows:
@@ -119,14 +116,3 @@ def generate_and_save_graph(
 
     plt.gcf().set_size_inches(8.27, 11.69)  # A4 (vertical/portrait)
     plt.savefig(destination)
-
-
-def _add_sun_visibility(ax: Axes, data: DataModel) -> None:
-    logger.critical("Sun visibility still in alpha!")
-    for row in data.rows:
-        ax.hlines(
-            row.date_and_time,
-            _BASE_DATE + optional_hm_str_to_timedelta(row.rise),
-            _BASE_DATE + optional_hm_str_to_timedelta(row.set),
-            "#0002",
-        )
