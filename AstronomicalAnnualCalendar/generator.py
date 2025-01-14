@@ -14,7 +14,7 @@ from matplotlib.ticker import FuncFormatter, NullFormatter
 from .logger import get_logger
 from .models import DataModel, ObservableObjectModel
 from .translations import get_text as _
-from .utils import generate_metadata, get_aac_title, optional_hm_str_to_timedelta
+from .utils import format_to_wh, generate_metadata, get_aac_title, optional_hm_str_to_timedelta
 
 
 __all__ = ("generate_and_save_graph",)
@@ -34,13 +34,20 @@ def _month_formatter(x, pos=None) -> str:  # noqa: ANN001, ARG001
 
 
 def generate_and_save_graph(
-    data: dict[ObservableObjectModel, DataModel], destination: Path, title: str | None = None
+    data: dict[ObservableObjectModel, DataModel],
+    destination: Path,
+    title: str | None = None,
+    size: tuple[float, float] = format_to_wh("A4"),
 ) -> None:
     """Generate a graph based on the given data."""
     dates = [row.date_and_time for row in next(iter(data.values())).rows]
     x_min, x_max, y_min, y_max = 0, 1, min(dates), max(dates)
 
-    ax1 = plt.gca()
+    title = get_aac_title(title, next(iter(data.values())).metadata.place)
+
+    fig = plt.gcf()
+
+    ax1 = fig.gca()
     ax2 = ax1.twinx()
     ax3 = ax1.twinx()
 
@@ -54,7 +61,7 @@ def generate_and_save_graph(
 
     logger.debug(_("detected range from %s to %s") % (y_min.isoformat(" "), y_max.isoformat(" ")))
 
-    plt.title(title := get_aac_title(title, next(iter(data.values())).metadata.place))
+    ax1.set_title(title, size="x-large", y=1.04)
 
     legend: list[Line2D] = []
     for o, d in data.items():
@@ -116,8 +123,9 @@ def generate_and_save_graph(
     for ax in (ax1, ax2, ax3):
         ax.patch.set_visible(False)  # make background transparent
 
-    plt.gcf().set_size_inches(8.27, 11.69)  # A4 (vertical/portrait)
-    plt.savefig(
+    fig.set_size_inches(size)
+    fig.tight_layout(pad=2.4)
+    fig.savefig(
         destination,
         dpi=300,
         metadata=generate_metadata(title),

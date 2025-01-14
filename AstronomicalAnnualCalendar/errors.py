@@ -6,8 +6,12 @@ __all__ = (
     "AliasNotAssignedError",
     "AstronomicalAnnualCalendarException",
     "EvaluatedHeaderValidationError",
+    "MalformedPaperFormatError",
+    "PaperFormatError",
     "TranslationsDirNotADirectoryError",
     "UnitNotSupportedError",
+    "UnknownPaperFormatError",
+    "UnknownPaperOrientationError",
 )
 
 
@@ -64,3 +68,31 @@ class TranslationsDirNotADirectoryError(AstronomicalAnnualCalendarException, Val
             f"The path {translations_dir.as_posix()} is not a directory! "
             f"A directory is required as translations are stored in separate files!"
         )
+
+
+class PaperFormatError(AstronomicalAnnualCalendarException, ValueError):
+    """Base exception for ``utils.format_to_wh``."""
+
+
+class MalformedPaperFormatError(PaperFormatError):
+    """Error for ``utils.format_to_wh``."""
+
+    def __init__(self, format: str):  # noqa: A002
+        super().__init__(f"Malformed paper format {format!r}. Length should be 2 or 3 and not {len(format)}!")
+
+
+class UnknownPaperOrientationError(PaperFormatError):
+    """Error for ``utils.format_to_wh``."""
+
+    def __init__(self, orientation: str, format: str):  # noqa: A002
+        super().__init__(
+            f"Unknown orientation {orientation!r} detected from {format!r}. "
+            f"Expecting 'v' (vertical/portrait) or 'h' (horizontal/landscape)!"
+        )
+
+
+class UnknownPaperFormatError(PaperFormatError):
+    """Error for ``utils.format_to_wh``."""
+
+    def __init__(self, format: str, *, biggest: str, smallest: str):  # noqa: A002
+        super().__init__(f"Unknown format {format!r}! {biggest!r} to {smallest!r} supported!")

@@ -11,7 +11,13 @@ from pydantic import ValidationError
 
 # local
 from . import __repository__, __version__
-from .errors import AliasNotAssignedError, UnitNotSupportedError
+from .errors import (
+    AliasNotAssignedError,
+    MalformedPaperFormatError,
+    UnitNotSupportedError,
+    UnknownPaperFormatError,
+    UnknownPaperOrientationError,
+)
 from .logger import get_logger
 from .translations import get_text as _
 from .translations import locale
@@ -56,6 +62,7 @@ except ImportError:
 __all__ = (
     "append_name_to_all_pattern_groups",
     "extract_pattern_from_regex",
+    "format_to_wh",
     "generate_metadata",
     "get_aac_title",
     "get_present_headers",
@@ -180,3 +187,40 @@ def get_aac_title(title: str | None, place: str) -> str:
     if "%s" in title:
         title = title % place
     return title
+
+
+def format_to_wh(format: str) -> tuple[float, float]:  # noqa: A002
+    """Return size of format as width/height tuple (in inches)."""
+    match len(format):
+        case 2:
+            orientation = "v"  # default
+            size = format
+        case 3:
+            orientation = format[-1]
+            size = format[:2]
+        case __:
+            raise MalformedPaperFormatError(format)
+
+    if orientation not in ("v", "h"):
+        raise UnknownPaperOrientationError(orientation, format)
+
+    ret: tuple[float, float]
+    match size.upper():
+        case "A0":
+            ret = (33.1102362205, 46.8110236220)
+        case "A1":
+            ret = (23.3858267717, 33.1102362205)
+        case "A2":
+            ret = (16.5354330709, 23.3858267717)
+        case "A3":
+            ret = (11.6929133858, 16.5354330709)
+        case "A4":
+            ret = (8.2677165354, 11.6929133858)
+        case "A5":
+            ret = (5.8267716535, 8.2677165354)
+        case "A6":
+            ret = (4.1338582677, 5.8267716535)
+        case __:
+            raise UnknownPaperFormatError(format, biggest="A0", smallest="A6")
+
+    return ret if orientation == "v" else ret[::-1]
