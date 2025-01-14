@@ -216,11 +216,7 @@ def format_to_wh(format: str) -> tuple[float, float]:  # noqa: A002
             ret = (11.6929133858, 16.5354330709)
         case "A4":
             ret = (8.2677165354, 11.6929133858)
-        case "A5":
-            ret = (5.8267716535, 8.2677165354)
-        case "A6":
-            ret = (4.1338582677, 5.8267716535)
         case __:
-            raise UnknownPaperFormatError(format, biggest="A0", smallest="A6")
+            raise UnknownPaperFormatError(format, biggest="A0", smallest="A4")
 
     return ret if orientation == "v" else ret[::-1]
