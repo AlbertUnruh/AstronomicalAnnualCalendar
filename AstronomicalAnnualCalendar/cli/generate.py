@@ -65,21 +65,21 @@ def generate(source: Path, destination: Path, title: str | None, format: str):  
     is_pdf = destination.suffix == ".pdf"
 
     size = format_to_wh(format)
-    legend_destination = destination.with_stem(f"{destination.stem}-legend")
+    explanation_destination = destination.with_stem(f"{destination.stem}-explanation")
 
     generate_and_save_graph(data=data, destination=destination, title=title, size=size)
-    generate_and_save_explanation(destination=legend_destination, size=size)
+    generate_and_save_explanation(destination=explanation_destination, size=size)
 
     if is_pdf:
-        merge_pdfs(destination, legend_destination, destination=destination)
-        # legend_destination.unlink()
+        merge_pdfs(destination, explanation_destination, destination=destination)
+        explanation_destination.unlink()
 
     logger.debug(f"output written to {destination.resolve()}{" (overwriting)" * is_overwriting}")
     if not is_pdf:
-        logger.debug(f"legend written to {legend_destination.resolve()}{" (overwriting)" * is_overwriting}")
+        logger.debug(f"explanation written to {explanation_destination.resolve()}{" (overwriting)" * is_overwriting}")
 
     click.secho(_("Output written to %s") % destination, fg="blue")
     if not is_pdf:
-        click.secho(_("Legend written to %s") % legend_destination, fg="cyan")
+        click.secho(_("Explanation written to %s") % explanation_destination, fg="cyan")
 
     click.secho(_("Enjoy your astronomical calendar!"), fg="bright_green")
