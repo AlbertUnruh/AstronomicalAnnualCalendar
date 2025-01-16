@@ -6,11 +6,11 @@ from typing import TYPE_CHECKING
 import click
 
 # local
-from ..generator import generate_and_save_graph
+from ..generator import generate_and_save_explanation, generate_and_save_graph
 from ..logger import get_logger
 from ..parser import Parser
 from ..translations import get_text as _
-from ..utils import format_to_wh
+from ..utils import format_to_wh, merge_pdfs
 from . import cli
 
 
@@ -62,9 +62,24 @@ def generate(source: Path, destination: Path, title: str | None, format: str):  
     data: dict[ObservableObjectModel, DataModel] = parser.parse()
 
     is_overwriting = destination.is_file()
+    is_pdf = destination.suffix == ".pdf"
 
-    generate_and_save_graph(data=data, destination=destination, title=title, size=format_to_wh(format))
+    size = format_to_wh(format)
+    legend_destination = destination.with_stem(f"{destination.stem}-legend")
+
+    generate_and_save_graph(data=data, destination=destination, title=title, size=size)
+    generate_and_save_explanation(destination=legend_destination, size=size)
+
+    if is_pdf:
+        merge_pdfs(destination, legend_destination, destination=destination)
+        # legend_destination.unlink()
 
     logger.debug(f"output written to {destination.resolve()}{" (overwriting)" * is_overwriting}")
+    if not is_pdf:
+        logger.debug(f"legend written to {legend_destination.resolve()}{" (overwriting)" * is_overwriting}")
+
     click.secho(_("Output written to %s") % destination, fg="blue")
+    if not is_pdf:
+        click.secho(_("Legend written to %s") % legend_destination, fg="cyan")
+
     click.secho(_("Enjoy your astronomical calendar!"), fg="bright_green")

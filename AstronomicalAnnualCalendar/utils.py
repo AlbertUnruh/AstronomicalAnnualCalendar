@@ -3,6 +3,7 @@ import re
 import sys
 from contextlib import contextmanager
 from datetime import timedelta
+from pathlib import Path
 from typing import Literal, SupportsFloat
 
 # third party
@@ -67,6 +68,7 @@ __all__ = (
     "get_aac_title",
     "get_present_headers",
     "issue19_note_on_validation_error",
+    "merge_pdfs",
     "observable_object_from_alias",
     "optional_hm_str_to_timedelta",
     "raw_delta_t_to_timedelta",
@@ -220,3 +222,7 @@ def format_to_wh(format: str) -> tuple[float, float]:  # noqa: A002
             raise UnknownPaperFormatError(format, biggest="A0", smallest="A4")
 
     return ret if orientation == "v" else ret[::-1]
+
+
+def merge_pdfs(*pdfs: Path, destination: Path):
+    """Merge multiple pdfs into one big pdf at the given destination."""
