@@ -23,6 +23,7 @@ _SHA1_MESSAGE_PAIRS_REGEX: re.Pattern[str] = re.compile(r"^(?P<sha1>[\da-f]{40})
 class _Translations:
     _translations_dir: Path
     _cached_translations: dict[str, dict[str, str]]  # {language: {sha1: message, ...}, ...}
+    _cached_explanations: dict[str, str]  # {language: explanation, ...}
     _fallback: str
 
     def __init__(self, translations_dir: Path, fallback: str = "en"):
@@ -30,6 +31,7 @@ class _Translations:
             raise TranslationsDirNotADirectoryError(translations_dir=translations_dir)
         self._translations_dir = translations_dir
         self._cached_translations = {}
+        self._cached_explanations = {}
         self._fallback = fallback
         self.get_translations(lang=fallback)  # load fallback directly
 
@@ -61,5 +63,21 @@ class _Translations:
         """Find the translated message and return it if available (but defaults to the given input)."""
         return self.get_translation(message, lang=lang) or message
 
+    def get_explanation(self, *, lang: str | None = None) -> str:
+        """Find translated explanation and return it."""
+        if lang is None:
+            lang = locale.get()
 
-get_text: Callable[[str], str] = _Translations(Path(__file__).parent / Path("locales")).get_text
+        if lang not in self._cached_explanations:
+            if (explanation_file := self._translations_dir / f"explanation-{lang}.txt").is_file():
+                self._cached_explanations[lang] = explanation_file.read_text("utf-8")
+            else:
+                return self.get_explanation(lang=self._fallback)
+
+        return self._cached_explanations[lang]
+
+
+_T = _Translations(Path(__file__).parent / Path("locales"))
+
+get_text: Callable[[str], str] = _T.get_text
+get_explanation: Callable[[], str] = _T.get_explanation
