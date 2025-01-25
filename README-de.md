@@ -24,34 +24,34 @@ Wenn nun alle Programme vorhanden sind, müssen Daten beschafft werden. Dafür w
 #### Schritt für Schritt: AstroWin32
 
 1. Listenberechnung aktivieren </br>
-   *Knopf muss "gedrückt" aussehen*
+   *Knopf muss "gedrückt" aussehen* </br>
    ![](readme-imgs/AstroWin-1.png)
 2. Datum und Uhrzeit auswählen </br>
-   Beispiel für das Jahr 2024:
+   Beispiel für das Jahr 2024: </br>
    ![](readme-imgs/AstroWin-2.png)
 3. Beobachtungsort festlegen </br>
-   Beispiel für Papenburg:
+   Beispiel für Papenburg: </br>
    ![](readme-imgs/AstroWin-3.png)
 4. "Jahrbuchmodus" auswählen </br>
-   *Hier die minimale Auswahl an Häkchen, die benötigt werden. Es ist möglich alles auszuwählen, die Daten werden nur nicht verwertet.*
+   *Hier die minimale Auswahl an Häkchen, die benötigt werden. Es ist möglich alles auszuwählen, die Daten werden nur nicht verwertet.* </br>
    ![](readme-imgs/AstroWin-4.png)
 5. Anschließend auf "Ok" drücken und warten, bis kein neuer Text mehr erscheint
-6. In Textfeld klicken und ``strg + A`` (der Text sollte blau werden) und ``strg + C`` drücken
+6. In Textfeld klicken und ``strg + A`` (der Text sollte blau werden) und ``strg + C`` drücken </br>
    ![](readme-imgs/AstroWin-6.png)
 7. Im Explorer ein neues Textdokument erstellen und öffnen.
-8. In Textfeld klicken und ``strg + V`` (der eben kopierte Text sollte erscheinen) und ``strg + S`` drücken
+8. In Textfeld klicken und ``strg + V`` (der eben kopierte Text sollte erscheinen) und ``strg + S`` drücken </br>
    ![](readme-imgs/AstroWin-8.png)
 9. Die Datei ist gespeichert und kann geschlossen werden. **Der Pfad wird im Verlauf aber noch wichtig!**
 
 
 #### Schritt für Schritt: AstronomicalAnnualCalendar
 
-1. Projekt von [GitHub][] herunterladen und ZIP entpacken
+1. Projekt von [GitHub][] herunterladen und ZIP entpacken </br>
    ![](readme-imgs/AAC-1.png)
 2. Im Explorer in entpackten Ordner navigieren </br>
-   *So in etwa sollte es aussehen*
+   *So in etwa sollte es aussehen* </br>
    ![](readme-imgs/AAC-2.png)
-3. ``shift + Rechtsklick`` drücken und "PowerShell-Fenster hier öffnen" anklicken
+3. ``shift + Rechtsklick`` drücken und "PowerShell-Fenster hier öffnen" anklicken </br>
    ![](readme-imgs/AAC-3.png)
 4. In die nun geöffnete Befehlszeile je nach präferenz den gewünschten Befehl zum Installieren der Abhängigkeiten eingeben und ausführen:
    - ``pip install -r requirements.txt``
