@@ -29,10 +29,14 @@ sha1,message
 65640c6577c9c72497525e656127b5bd1deb6f85,"December"
 # August
 69d97c5797dc7d211aaa4e9229db5c8466d4edef,"August"
+# Explanation For The Astronomical Annual Calendar
+6a23b5496aca5ba35d6230a9c5f71f61889a6aeb,"Explanation For The Astronomical Annual Calendar"
 # Unable to load latest release-data from GitHub...
 6c610b3e5291e89e763f7b422f8d21b8d04b8413,"Unable to load latest release-data from GitHub..."
 # January
 7a22d73d336abd6281d4dd71080220a230cb79de,"January"
+# Explanation written to %s
+8203b9048247b90a9c9fa368f265d2de49214ba6,"Explanation written to %s"
 # detected range from %s to %s
 848408f79f22f4c88ef6dac62d403c011ee8c642,"detected range from %s to %s"
 # October

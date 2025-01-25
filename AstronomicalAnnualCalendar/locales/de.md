@@ -36,10 +36,14 @@
   65640c6577c9c72497525e656127b5bd1deb6f85,"TRANSLATION"
   # August
   69d97c5797dc7d211aaa4e9229db5c8466d4edef,"TRANSLATION"
+  # Explanation For The Astronomical Annual Calendar
+  6a23b5496aca5ba35d6230a9c5f71f61889a6aeb,"TRANSLATION"
   # Unable to load latest release-data from GitHub...
   6c610b3e5291e89e763f7b422f8d21b8d04b8413,"TRANSLATION"
   # January
   7a22d73d336abd6281d4dd71080220a230cb79de,"TRANSLATION"
+  # Explanation written to %s
+  8203b9048247b90a9c9fa368f265d2de49214ba6,"TRANSLATION"
   # detected range from %s to %s
   848408f79f22f4c88ef6dac62d403c011ee8c642,"TRANSLATION"
   # October
@@ -80,5 +84,5 @@
   f77be3faff9e5f518fcda68621906d34e0fc4bbe,"TRANSLATION"
 ```
 
-> Time of creation: 2025-01-06 17:50:57+00:00</br>
+> Time of creation: 2025-01-25 13:11:15+00:00</br>
 > Version: `1.3.1`
