@@ -1,0 +1,83 @@
+# Specification
+
+So you want wo use this project to generate the astronomical annual calendar without data from AstroWin32?
+
+In this document I show you how any custom files have to be built to be valid.
+
+
+### The Header/Metadata
+The first line in the file contains all the metadata.
+
+It has to match following RegEx:
+```pythonregexp
+^Ort:\s*(?P<place>[^,]+),\s*(?P<coordinate>(?P<lat>((?P<degree_lat>\d{1,2}|[0-2]\d{2}|3[0-5]\d|360)°((?P<minute_lat>\s?([0-5 ])?\d)'(\s?(?P<second_lat>(([0-5 ])?\d|60)(\.\d+)?)\")?)?\s?([NS])))(\s*,\s*)?\s+(?P<lon>((?P<degree_lon>\d{1,2}|[0-2]\d{2}|3[0-5]\d|360)°((?P<minute_lon>\s?([0-5 ])?\d)'(\s?(?P<second_lon>(([0-5 ])?\d|60)(\.\d+)?)\")?)?\s?([EWO]))))\s*(\sÄquin:\s*(?P<equinox>-?\d+(\.\d+)?),\s*geozentrisch)?,\s*DeltaT\s?=\s?(?P<delta_t>-?\d+(\.\d+)?)\s?(?P<delta_t_unit>\w+)$
+```
+
+> *Depending on the flavour of RegEx I have another variant for you:*
+> ```regexp
+> ^Ort:\s*(?<place>[^,]+),\s*(?<coordinate>(?<lat>((?<degree_lat>\d{1,2}|[0-2]\d{2}|3[0-5]\d|360)°((?<minute_lat>\s?([0-5 ])?\d)'(\s?(?<second_lat>(([0-5 ])?\d|60)(\.\d+)?)\")?)?\s?([NS])))(\s*,\s*)?\s+(?<lon>((?<degree_lon>\d{1,2}|[0-2]\d{2}|3[0-5]\d|360)°((?<minute_lon>\s?([0-5 ])?\d)'(\s?(?<second_lon>(([0-5 ])?\d|60)(\.\d+)?)\")?)?\s?([EWO]))))\s*(\sÄquin:\s*(?<equinox>-?\d+(\.\d+)?),\s*geozentrisch)?,\s*DeltaT\s?=\s?(?<delta_t>-?\d+(\.\d+)?)\s?(?<delta_t_unit>\w+)$
+> ```
+
+> [!NOTE]
+> The regex can be found at ``AstronomicalAnnualCalendar.regex.METADATA_REGEX``
+
+
+### Planet/Sun Data
+The planets and sun are a bit more complicated and don't have one simple RegEx.
+
+Each object follows the same structure inside the file:
+```text
+NAME
+FIELDS MATCHING REGEX FROM TABLE BELOW
+DATA MATCHING POSITIONS
+[...]
+DATA MATCHING POSITIONS
+```
+> [!IMPORTANT]
+> **Before** and **after** every object an **empty line** is required!
+
+
+#### Fields
+| header       | description                                                     |
+|--------------|-----------------------------------------------------------------|
+| name         | the name of the field                                           |
+| type         | how it should be structured                                     |
+| regex        | the regex the title has to match                                |
+| length       | how long the data is (max)                                      |
+| offset       | the offset at which the data is extracted                       |
+| required for | where the field is used <br/>"-" = nowhere<br/>"*" = everywhere |
+
+How are ``length`` and ``offset`` used?
+> The data is extracted from the range [``i - length + offset``,``i + offset``] with ``i`` being the end position of the matched regex title.
+
+| name                            | type                                                                 | regex                   | length | offset | required for |
+|---------------------------------|----------------------------------------------------------------------|-------------------------|--------|--------|--------------|
+| weekday                         | two letter day (e.g. "Mo")                                           | "^ {2}(?= {4})"         | 2      | 0      | -            |
+| date                            | DD.MM.YYYY (e.g. 01.01.2001)                                         | "Datum"                 | 10     | 2      | *            |
+| time                            | HH:MM:SS (e.g. 12:34:56 or 0:12:34)<br>timezone extracted from regex | "MEZ \|MESZ\|UTC "      | 8      | 2      | *            |
+| right ascension                 | HMS angle                                                            | "Rektasz\."             | 11     | 0      | -            |
+| declination                     | signed DMS angle (90°)                                               | "Deklin\."              | 10     | 0      | -            |
+| ecliptic longitude              | DMS angle (360°)                                                     | "Ekl\. Lg\."            | 10     | 0      | -            |
+| ecliptic latitude               | signed DMS angle (90°)                                               | "Ekl\. Br"              | 10     | 0      | -            |
+| rise                            | n*"-" OR HHhMMm (e.g. 12h34m or 1h23m)                               | "Aufg\."                | 6      | 0      | -            |
+| culmination                     | n*"-" OR HHhMMm (e.g. 12h34m or 1h23m)                               | "Kulm\."                | 6      | 0      | generate     |
+| set                             | n*"-" OR HHhMMm (e.g. 12h34m or 1h23m)                               | "Unterg"                | 6      | 0      | -            |
+| azimut rise                     | degree (180°)                                                        | "(?<=Az )Auf"           | 4      | 0      | -            |
+| azimut set                      | degree (360°)                                                        | "(?<=Az Auf )Unt\."     | 4      | 0      | -            |
+| distance                        | float ("." for fraction)<br>unit@moon: km<br>unit@planet/sun: AU     | "Entf\."                | 8      | 1      | -            |
+| brightness                      | signed float ("." for fraction)                                      | "Hell\."                | 5      | 0      | -            |
+| diameter                        | arc seconds                                                          | "Ø \[\"]"               | 6      | 0      | -            |
+| diameter ring                   | arc seconds                                                          | "Ø Ring"                | 4      | 0      | -            |
+| dawn                            | n*"-" OR HHhMMm (e.g. 12h34m or 1h23m)                               | "ADämm"                 | 6      | 0      | -            |
+| dusk                            | n*"-" OR HHhMMm (e.g. 12h34m or 1h23m)                               | "EDämm"                 | 6      | 0      | -            |
+| phase                           | float ("." for fraction) in range [-1,1]                             | "Phase"                 | 5      | 0      | -            |
+| age                             | float ("." for fraction)                                             | "Alter"                 | 5      | 0      | -            |
+| elongation                      | signed degree (180°)                                                 | "Elong"                 | 6      | 0      | -            |
+| phas. w.                        | signed degree (180°)                                                 | "Phas\.W\."             | 6      | 0      | -            |
+| @physical ephemeris: NP \| PA_N | degrees (?)                                                          | "Pos\.W\."              | 6      | 0      | -            |
+| @physical ephemeris: SEP(δ)     | degrees (?)                                                          | "BrErde"                | 6      | 0      | -            |
+| @physical ephemeris: SEP(ω)     | degree (360°)                                                        | "ZM"                    | 5      | 1      | -            |
+| @moon: lib longitude            | signed float ("." for fraction)                                      | "Lib Lg\."              | 4      | -1     | -            |
+| @moon: lib latitude             | signed float ("." for fraction)                                      | "(?<=Lib Lg\. {2})Br\." | 4      | 0      | -            |
+| @moon: colong.                  | degree (360°)                                                        | "Colong\."              | 5      | 0      | -            |
+| @moon: br.                      | signed float ("." for fraction)                                      | "(?<=Colong\. {2})Br\." | 4      | 0      | -            |
