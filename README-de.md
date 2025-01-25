@@ -58,13 +58,13 @@ Wenn nun alle Programme vorhanden sind, müssen Daten beschafft werden. Dafür w
    - ``poetry install``
      - Poetry Version < 2.0.0: ``poetry shell`` einmalig ausführen
      - Poetry Version ≥ 2.0.0: ``poetry run`` vor jedes ``python ...`` setzen
-5. Eine Übersicht aller Befehle sollte mit dem Befehl ``python -m AstronomicalAnnualCalendar`` einsehbar sein
-6. Der grundlegende Befehl zum Generieren sieht wie folgt aus: ``python -m AstronomicalAnnualCalendar -l de generate -s Textdatei -d AJK.pdf``
+5. Eine Übersicht aller Befehle sollte mit dem Befehl ``python AstronomicalAnnualCalendar`` einsehbar sein
+6. Der grundlegende Befehl zum Generieren sieht wie folgt aus: ``python AstronomicalAnnualCalendar -l de generate -s Textdatei -d AJK.pdf``
    - ``-l de`` setzt die Sprache auf Deutsch
    - ``Textdatei`` muss durch den Pfad von der vorhin erstellten Textdatei ersetzt werden
    - ``-d AJK.pdf`` speichert das Ergebnis unter "AJK.pdf"
 7. Glückwunsch! Der astronomische Jahreskalender wurde generiert! </br>
-   *Für mehr Details zum Befehl, kann ``python -m AstronomicalAnnualCalendar generate --help`` ausgeführt werden*
+   *Für mehr Details zum Befehl, kann ``python AstronomicalAnnualCalendar generate --help`` ausgeführt werden*
 
 [GitHub]: https://github.com/AlbertUnruh/AstronomicalAnnualCalendar
 
