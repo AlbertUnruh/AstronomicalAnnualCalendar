@@ -9,7 +9,7 @@ In this document I show you how any custom files have to be built to be valid.
 The first line in the file contains all the metadata.
 
 It has to match following RegEx:
-```pythonregexp
+```regexp
 ^Ort:\s*(?P<place>[^,]+),\s*(?P<coordinate>(?P<lat>((?P<degree_lat>\d{1,2}|[0-2]\d{2}|3[0-5]\d|360)°((?P<minute_lat>\s?([0-5 ])?\d)'(\s?(?P<second_lat>(([0-5 ])?\d|60)(\.\d+)?)\")?)?\s?([NS])))(\s*,\s*)?\s+(?P<lon>((?P<degree_lon>\d{1,2}|[0-2]\d{2}|3[0-5]\d|360)°((?P<minute_lon>\s?([0-5 ])?\d)'(\s?(?P<second_lon>(([0-5 ])?\d|60)(\.\d+)?)\")?)?\s?([EWO]))))\s*(\sÄquin:\s*(?P<equinox>-?\d+(\.\d+)?),\s*geozentrisch)?,\s*DeltaT\s?=\s?(?P<delta_t>-?\d+(\.\d+)?)\s?(?P<delta_t_unit>\w+)$
 ```
 
