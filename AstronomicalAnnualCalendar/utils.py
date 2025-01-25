@@ -9,7 +9,7 @@ from typing import Literal, SupportsFloat
 # third party
 from click import get_current_context
 from pydantic import ValidationError
-from PyPDF2 import PdfReader, PdfWriter
+from pypdf import PdfReader, PdfWriter
 
 # local
 from . import __repository__, __version__
