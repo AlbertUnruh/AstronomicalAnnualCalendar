@@ -9,6 +9,7 @@ from typing import Literal, SupportsFloat
 # third party
 from click import get_current_context
 from pydantic import ValidationError
+from PyPDF2 import PdfReader, PdfWriter
 
 # local
 from . import __repository__, __version__
@@ -226,4 +227,7 @@ def format_to_wh(format: str) -> tuple[float, float]:  # noqa: A002
 
 def merge_pdfs(*pdfs: Path, destination: Path):
     """Merge multiple pdfs into one big pdf at the given destination."""
-    logger.critical(f"PDFs {", ".join(p.name for p in pdfs)} not actually merged to {destination}!")
+    with PdfWriter(str(destination.resolve())) as merger:
+        merger.add_metadata(PdfReader(pdfs[0]).metadata)
+        for pdf in pdfs:
+            merger.append(pdf)

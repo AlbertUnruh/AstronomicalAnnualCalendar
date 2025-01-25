@@ -56,7 +56,15 @@ logger = get_logger("generate@cli")
     default="A4",
     help="The desired format for the output. May be 'A4' or 'A3'. For landscape append 'h'.",
 )
-def generate(source: Path, destination: Path, title: str | None, format: str):  # noqa: A002
+@click.option(
+    "--explanation-format",
+    "-ef",
+    "explanation_format",
+    type=str,
+    default="A4",
+    help="The desired format for the explanation. May be 'A4' or 'A3'. For landscape append 'h'.",
+)
+def generate(source: Path, destination: Path, title: str | None, format: str, explanation_format: str):  # noqa: A002
     logger.info(f"reading data from {source.resolve()}")
     parser = Parser(file_path=source)
     data: dict[ObservableObjectModel, DataModel] = parser.parse()
@@ -68,7 +76,7 @@ def generate(source: Path, destination: Path, title: str | None, format: str):  
     explanation_destination = destination.with_stem(f"{destination.stem}-explanation")
 
     generate_and_save_graph(data=data, destination=destination, title=title, size=size)
-    generate_and_save_explanation(destination=explanation_destination, size=size)
+    generate_and_save_explanation(destination=explanation_destination, size=format_to_wh(explanation_format))
 
     if is_pdf:
         merge_pdfs(destination, explanation_destination, destination=destination)

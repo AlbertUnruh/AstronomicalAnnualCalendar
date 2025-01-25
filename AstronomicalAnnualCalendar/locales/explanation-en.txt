@@ -1,1 +1,15 @@
-Coming soon$^{\text{tm}}$...
+The astronomical annual calendar provides a quick overview of the position of the planets throughout the year. A calendar with the corresponding months is shown on the right-hand side.
+Within the months, lines are drawn on the 11th and 21st of the month for easy subdivision.
+
+Time is shown at the top and bottom. They are used to easily recognize the planetary positions relative to the sun based on their culmination times.
+
+To determine the position of a planet for a particular day, look for the date on the right and see its position on the $horizontal$ to the planet.
+Strictly speaking, this is the time distance from the sun during the course of the day. The greater the distance, the better the visibility.
+
+The top edge of the sheet also indicates the best time to observe the planet (evening, night or morning sky)
+
+You can see at a glance when a particular planet can be observed during the year (in the evening, in the morning, all night or not at all).
+Conjunctions and oppositions are also visible.
+
+The sun line also shows that the sun does not reach its highest position at the same time every day (equation of time).
+$You\ can\ learn\ more\ about\ this,\ e.g.\ at\ the\ Papenburg\ Astronomical\ Observatory.$

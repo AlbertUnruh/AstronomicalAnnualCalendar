@@ -147,12 +147,13 @@ def generate_and_save_explanation(destination: Path, size: tuple[float, float] =
         WrapText(
             x=left_padding,
             y=0.93,
-            text=get_explanation(),
+            text="\n" + get_explanation(),
             width=1 - 2 * left_padding,
             width_coords=ax.transAxes,
             ha="left",
             va="top",
             clip_on=True,
+            fontproperties={"size": "large"},
         )
     )
 
