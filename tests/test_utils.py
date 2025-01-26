@@ -5,15 +5,26 @@ from typing import Literal, SupportsFloat
 
 # third party
 import pytest
+from pydantic import ValidationError
 
 # first party
 from AstronomicalAnnualCalendar.enums import ObservableObjectEnum
-from AstronomicalAnnualCalendar.errors import AliasNotAssignedError, UnitNotSupportedError
+from AstronomicalAnnualCalendar.errors import (
+    AliasNotAssignedError,
+    MalformedPaperFormatError,
+    UnitNotSupportedError,
+    UnknownPaperFormatError,
+    UnknownPaperOrientationError,
+)
 from AstronomicalAnnualCalendar.models import ObservableObjectModel
+from AstronomicalAnnualCalendar.translations import locale
 from AstronomicalAnnualCalendar.utils import (
     append_name_to_all_pattern_groups,
     extract_pattern_from_regex,
+    format_to_wh,
+    issue19_note_on_validation_error,
     observable_object_from_alias,
+    optional_hm_str_to_timedelta,
     raw_delta_t_to_timedelta,
 )
 
@@ -157,3 +168,64 @@ def test_observable_object_from_alias(alias: str, expected: ObservableObjectMode
 def test_observable_object_from_alias_fail(alias: str):
     with pytest.raises(AliasNotAssignedError):
         observable_object_from_alias(alias)
+
+
+@pytest.mark.parametrize(
+    ("hm", "expected"),
+    [
+        (None, None),
+        ("", None),
+        ("-", None),
+        ("------", None),
+        ("00h00m", timedelta(hours=0, minutes=0)),
+        ("0h00m", timedelta(hours=0, minutes=0)),
+        ("00h99m", timedelta(hours=0, minutes=99)),
+        ("99h00m", timedelta(hours=99, minutes=0)),
+        ("9h00m", timedelta(hours=9, minutes=0)),
+    ],
+)
+def test_optional_hm_str_to_timedelta(hm: str | None, expected: timedelta | None):
+    assert optional_hm_str_to_timedelta(hm) == expected
+
+
+@pytest.mark.parametrize(
+    ("fmt", "expected"),
+    [
+        ("A0", (33.110, 46.811)),
+        ("A1", (23.386, 33.110)),
+        ("A2", (16.535, 23.386)),
+        ("A3", (11.693, 16.535)),
+        ("A4", (8.268, 11.693)),
+        ("a4", (8.268, 11.693)),  # if lowercase works for A4 it'll work everywhere
+    ],
+)
+def test_format_to_wh(fmt: str, expected: tuple[float, float]):
+    tol = 0.001
+    assert len(fmt) == 2  # noqa: PLR2004
+    assert format_to_wh(fmt) == pytest.approx(expected, abs=tol)
+    assert format_to_wh(fmt + "v") == pytest.approx(expected, abs=tol)
+    assert format_to_wh(fmt + "h") == pytest.approx(expected[::-1], abs=tol)
+
+
+@pytest.mark.parametrize(
+    ("fmt", "exception"),
+    [
+        ("", MalformedPaperFormatError),
+        ("A", MalformedPaperFormatError),
+        ("A4H", UnknownPaperOrientationError),
+        ("A4V", UnknownPaperOrientationError),
+        ("A4q", UnknownPaperOrientationError),
+        ("A5", UnknownPaperFormatError),
+        ("B0", UnknownPaperFormatError),
+    ],
+)
+def test_format_to_wh_fail(fmt: str, exception: type[Exception]):
+    with pytest.raises(exception):
+        format_to_wh(fmt)
+
+
+def test_issue19_note_on_validation_error():
+    locale.set("en")
+    issue19 = re.compile(r"https://github\.com/AlbertUnruh/AstronomicalAnnualCalendar/issues/19")
+    with pytest.raises(ValidationError, match=issue19), issue19_note_on_validation_error():
+        raise ValidationError("test", [])
