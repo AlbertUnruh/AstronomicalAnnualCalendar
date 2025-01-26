@@ -1,6 +1,6 @@
 # Specification
 
-So you want wo use this project to generate the astronomical annual calendar without data from AstroWin32?
+So you want to use this project to generate the astronomical annual calendar without data from AstroWin32?
 
 In this document I show you how any custom files have to be built to be valid.
 
