@@ -46,12 +46,12 @@ Once all programs are available, data must be obtained. AstroWin32 is used for t
 
 #### Step by step: AstronomicalAnnualCalendar
 
-1. Download project from [GitHub][] and unpack ZIP </br
+1. Download project from [GitHub][] and unpack ZIP </br>
    ![](readme-imgs/AAC-1.png)
-2. Navigate to the unzipped folder in Explorer </br
-   *It should look something like this* </br
+2. Navigate to the unzipped folder in Explorer </br>
+   *It should look something like this* </br>
    ![](readme-imgs/AAC-2.png)
-3. Press ``shift + right-click`` and click on "Open PowerShell window here" (or something like that) </br
+3. Press ``shift + right-click`` and click on "Open PowerShell window here" (or something like that) </br>
    ![](readme-imgs/AAC-3.png)
 4. Enter and execute the desired command to install the dependencies in the command line that has opened, depending on your preference:
    - ``pip install -r requirements.txt``
