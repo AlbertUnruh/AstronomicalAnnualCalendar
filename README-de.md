@@ -1,7 +1,7 @@
 # Astronomische Jahreskalender
 
 Dieses Projekt entstand als kleine Programmieridee, nachdem ich bei uns auf der Sternwarte einen [per Hand erstellten Kalender][AJK] ([Archiv][]) gesehen habe.
-Die händische Erstellung ist zeitaufwändig und ungenau, da der Einfachheit halber Mittelwerte genommen werden.
+Die händische Erstellung ist zeitaufwändig und ungenau, da der Einfachheit halber Mittelwerte genommen werden, weshalb ich den Prozess automatisieren wollte.
 
 [AJK]: https://sternwarte-papenburg.de/jahreskalender/download/ajk_2024.pdf
 [Archiv]: https://web.archive.org/web/20240531110805/https://sternwarte-papenburg.de/jahreskalender/download/ajk_2024.pdf
@@ -38,7 +38,7 @@ Wenn nun alle Programme vorhanden sind, müssen Daten beschafft werden. Dafür w
 5. Anschließend auf "Ok" drücken und warten, bis kein neuer Text mehr erscheint
 6. In Textfeld klicken und ``strg + A`` (der Text sollte blau werden) und ``strg + C`` drücken </br>
    ![](readme-imgs/AstroWin-6.png)
-7. Im Explorer ein neues Textdokument erstellen und öffnen.
+7. Im Explorer ein neues Textdokument erstellen und öffnen
 8. In Textfeld klicken und ``strg + V`` (der eben kopierte Text sollte erscheinen) und ``strg + S`` drücken </br>
    ![](readme-imgs/AstroWin-8.png)
 9. Die Datei ist gespeichert und kann geschlossen werden. **Der Pfad wird im Verlauf aber noch wichtig!**
