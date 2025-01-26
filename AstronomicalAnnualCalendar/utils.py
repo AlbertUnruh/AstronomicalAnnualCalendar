@@ -149,9 +149,9 @@ def issue19_note_on_validation_error():
     """Small contextmanager to apply a note for any `ValidationError`s raised."""
     try:
         yield
-    except ValidationError:
-        logger.critical(
-            _("For more information on the following exception follow [this](%s) link.")
+    except ValidationError as e:
+        e.add_note(
+            _("For more information on the exception follow [this](%s) link.")
             % "https://github.com/AlbertUnruh/AstronomicalAnnualCalendar/issues/19"
         )
         raise

@@ -8,8 +8,6 @@
   sha1,message
   # A new update is available!
   02b440ec9035c83248e2bd6d25846831291bd800,"TRANSLATION"
-  # For more information on the following exception follow [this](%s) link.
-  03d3f895edbf62608e9221b2b3df8a8f66626766,"TRANSLATION"
   # September
   1c542e79c9b4257e640ccf72974d61fd590a5c26,"TRANSLATION"
   # sun
@@ -24,6 +22,8 @@
   3c5bf776f5efcaa22d6e0fd4839db7d2b83e52be,"TRANSLATION"
   # March
   433632ea5cd64cd163c3a390d5e531d33da3c5e5,"TRANSLATION"
+  # For more information on the exception follow [this](%s) link.
+  43aca2216b609b3312e9fcdaec4d5cc6c67dc76c,"TRANSLATION"
   # mars
   44a07a1c8cc71de0e980dba3aca732b752fa1df5,"TRANSLATION"
   # moon
@@ -90,5 +90,5 @@
   f77be3faff9e5f518fcda68621906d34e0fc4bbe,"TRANSLATION"
 ```
 
-> Time of creation: 2025-01-26 10:28:55+00:00</br>
+> Time of creation: 2025-01-26 19:21:40+00:00</br>
 > Version: `1.3.2`
