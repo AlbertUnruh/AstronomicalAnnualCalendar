@@ -10,6 +10,7 @@ from AstronomicalAnnualCalendar.errors import TranslationsDirNotADirectoryError
 
 
 __all__ = (
+    "get_explanation",
     "get_text",
     "locale",
 )
