@@ -10,7 +10,7 @@ Use at your own risk!
 
 ---
 
-Version: 1.3.1
+Version: 1.3.2
 License: MIT (more over at https://github.com/AlbertUnruh/AstronomicalAnnualCalendar/blob/develop/LICENSE)
 Authors:
     - AlbertUnruh <AlbertUnruh@pm.me>
@@ -79,6 +79,9 @@ messages: set[str] = {
     "October",
     "November",
     "December",
+    "night sky",
+    "morning sky",
+    "evening sky",
 }
 debug(f"Following messages are pre-set: {", ".join(sorted(messages))}")
 

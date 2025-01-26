@@ -6,6 +6,7 @@ from pathlib import Path
 # third party
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.axes import Axes
 from matplotlib.dates import HourLocator, MinuteLocator, MonthLocator, num2date
 from matplotlib.lines import Line2D
 from matplotlib.ticker import FuncFormatter, NullFormatter
@@ -25,6 +26,13 @@ __all__ = ("generate_and_save_explanation", "generate_and_save_graph")
 logger = get_logger("generator@core")
 
 _BASE_DATE = datetime(1970, 1, 1, tzinfo=UTC)
+_OBSERVATION_TIMES: dict[int, str] = {3: "night sky", 9: "morning sky", 15: "evening sky", 21: "night sky"}
+
+
+def _annotate_observation_times(ax: Axes) -> None:
+    h = ax.get_ybound()[1]
+    for k, v in _OBSERVATION_TIMES.items():
+        ax.text(k / 24, h, _(v) + 2 * "\n", horizontalalignment="center", weight="bold")
 
 
 def _24h_formatter(x, pos=0) -> str:  # noqa: ANN001, ARG001
@@ -63,7 +71,7 @@ def generate_and_save_graph(
 
     logger.debug(_("detected range from %s to %s") % (y_min.isoformat(" "), y_max.isoformat(" ")))
 
-    ax1.set_title(title, size="x-large", y=1.04)
+    ax1.set_title("\n" + title + 2 * "\n", size="x-large")
 
     legend: list[Line2D] = []
     for o, d in data.items():
@@ -104,6 +112,8 @@ def generate_and_save_graph(
     # minor locator
     ax2.yaxis.set_minor_locator(MonthLocator(bymonthday=11))  # 1st 10-day marker
     ax3.yaxis.set_minor_locator(MonthLocator(bymonthday=21))  # 2nd 10-day marker
+
+    _annotate_observation_times(ax1)
 
     for tick in chain(
         ax1.xaxis.get_minor_ticks(),

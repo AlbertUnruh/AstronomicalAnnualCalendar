@@ -1,4 +1,4 @@
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 __description__ = "A tool to help to generate the astronomical annual calendar"
 __license__ = "MIT"
 __authors__ = ["AlbertUnruh <AlbertUnruh@pm.me>"]

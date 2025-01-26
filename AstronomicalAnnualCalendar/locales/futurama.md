@@ -16,6 +16,8 @@
 - 22fa6121da96f43a106e413e65d4f9089c53824c,"TRANSLATION"
 - # metadata points to %s (%s) with the equinox being %s
 - 2c1baebb910e3b76c76560d428c1efc70aa7ba2c,"TRANSLATION"
+- # morning sky
+- 339bf32b84a28bccf17297282ffc7b3110b7b9c9,"TRANSLATION"
 - # Skipping %s!
 - 39d18071d985204de69c533fc98adcf3dbf472e6,"TRANSLATION"
 - # November
@@ -64,6 +66,8 @@
 - a9db906761699b31567727716eaa6fd19ae5f5d5,"TRANSLATION"
 - # Output written to %s
 - ac2ab36076d3472de975fcc60d7a8213b8ee78a8,"TRANSLATION"
+- # evening sky
+- b917c6d98461eaf615876323cd79de4228800628,"TRANSLATION"
 - # venus
 - c8721b651877e875de2bb1e7a1f0988806e26562,"TRANSLATION"
 - # May
@@ -78,11 +82,13 @@
 - df3a9c2948073b2dec8be3483f1112d480ae5dc1,"TRANSLATION"
 - # July
 - df97a42549e5c0e1753b985126565531cc9f3c56,"TRANSLATION"
+- # night sky
+- dffb9aecaf7df80102ec15896bdf04f42ed40e78,"TRANSLATION"
 - # mercury
 - f3aa85ef72957869464b16e655dc3632217bb8d4,"TRANSLATION"
 - # Wait, are you currently developing?
 - f77be3faff9e5f518fcda68621906d34e0fc4bbe,"TRANSLATION"
 ```
 
-> Time of creation: 2025-01-25 13:11:15+00:00</br>
-> Version: `1.3.1`
+> Time of creation: 2025-01-26 10:28:55+00:00</br>
+> Version: `1.3.2`

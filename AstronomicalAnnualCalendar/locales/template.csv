@@ -9,6 +9,8 @@ sha1,message
 22fa6121da96f43a106e413e65d4f9089c53824c,"sun"
 # metadata points to %s (%s) with the equinox being %s
 2c1baebb910e3b76c76560d428c1efc70aa7ba2c,"metadata points to %s (%s) with the equinox being %s"
+# morning sky
+339bf32b84a28bccf17297282ffc7b3110b7b9c9,"morning sky"
 # Skipping %s!
 39d18071d985204de69c533fc98adcf3dbf472e6,"Skipping %s!"
 # November
@@ -57,6 +59,8 @@ a721ef580fedc893c219555fa5b2f154356bec33,"parsing %s"
 a9db906761699b31567727716eaa6fd19ae5f5d5,"June"
 # Output written to %s
 ac2ab36076d3472de975fcc60d7a8213b8ee78a8,"Output written to %s"
+# evening sky
+b917c6d98461eaf615876323cd79de4228800628,"evening sky"
 # venus
 c8721b651877e875de2bb1e7a1f0988806e26562,"venus"
 # May
@@ -71,6 +75,8 @@ de9b8956facf944418635dace446763de9f2b4fb,"neptune"
 df3a9c2948073b2dec8be3483f1112d480ae5dc1,"Current version: %s"
 # July
 df97a42549e5c0e1753b985126565531cc9f3c56,"July"
+# night sky
+dffb9aecaf7df80102ec15896bdf04f42ed40e78,"night sky"
 # mercury
 f3aa85ef72957869464b16e655dc3632217bb8d4,"mercury"
 # Wait, are you currently developing?
