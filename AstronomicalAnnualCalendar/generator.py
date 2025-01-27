@@ -85,7 +85,7 @@ def generate_and_save_graph(
                 x.append(_BASE_DATE + t)
                 y.append(row.date_and_time)
 
-        # where the object jumps from 24 to 0 (and would jump across the whole plot to connect to next point)
+        # where the object jumps from 24 to 0 (and would jump across the whole plot to connect to the next point)
         jumps = np.where(abs(np.diff(x)) > timedelta(0.5))[0] + 1
 
         for x_, y_ in zip(np.split(x, jumps), np.split(y, jumps), strict=False):
