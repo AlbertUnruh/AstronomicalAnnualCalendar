@@ -86,7 +86,7 @@ _NAME_SUFFIX: dict[type, str | bytes] = {str: ">", bytes: b">"}
 
 
 def extract_pattern_from_regex[T: str | bytes](regex: re.Pattern[T], /) -> T:
-    """Extract pattern from re.Pattern ^ and $ before returning it."""
+    """Extract the pattern from re.Pattern ^ and $ before returning it."""
     pattern = regex.pattern
     t_ = type(pattern)
     return pattern.removeprefix(_PREFIX[t_]).removesuffix(_SUFFIX[t_])
@@ -96,7 +96,8 @@ def append_name_to_all_pattern_groups[T: str | bytes](name: T, pattern: T) -> T:
     """
     Append ``name`` to every named capturing group in the given ``pattern``.
 
-    It's recommended to prepend "_" to the ``name``.
+    It's recommended to prepend "_" to ``name``.
+    For example, ``NAMEAPPENDED-NAME`` doesn't look as clean as ``NAME_APPENDED-NAME``.
     """
     t_ = type(pattern)
 
@@ -146,7 +147,7 @@ def get_present_headers(bound_object: ObservableObjectModel, header: str) -> lis
 
 @contextmanager
 def issue19_note_on_validation_error():
-    """Small contextmanager to apply a note for any `ValidationError`s raised."""
+    """Small contextmanager to apply a note for any ``ValidationError``s raised."""
     try:
         yield
     except ValidationError as e:
@@ -171,7 +172,7 @@ def generate_metadata(title: str, *, cmd: str | None = None) -> dict:
     pkg = __package__
     repo = __repository__
     lang = locale.get().upper()
-    cmd = ctx.command.name if (ctx := get_current_context(silent=True)) else "*function*"
+    cmd = cmd or ctx.command.name if (ctx := get_current_context(silent=True)) else "*function*"
     metadata = {
         "Title": title,
         "Creator": f"{pkg} v{aac_v}, {repo}",

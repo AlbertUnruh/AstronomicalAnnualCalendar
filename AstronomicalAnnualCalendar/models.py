@@ -60,7 +60,8 @@ class ObservableObjectModel(BaseModel):
 
     @property
     def aliases(self) -> set[str]:
-        """Returns given aliases including the name.
+        """
+        Returns given aliases including the name.
 
         This comes in handy when dealing with the raw (localized) data.
         """
@@ -74,7 +75,7 @@ class ObservableObjectModel(BaseModel):
         Returns whether it's the sun.
 
         It's determined by setting ``is_sun`` to either True or False.
-        If not set will check whether the ``internal_id`` equals "sun".
+        If not set, check whether the ``internal_id`` equals "sun".
         """
         if self.is_sun_ is None:
             return self.internal_id == "sun"
@@ -86,7 +87,7 @@ class ObservableObjectModel(BaseModel):
         Returns whether it's the moon.
 
         It's determined by setting ``is_moon`` to either True or False.
-        If not set will check whether the ``internal_id`` equals "moon".
+        If not set, check whether the ``internal_id`` equals "moon".
         """
         if self.is_moon_ is None:
             return self.internal_id == "moon"
@@ -126,7 +127,7 @@ class CoordinateModel(BaseModel):
     lon: str
 
     def __str__(self) -> str:  # noqa: D105
-        return f"{self.lat} {self.lon}"  # pragma: no cover
+        return f"{self.lat} {self.lon}"
 
 
 class MetaDataModel(BaseModel):
@@ -157,7 +158,7 @@ class HeaderModel(BaseModel):
 
 
 class EvaluatedHeaderModel(BoundToObservableObjectBaseModel, BaseModel):
-    """Model to store information about a headers position."""
+    """Model to store information about a header's position."""
 
     model_config = ConfigDict(frozen=True)
 
@@ -230,7 +231,7 @@ class RowModel(BoundToObservableObjectBaseModel, BaseModel):
     moon_specific_colong: str = Field(default=None)  # [2]  # "Colong."  # 0° <-> 360°
     moon_specific_br: str = Field(default=None)  # [2]  # "Br."
     # [1]: This was the only (remotely) helpful page I've found: https://ssp.imcce.fr/forms/physical-ephemeris
-    # [2]: When and if they are used these specific arguments will get deprecated and replaced
+    # [2]: When and if they are used, these specific arguments will get deprecated and replaced
 
     @property
     def distance_unit(self) -> str | None:  # pragma: no cover

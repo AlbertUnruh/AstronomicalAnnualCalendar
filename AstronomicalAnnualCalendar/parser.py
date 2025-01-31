@@ -46,7 +46,7 @@ class Parser(BaseModel):  # noqa: D101  # ToDo: add documentation
             self.populate_metadata()
         return self._cached_metadata
 
-    def model_post_init(self, *args, **kwargs) -> None:  # noqa: D102, ANN002, ANN003, ARG002
+    def model_post_init(self, *args: ..., **kwargs: ...) -> None:  # noqa: D102, ARG002
         self.populate_metadata()
 
     def populate_metadata(self) -> None:  # noqa: D102  # ToDo: add documentation

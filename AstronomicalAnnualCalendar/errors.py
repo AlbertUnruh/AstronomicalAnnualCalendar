@@ -32,7 +32,7 @@ class UnitNotSupportedError(AstronomicalAnnualCalendarException, NotImplementedE
     """
     Error for ``utils.raw_delta_t_to_timedelta``.
 
-    It's used to signify, that an unknown unit was passed as a parameter.
+    It's used to signify that an unknown unit was passed as a parameter.
     """
 
     def __init__(self, unit: str):
@@ -43,7 +43,7 @@ class AliasNotAssignedError(AstronomicalAnnualCalendarException, ValueError):
     """
     Error for ``utils.observable_object_from_alias``.
 
-    It's used to signify, that an unknown alias was passed to look up an ObservableObjectModel.
+    It's used to signify that an unknown alias was passed to look up an ObservableObjectModel.
     """
 
     def __init__(self, alias: str):
