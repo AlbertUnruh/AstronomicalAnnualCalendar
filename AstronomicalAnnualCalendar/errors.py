@@ -77,16 +77,16 @@ class PaperFormatError(AstronomicalAnnualCalendarException, ValueError):
 class MalformedPaperFormatError(PaperFormatError):
     """Error for ``utils.format_to_wh``."""
 
-    def __init__(self, format: str):  # noqa: A002
-        super().__init__(f"Malformed paper format {format!r}. Length should be 2 or 3 and not {len(format)}!")
+    def __init__(self, fmt: str):
+        super().__init__(f"Malformed paper format {fmt!r}. Length should be 2 or 3 and not {len(fmt)}!")
 
 
 class UnknownPaperOrientationError(PaperFormatError):
     """Error for ``utils.format_to_wh``."""
 
-    def __init__(self, orientation: str, format: str):  # noqa: A002
+    def __init__(self, orientation: str, fmt: str):
         super().__init__(
-            f"Unknown orientation {orientation!r} detected from {format!r}. "
+            f"Unknown orientation {orientation!r} detected from {fmt!r}. "
             f"Expecting 'v' (vertical/portrait) or 'h' (horizontal/landscape)!"
         )
 
@@ -94,5 +94,5 @@ class UnknownPaperOrientationError(PaperFormatError):
 class UnknownPaperFormatError(PaperFormatError):
     """Error for ``utils.format_to_wh``."""
 
-    def __init__(self, format: str, *, biggest: str, smallest: str):  # noqa: A002
-        super().__init__(f"Unknown format {format!r}! {biggest!r} to {smallest!r} supported!")
+    def __init__(self, fmt: str, *, biggest: str, smallest: str):
+        super().__init__(f"Unknown format {fmt!r}! {biggest!r} to {smallest!r} supported!")

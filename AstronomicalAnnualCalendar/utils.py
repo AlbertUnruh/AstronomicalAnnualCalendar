@@ -192,20 +192,20 @@ def get_aac_title(title: str | None, place: str) -> str:
     return title
 
 
-def format_to_wh(format: str) -> tuple[float, float]:  # noqa: A002
+def format_to_wh(fmt: str) -> tuple[float, float]:
     """Return size of format as width/height tuple (in inches)."""
-    match len(format):
+    match len(fmt):
         case 2:
             orientation = "v"  # default
-            size = format
+            size = fmt
         case 3:
-            orientation = format[-1]
-            size = format[:2]
+            orientation = fmt[-1]
+            size = fmt[:2]
         case __:
-            raise MalformedPaperFormatError(format)
+            raise MalformedPaperFormatError(fmt)
 
     if orientation not in ("v", "h"):
-        raise UnknownPaperOrientationError(orientation, format)
+        raise UnknownPaperOrientationError(orientation, fmt)
 
     ret: tuple[float, float]
     match size.upper():
@@ -220,7 +220,7 @@ def format_to_wh(format: str) -> tuple[float, float]:  # noqa: A002
         case "A4":
             ret = (8.2677165354, 11.6929133858)
         case __:
-            raise UnknownPaperFormatError(format, biggest="A0", smallest="A4")
+            raise UnknownPaperFormatError(fmt, biggest="A0", smallest="A4")
 
     return ret if orientation == "v" else ret[::-1]
 
