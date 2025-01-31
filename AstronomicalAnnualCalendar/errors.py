@@ -24,8 +24,9 @@ class AstronomicalAnnualCalendarException(Exception):  # noqa: N818
     )
 
     def __init__(self, message: str, /, *, gh: bool = False):
-        info = " " + self.gh_message.strip() if gh else ""
-        super().__init__(message + info)
+        super().__init__(message)
+        if gh:
+            self.add_note(self.gh_message)
 
 
 class UnitNotSupportedError(AstronomicalAnnualCalendarException, NotImplementedError):
@@ -95,4 +96,4 @@ class UnknownPaperFormatError(PaperFormatError):
     """Error for ``utils.format_to_wh``."""
 
     def __init__(self, fmt: str, *, biggest: str, smallest: str):
-        super().__init__(f"Unknown format {fmt!r}! {biggest!r} to {smallest!r} supported!")
+        super().__init__(f"Unknown format {fmt!r}! {biggest!r} to {smallest!r} supported!", gh=True)
