@@ -164,7 +164,7 @@ def optional_hm_str_to_timedelta(hm: str | None) -> timedelta | None:
     return timedelta(hours=int(hm[:-4]), minutes=int(hm[-3:-1]))
 
 
-def generate_metadata(title: str) -> dict:
+def generate_metadata(title: str, *, cmd: str | None = None) -> dict:
     """Generate metadata for generated files."""
     py_v = ".".join(str(getattr(sys.version_info, part)) for part in ("major", "minor", "micro"))
     aac_v = __version__
