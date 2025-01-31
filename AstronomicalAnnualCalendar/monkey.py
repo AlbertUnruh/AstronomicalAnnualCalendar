@@ -1,6 +1,14 @@
+# standard library
+from typing import TYPE_CHECKING
+
 # third party
 from matplotlib.text import Text
 from matplotlib.transforms import Transform
+
+
+if TYPE_CHECKING:
+    # third party
+    import numpy as np
 
 
 __all__ = ("WrapText",)
@@ -23,7 +31,7 @@ class WrapText(Text):
         text: str = "",
         width: float = 0,
         width_coords: Transform | None = None,
-        **kwargs,  # noqa: ANN003
+        **kwargs: ...,
     ):
         super().__init__(x, y, text, wrap=True, **kwargs)
         self._width = width
@@ -34,4 +42,5 @@ class WrapText(Text):
             return self._width
 
         a = self._width_coords.transform_point([(0, 0), (self._width, 0)])
-        return a[1][0] - a[0][0]
+        line_width: np.float64 = a[1][0] - a[0][0]  # type: ignore
+        return line_width

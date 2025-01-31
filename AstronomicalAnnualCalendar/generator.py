@@ -35,11 +35,11 @@ def _annotate_observation_times(ax: Axes) -> None:
         ax.text(k / 24, h, _(v) + 2 * "\n", horizontalalignment="center", weight="bold")
 
 
-def _24h_formatter(x, pos=0) -> str:  # noqa: ANN001, ARG001
+def _24h_formatter(x: np.float64, pos: int) -> str:  # noqa: ARG001
     return str(round((num2date(x, UTC) - _BASE_DATE).total_seconds() / (60 * 60)))
 
 
-def _month_formatter(x, pos=None) -> str:  # noqa: ANN001, ARG001
+def _month_formatter(x: np.float64, pos: int) -> str:  # noqa: ARG001
     return _(num2date(x, UTC).strftime("%B"))
 
 

@@ -11,7 +11,7 @@ __all__ = ("get_logger",)
 
 
 class ColorStr(str):
-    def format(self, *args, **kwargs) -> str:  # noqa: ANN002, ANN003
+    def format(self, *args: ..., **kwargs: ...) -> str:
         level: int = kwargs.get("levelno", 0)
         if level >= 50:  # noqa: PLR2004
             color_code = "30;47;1"  # CRITICAL/FATAL
