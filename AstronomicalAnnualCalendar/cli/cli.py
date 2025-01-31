@@ -36,6 +36,7 @@ _log_level: dict[CLIFlags, str] = {
     "--show-warnings",
     "-w",
     "verbosity",
+    type=CLIFlags,
     flag_value=CLIFlags.SHOW_WARNINGS,
     default=CLIFlags.DEFAULT & CLIFlags.SHOW_WARNINGS,
 )
@@ -43,6 +44,7 @@ _log_level: dict[CLIFlags, str] = {
     "--show-infos",
     "-i",
     "verbosity",
+    type=CLIFlags,
     flag_value=CLIFlags.SHOW_INFOS,
     default=CLIFlags.DEFAULT & CLIFlags.SHOW_INFOS,
 )
@@ -50,6 +52,7 @@ _log_level: dict[CLIFlags, str] = {
     "--show-debug",
     "-d",
     "verbosity",
+    type=CLIFlags,
     flag_value=CLIFlags.SHOW_DEBUG,
     default=CLIFlags.DEFAULT & CLIFlags.SHOW_DEBUG,
 )
@@ -57,6 +60,7 @@ _log_level: dict[CLIFlags, str] = {
     "--quiet",
     "-q",
     "verbosity",
+    type=CLIFlags,
     flag_value=CLIFlags.QUIET,
     default=CLIFlags.DEFAULT & CLIFlags.QUIET,
 )
@@ -68,15 +72,13 @@ _log_level: dict[CLIFlags, str] = {
     show_default=False,
     help="Sets the language for the command and media output.",
 )
-def cli(verbosity: str, lang: str) -> None:
-    _set_verbosity(CLIFlags(int(verbosity)))
+def cli(verbosity: CLIFlags, lang: str) -> None:
+    _set_verbosity(verbosity)
     _set_language(lang)
 
 
 def _set_verbosity(verbosity: CLIFlags) -> None:
-    flags.set(  # set verbosity
-        flags.get() & ~(CLIFlags.SHOW_WARNINGS | CLIFlags.SHOW_INFOS | CLIFlags.SHOW_DEBUG | CLIFlags.QUIET) | verbosity
-    )
+    flags.set(flags.get() & ~CLIFlags.LOGGING_AND_VERBOSITY_FLAGS | verbosity)  # set verbosity
 
     for _logger in logging.root.manager.loggerDict.values():
         if not hasattr(_logger, "setLevel") or "matplotlib" in _logger.name:

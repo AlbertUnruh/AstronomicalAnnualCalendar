@@ -30,24 +30,15 @@ class AntiIntFlag[T: int]:
 class CLIFlags(IntFlag):
     """A collection of flags that can be set via the CLI."""
 
-    # cli
-    INTERACTIVE = auto()
-
     # logging/verbosity
     SHOW_WARNINGS = auto()
     SHOW_INFOS = auto()
     SHOW_DEBUG = auto()
     QUIET = auto()
 
-    # info included in AAC
-    DISPLAY_PLACE = auto()
-    DISPLAY_COORDINATE = auto()
-    DISPLAY_EQUINOX = auto()
-    DISPLAY_DELTA_T = auto()
-
-    # ToDo: complete flags
+    LOGGING_AND_VERBOSITY_FLAGS = SHOW_WARNINGS | SHOW_INFOS | SHOW_DEBUG | QUIET
 
     # specials
     NONE = 0
     ALL = AntiIntFlag(NONE)
-    DEFAULT = INTERACTIVE | SHOW_WARNINGS | DISPLAY_PLACE  # ToDo: update as flags get added
+    DEFAULT = SHOW_WARNINGS
