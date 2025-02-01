@@ -54,7 +54,7 @@ How are ``length`` and ``offset`` used?
 |---------------------------------|----------------------------------------------------------------------|-------------------------|--------|--------|--------------|
 | weekday                         | two letter day (e.g. "Mo")                                           | `^ {2}(?= {4})`         | 2      | 0      | -            |
 | date                            | DD.MM.YYYY (e.g. 01.01.2001)                                         | `Datum`                 | 10     | 2      | *            |
-| time                            | HH:MM:SS (e.g. 12:34:56 or 0:12:34)<br>timezone extracted from regex | `MEZ \|MESZ\| UTC `     | 8      | 2      | *            |
+| time                            | HH:MM:SS (e.g. 12:34:56 or 0:12:34)<br>timezone extracted from regex | `MEZ \|MESZ\|UTC `      | 8      | 2      | *            |
 | right ascension                 | HMS angle                                                            | `Rektasz\.`             | 11     | 0      | -            |
 | declination                     | signed DMS angle (90°)                                               | `Deklin\.`              | 10     | 0      | -            |
 | ecliptic longitude              | DMS angle (360°)                                                     | `Ekl\. Lg\.`            | 10     | 0      | -            |
