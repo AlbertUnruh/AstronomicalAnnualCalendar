@@ -1,12 +1,14 @@
 # standard library
 import re
 import sys
+from collections.abc import Iterable, Iterator
 from contextlib import contextmanager
 from datetime import timedelta
 from pathlib import Path
 from typing import Literal, SupportsFloat
 
 # third party
+import numpy as np
 from click import get_current_context
 from pydantic import ValidationError
 from pypdf import PdfReader, PdfWriter
@@ -73,6 +75,7 @@ __all__ = (
     "observable_object_from_alias",
     "optional_hm_str_to_timedelta",
     "raw_delta_t_to_timedelta",
+    "split_data",
 )
 
 
@@ -191,6 +194,29 @@ def get_aac_title(title: str | None, place: str) -> str:
     if "%s" in title:
         title = title % place
     return title
+
+
+def split_data[
+    X: np.typing.ArrayLike, Y: np.typing.ArrayLike
+](x: X, y: Y, jumps: np.typing.NDArray | Iterable[int], *, reverse_transition: bool = False) -> Iterator[tuple[X, Y]]:
+    """Split data whilst preserving lines going out of the graph (so they aren't cut of inside the plot)."""
+    if len(jumps) == 0:
+        yield x, y
+        return
+
+    d = -1 if reverse_transition else 1
+
+    for i, (_x, _y) in enumerate(zip(np.split(x, jumps), np.split(y, jumps), strict=False)):
+        x_, y_ = _x.tolist(), _y.tolist()
+
+        if i > 0:
+            x_ = [x[jumps[i - 1] - 1] + timedelta(d), *x_]
+            y_ = [y[jumps[i - 1] - 1], *y_]
+        if i < len(jumps):
+            x_ = [*x_, x[jumps[i] + 1] - timedelta(d)]
+            y_ = [*y_, y[jumps[i] + 1]]
+
+        yield x_, y_
 
 
 def format_to_wh(fmt: str) -> tuple[float, float]:

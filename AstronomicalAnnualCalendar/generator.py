@@ -17,7 +17,7 @@ from .models import DataModel, ObservableObjectModel
 from .monkey import WrapText
 from .translations import get_explanation
 from .translations import get_text as _
-from .utils import format_to_wh, generate_metadata, get_aac_title, optional_hm_str_to_timedelta
+from .utils import format_to_wh, generate_metadata, get_aac_title, optional_hm_str_to_timedelta, split_data
 
 
 __all__ = ("generate_and_save_explanation", "generate_and_save_graph")
@@ -88,7 +88,7 @@ def generate_and_save_graph(
         # where the object jumps from 24 to 0 (and would jump across the whole plot to connect to the next point)
         jumps = np.where(abs(np.diff(x)) > timedelta(0.5))[0] + 1
 
-        for x_, y_ in zip(np.split(x, jumps), np.split(y, jumps), strict=False):
+        for x_, y_ in split_data(x=x, y=y, jumps=jumps, reverse_transition=o.is_moon):
             ax1.plot(x_, y_, "-", color=o.line_color.as_hex(), lw=o.line_strength / 2)
 
         legend.append(Line2D([], [], color=o.line_color.as_hex(), lw=o.line_strength**0.5, label=o.name))
