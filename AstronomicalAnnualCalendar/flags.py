@@ -3,7 +3,7 @@ from functools import reduce
 from operator import or_
 
 # third party
-from aenum import EnumMeta, IntFlag, auto
+from aenum import IntFlag, auto
 
 
 __all__ = ("CLIFlags",)
@@ -22,7 +22,7 @@ class AntiIntFlag[T: int]:
     def __init__(self, anti: T = 0) -> None:
         self.anti = anti
 
-    def __get__(self, instance: IntFlag | None, cls: EnumMeta) -> T:
+    def __get__(self, instance: IntFlag | None, cls) -> T:  # noqa: ANN001
         negative = ~cls(self.anti)
         return cls(reduce(or_, negative))
 

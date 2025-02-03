@@ -47,9 +47,9 @@ class ObservableObjectModel(BaseModel):
     internal_id: LowerCase = Field(alias="id")
     aliases_: set[str] = Field(default_factory=set, alias="aliases")
     line_color: Color
-    is_sun_: bool = Field(default=None, alias="is_sun")
-    is_moon_: bool = Field(default=None, alias="is_moon")
-    is_planet_: bool = Field(default=None, alias="is_planet")
+    is_sun_: bool | None = Field(default=None, alias="is_sun")
+    is_moon_: bool | None = Field(default=None, alias="is_moon")
+    is_planet_: bool | None = Field(default=None, alias="is_planet")
     line_strength_: float = Field(default=2, alias="line_strength", gt=0)
     """NOTE: if the object is a sun the line_strength will get modified!"""
 
@@ -199,37 +199,43 @@ class RowModel(BoundToObservableObjectBaseModel, BaseModel):
     model_config = ConfigDict(frozen=True)
 
     date_and_time: datetime  # "Datum" & "MEZ"/"MESZ"/"UTC"
-    right_ascension: str = Field(default=None, pattern=HMS_ANGLE_REGEX)  # "Rektasz."
-    declination: str = Field(default=None, pattern=DMS_ANGLE_90_REGEX)  # "Deklin."
-    ecliptic_longitude: str = Field(default=None, pattern=DMS_ANGLE_360_REGEX)  # "Ekl. Lg."
-    ecliptic_latitude: str = Field(default=None, pattern=DMS_ANGLE_90_REGEX)  # "Ekl. Br"
-    rise: str = Field(default=None, pattern=OPTIONAL_HM_TIME_REGEX)  # "Aufg."
-    culmination: str = Field(default=None, pattern=OPTIONAL_HM_TIME_REGEX)  # "Kulm."
-    set: str = Field(default=None, pattern=OPTIONAL_HM_TIME_REGEX)  # "Unterg"
-    azimut_rise: str = Field(default=None, pattern=DEGREE_180_REGEX)  # "Az Auf"
-    azimut_set: str = Field(default=None, pattern=DEGREE_360_REGEX)  # "[Az ]Unt."
-    distance: float = Field(default=None)  # "Entf."
-    distance_unit_: str = Field(default=None, alias="distance_unit")  # reverse engineered (from observations)
-    brightness: float = Field(default=None)  # "Hell."
-    diameter: float = Field(default=None, gt=0)  # "Ø [\"]"
-    diameter_unit_: str = Field(default="arc second", alias="diameter_unit")  # provided as "[\"]"
-    diameter_ring: float = Field(default=None, gt=0)  # "Ø Ring"
-    diameter_ring_unit_: str = Field(default="arc second", alias="diameter_ring_unit")  # should be like ``diameter``
-    dawn: str = Field(default=None, pattern=OPTIONAL_HM_TIME_REGEX)  # "ADämm"  # sun only
-    dusk: str = Field(default=None, pattern=OPTIONAL_HM_TIME_REGEX)  # "EDämm"  # sun only
-    phase: float = Field(default=None, ge=-1, le=1)  # "Phase"  # moon only
-    age: float = Field(default=None)  # "Alter"  # moon only
-    elongation: float = Field(default=None)  # "Elong"  # planet only  # -180° <-> 180°
+    right_ascension: str | None = Field(default=None, pattern=HMS_ANGLE_REGEX)  # "Rektasz."
+    declination: str | None = Field(default=None, pattern=DMS_ANGLE_90_REGEX)  # "Deklin."
+    ecliptic_longitude: str | None = Field(default=None, pattern=DMS_ANGLE_360_REGEX)  # "Ekl. Lg."
+    ecliptic_latitude: str | None = Field(default=None, pattern=DMS_ANGLE_90_REGEX)  # "Ekl. Br"
+    rise: str | None = Field(default=None, pattern=OPTIONAL_HM_TIME_REGEX)  # "Aufg."
+    culmination: str | None = Field(default=None, pattern=OPTIONAL_HM_TIME_REGEX)  # "Kulm."
+    set: str | None = Field(default=None, pattern=OPTIONAL_HM_TIME_REGEX)  # "Unterg"
+    azimut_rise: str | None = Field(default=None, pattern=DEGREE_180_REGEX)  # "Az Auf"
+    azimut_set: str | None = Field(default=None, pattern=DEGREE_360_REGEX)  # "[Az ]Unt."
+    distance: float | None = Field(default=None)  # "Entf."
+    distance_unit_: str | None = Field(default=None, alias="distance_unit")  # reverse engineered (from observations)
+    brightness: float | None = Field(default=None)  # "Hell."
+    diameter: float | None = Field(default=None, gt=0)  # "Ø [\"]"
+    diameter_unit_: str | None = Field(default="arc second", alias="diameter_unit")  # provided as "[\"]"
+    diameter_ring: float | None = Field(default=None, gt=0)  # "Ø Ring"
+    diameter_ring_unit_: str | None = Field(
+        default="arc second", alias="diameter_ring_unit"
+    )  # should be like ``diameter``
+    dawn: str | None = Field(default=None, pattern=OPTIONAL_HM_TIME_REGEX)  # "ADämm"  # sun only
+    dusk: str | None = Field(default=None, pattern=OPTIONAL_HM_TIME_REGEX)  # "EDämm"  # sun only
+    phase: float | None = Field(default=None, ge=-1, le=1)  # "Phase"  # moon only
+    age: float | None = Field(default=None)  # "Alter"  # moon only
+    elongation: float | None = Field(default=None)  # "Elong"  # planet only  # -180° <-> 180°
 
     # Unclear *what* they really are...
-    phas_w: str = Field(default=None)  # [2]  # "Phas.W."  # unit appears to be 180° signed
-    physical_ephemeris__np__or__pa_n: str = Field(default=None)  # NP | PA_N in degrees (°) [1]  # [2]  # "Pos.W."
-    physical_ephemeris__sep_delta: str = Field(default=None)  # SEP(δ) in degrees (°) [1]  # [2]  # "BrErde"
-    physical_ephemeris__sep_omega: str = Field(default=None)  # SEP(ω) in degrees (°) [1]  # [2]  # "ZM"  # 0° <-> 360°
-    moon_specific_lib_longitude: str = Field(default=None)  # [2]  # "Lib Lg."
-    moon_specific_lib_latitude: str = Field(default=None)  # [2]  # "[Lib ]Br."
-    moon_specific_colong: str = Field(default=None)  # [2]  # "Colong."  # 0° <-> 360°
-    moon_specific_br: str = Field(default=None)  # [2]  # "Br."
+    phas_w: str | None = Field(default=None)  # [2]  # "Phas.W."  # unit appears to be 180° signed
+    physical_ephemeris__np__or__pa_n: str | None = Field(
+        default=None
+    )  # NP | PA_N in degrees (°) [1]  # [2]  # "Pos.W."
+    physical_ephemeris__sep_delta: str | None = Field(default=None)  # SEP(δ) in degrees (°) [1]  # [2]  # "BrErde"
+    physical_ephemeris__sep_omega: str | None = Field(
+        default=None
+    )  # SEP(ω) in degrees (°) [1]  # [2]  # "ZM"  # 0° <-> 360°
+    moon_specific_lib_longitude: str | None = Field(default=None)  # [2]  # "Lib Lg."
+    moon_specific_lib_latitude: str | None = Field(default=None)  # [2]  # "[Lib ]Br."
+    moon_specific_colong: str | None = Field(default=None)  # [2]  # "Colong."  # 0° <-> 360°
+    moon_specific_br: str | None = Field(default=None)  # [2]  # "Br."
     # [1]: This was the only (remotely) helpful page I've found: https://ssp.imcce.fr/forms/physical-ephemeris
     # [2]: When and if they are used, these specific arguments will get deprecated and replaced
 
