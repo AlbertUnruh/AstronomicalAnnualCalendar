@@ -2,15 +2,10 @@
 from collections.abc import Iterator
 from datetime import datetime, timedelta, timezone
 
-# third party
-from pydantic import BaseModel
-from pydantic.fields import Field
-from pydantic.types import FilePath
-
 # local
-from .enums import HeaderEnum, ObservableObjectEnum
-from .logger import get_logger
-from .models import (
+from ..enums import HeaderEnum, ObservableObjectEnum
+from ..logger import get_logger
+from ..models import (
     CoordinateModel,
     DataModel,
     EvaluatedHeaderModel,
@@ -18,25 +13,24 @@ from .models import (
     ObservableObjectModel,
     RowModel,
 )
-from .regex import METADATA_REGEX, OBJECT_DATA_BODY_REGEX
-from .translations import get_text as _
-from .utils import (
+from ..regex import METADATA_REGEX, OBJECT_DATA_BODY_REGEX
+from ..translations import get_text as _
+from ..utils import (
     get_present_headers,
     issue19_note_on_validation_error,
     observable_object_from_alias,
     raw_delta_t_to_timedelta,
 )
+from ._base import ABCParser
 
 
-__all__ = ("Parser",)
+__all__ = ("AstroWinParser",)
 
 
-logger = get_logger("parser@core")
+logger = get_logger("astrowin@parser")
 
 
-class Parser(BaseModel):  # noqa: D101  # ToDo: add documentation
-    file: FilePath = Field(alias="file_path")
-
+class AstroWinParser(ABCParser):  # noqa: D101  # ToDo: add documentation
     _cached_metadata: MetaDataModel = None
 
     @property

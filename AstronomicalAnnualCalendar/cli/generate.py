@@ -8,7 +8,7 @@ import click
 # local
 from ..generator import generate_and_save_explanation, generate_and_save_graph
 from ..logger import get_logger
-from ..parser import Parser
+from ..parser import AstroWinParser
 from ..translations import get_text as _
 from ..utils import format_to_wh, merge_pdfs
 from . import cli
@@ -66,7 +66,7 @@ logger = get_logger("generate@cli")
 )
 def generate(source: Path, destination: Path, title: str | None, fmt: str, explanation_format: str):
     logger.info(f"reading data from {source.resolve()}")
-    parser = Parser(file_path=source)
+    parser = AstroWinParser(file_path=source)
     data: dict[ObservableObjectModel, DataModel] = parser.parse()
 
     is_overwriting = destination.is_file()
