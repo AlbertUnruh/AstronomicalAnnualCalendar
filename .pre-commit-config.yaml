@@ -50,6 +50,12 @@ repos:
       - id: black
         language_version: python3.12
 
+  # TODO: uncomment once everything is pyright doesn't complain anymore
+  # - repo: https://github.com/kumaraditya303/mirrors-pyright
+  #   rev: 'v1.1.393'
+  #   hooks:
+  #     - id: pyright
+
 exclude:
   'CNAME'
 
