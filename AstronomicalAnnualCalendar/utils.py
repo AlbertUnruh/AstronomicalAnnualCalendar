@@ -196,14 +196,10 @@ def get_aac_title(title: str | None, place: str) -> str:
     return title
 
 
-def split_data[
-    X: np.typing.ArrayLike, Y: np.typing.ArrayLike
-](x: X, y: Y, jumps: np.typing.NDArray | Iterable[int], *, reverse_transition: bool = False) -> Iterator[tuple[X, Y]]:
+def split_data[X: np.typing.ArrayLike, Y: np.typing.ArrayLike](
+    x: X, y: Y, jumps: np.typing.NDArray | Iterable[int], *, reverse_transition: bool = False
+) -> Iterator[tuple[X, Y]]:
     """Split data whilst preserving lines going out of the graph (so they aren't cut of inside the plot)."""
-    if len(jumps) == 0:
-        yield x, y
-        return
-
     d = -1 if reverse_transition else 1
 
     for i, (_x, _y) in enumerate(zip(np.split(x, jumps), np.split(y, jumps), strict=False)):
@@ -254,7 +250,7 @@ def format_to_wh(fmt: str) -> tuple[float, float]:
 
 def merge_pdfs(*pdfs: Path, destination: Path):
     """Merge multiple pdfs into one big pdf at the given destination."""
-    with PdfWriter(str(destination.resolve())) as merger:
+    with PdfWriter(destination) as merger:
         merger.add_metadata(PdfReader(pdfs[0]).metadata)
         for pdf in pdfs:
             merger.append(pdf)
