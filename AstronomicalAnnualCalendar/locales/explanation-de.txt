@@ -3,7 +3,7 @@ Innerhalb der Monate sind noch zur einfachen Unterteilung am 11. und 21. des Mon
 
 Am oberen und unteren Rand sind Uhrzeiten aufgetragen. Diese dienen dazu, die Planetenpositionen relativ zur Sonne anhand ihrer Kulminationszeiten einfach erkennen zu können.
 
-Um nun die Position eines Planeten für einen bestimmten Tag festzustellen, sucht man rechts das Datum auf und sieht auf der $Waagerechten$ zum Planeten seine Position.
+Um nun die Position eines Planeten für einen bestimmten Tag festzustellen, sucht man rechts das Datum auf und sieht auf der $Waagerechten$ zum Planeten seine Kulmination (also seine höchste Position am Tag).
 Genaugenommen handelt es sich dabei um den zeitlichen Abstand im Tageslauf zur Sonne. Je größer der Abstand, desto besser die Sichtbarkeit.
 
 Am oberen Blattrand ist noch angegeben, wann die beste Beobachtungszeit ist (Abend-, Nacht- oder Morgenhimmel)
@@ -11,5 +11,5 @@ Am oberen Blattrand ist noch angegeben, wann die beste Beobachtungszeit ist (Abe
 Auf einen Blick kann festgestellt werden, wann ein bestimmter Planet im Jahreslauf beobachtbar ist (abends, morgens, die ganze Nacht oder gar nicht).
 Ebenfalls sind Konjunktions- bzw. Oppositionsstellungen sichtbar.
 
-Die Sonnenlinie zeigt des Weiteren auch, dass die Sonne nich an jedem Tag zur gleichen Zeit ihre höchste Stellung erreicht (Zeitgleichung).
-$Näheres\ dazu\ können\ Sie\ sich\ bspw.\ auf\ der\ Sternwarte\ Papenburg\ erklären\ lassen.$
+Die Sonnenlinie zeigt des Weiteren auch, dass die Sonne nicht an jedem Tag zur gleichen Zeit ihre höchste Stellung erreicht (Zeitgleichung).
+$Näheres$ $dazu$ $können$ $Sie$ $sich$ $bspw.$ $auf$ $der$ $Sternwarte$ $Papenburg$ $erklären$ $lassen.$
