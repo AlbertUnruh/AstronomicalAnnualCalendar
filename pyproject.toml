@@ -19,7 +19,7 @@ pypdf = "5.1.0"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^4.0.1"
-black = "^24.10.0"
+black = "^25.1.0"
 
 [tool.poetry.group.tests.dependencies]
 pytest = "^8.3.4"
