@@ -10,6 +10,9 @@ from pydantic.types import FilePath
 from ..models import DataModel, MetaDataModel, ObservableObjectModel
 
 
+__all__ = ("ABCParser",)
+
+
 class ABCParser(ABC, BaseModel):
     """Baseclass for every parser."""
 
