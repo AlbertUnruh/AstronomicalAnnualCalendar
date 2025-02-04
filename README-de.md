@@ -55,7 +55,7 @@ Wenn nun alle Programme vorhanden sind, müssen Daten beschafft werden. Dafür w
    ![](readme-imgs/AAC-3.png)
 4. In die nun geöffnete Befehlszeile je nach präferenz den gewünschten Befehl zum Installieren der Abhängigkeiten eingeben und ausführen:
    - ``pip install -r requirements.txt``
-   - ``poetry install``
+   - ``poetry install --no-root``
      - Poetry Version < 2.0.0: ``poetry shell`` einmalig ausführen
      - Poetry Version ≥ 2.0.0: ``poetry run`` vor jedes ``python ...`` setzen
 5. Eine Übersicht aller Befehle sollte mit dem Befehl ``python AstronomicalAnnualCalendar`` einsehbar sein

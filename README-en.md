@@ -55,7 +55,7 @@ Once all programs are available, data must be obtained. AstroWin32 is used for t
    ![](readme-imgs/AAC-3.png)
 4. Enter and execute the desired command to install the dependencies in the command line that has opened, depending on your preference:
    - ``pip install -r requirements.txt``
-   - ``poetry install``
+   - ``poetry install --no-root``
      - Poetry version < 2.0.0: execute ``poetry shell`` once
      - Poetry version ≥ 2.0.0: put ``poetry run`` before each ``python ...``
 5. An overview of all commands should be visible with the command ``python AstronomicalAnnualCalendar``.
