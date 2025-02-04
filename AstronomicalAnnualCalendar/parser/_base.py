@@ -26,3 +26,8 @@ class ABCParser(ABC, BaseModel):
     @abstractmethod
     def parse(self) -> dict[ObservableObjectModel, DataModel]:
         """Parse data and return it accordingly."""
+
+    @property
+    @abstractmethod
+    def specification(self) -> str:
+        """Return a specification of what the current parser expects (in a human-readable format)."""
