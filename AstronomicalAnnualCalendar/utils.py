@@ -65,6 +65,7 @@ except ImportError:
 
 __all__ = (
     "append_name_to_all_pattern_groups",
+    "classproperty",
     "extract_pattern_from_regex",
     "format_to_wh",
     "generate_metadata",
@@ -254,3 +255,10 @@ def merge_pdfs(*pdfs: Path, destination: Path):
         merger.add_metadata(PdfReader(pdfs[0]).metadata)
         for pdf in pdfs:
             merger.append(pdf)
+
+
+class classproperty(property):  # noqa: N801
+    """Property that passes the cls instead of an instance."""
+
+    def __get__(self, __instance: ..., __owner: type | None = None) -> ...:  # noqa: D105
+        return self.fget(__owner)

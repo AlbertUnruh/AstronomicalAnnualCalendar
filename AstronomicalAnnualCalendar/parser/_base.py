@@ -8,6 +8,7 @@ from pydantic.types import FilePath
 
 # local
 from ..models import DataModel, MetaDataModel, ObservableObjectModel
+from ..utils import classproperty
 
 
 __all__ = ("ABCParser",)
@@ -27,7 +28,12 @@ class ABCParser(ABC, BaseModel):
     def parse(self) -> dict[ObservableObjectModel, DataModel]:
         """Parse data and return it accordingly."""
 
-    @property
+    @classproperty
     @abstractmethod
-    def specification(self) -> str:
+    def specification(cls) -> str:  # noqa: N805
         """Return a specification of what the current parser expects (in a human-readable format)."""
+
+    @classproperty
+    def parser_name(cls) -> str:  # noqa: N805
+        """Return the name of the parser."""
+        return cls.__name__
