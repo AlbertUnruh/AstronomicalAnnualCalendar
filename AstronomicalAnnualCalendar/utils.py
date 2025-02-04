@@ -28,7 +28,7 @@ from .translations import locale
 
 
 # I'm fully aware that the following try-except is a war-crime, but this was the easiest solution I could think of...
-# Should you have a better solution please open a pull-request over on GitHub
+# Should you have a better solution, please open a pull-request over on GitHub
 # (https://github.com/AlbertUnruh/AstronomicalAnnualCalendar/pulls)
 # ~AlbertUnruh
 

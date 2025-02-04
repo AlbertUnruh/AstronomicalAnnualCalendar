@@ -13,7 +13,7 @@ class AntiIntFlag[T: int]:
     """Flag to represent a flag with the opposite value.
 
     Copied (and modified) from interactions.py [1] (interactions.models.discord.enums.AntiFlag).
-    *interactions.py is licensed under the MIT license [2]*
+    *interactions.py is licensed under the MIT License [2]*
 
     [1]: https://github.com/interactions-py/interactions.py/blob/83fef883471328deb322f1f2bfd66d937768876b/interactions/models/discord/enums.py#L60-L66
     [2]: https://github.com/interactions-py/interactions.py/blob/83fef883471328deb322f1f2bfd66d937768876b/LICENSE
