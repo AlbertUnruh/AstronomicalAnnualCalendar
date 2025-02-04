@@ -4,6 +4,7 @@
 </br>
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/AlbertUnruh/AstronomicalAnnualCalendar/develop.svg)](https://results.pre-commit.ci/latest/github/AlbertUnruh/AstronomicalAnnualCalendar/develop)
 [![Code QL](https://img.shields.io/github/actions/workflow/status/AlbertUnruh/AstronomicalAnnualCalendar/.github%2Fworkflows%2Fcodeql.yml?branch=develop&logo=github&label=CodeQL)](https://github.com/AlbertUnruh/AstronomicalAnnualCalendar/actions/workflows/codeql.yml)
+[![pytest](https://img.shields.io/github/actions/workflow/status/AlbertUnruh/AstronomicalAnnualCalendar/.github%2Fworkflows%2Fpytest.yml?branch=develop&logo=github&label=pytest)](https://github.com/AlbertUnruh/AstronomicalAnnualCalendar/actions/workflows/pytest.yml)
 </br>
 [![GitHub Issues](https://img.shields.io/github/issues-raw/AlbertUnruh/AstronomicalAnnualCalendar)](https://github.com/AlbertUnruh/AstronomicalAnnualCalendar/issues)
 [![GitHub PRs](https://img.shields.io/github/issues-pr-raw/AlbertUnruh/AstronomicalAnnualCalendar)](https://github.com/AlbertUnruh/AstronomicalAnnualCalendar/pulls)
