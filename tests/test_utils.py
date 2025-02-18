@@ -198,7 +198,7 @@ def test_optional_hm_str_to_timedelta(hm: str | None, expected: timedelta | None
         ("A2", (16.535, 23.386)),
         ("A3", (11.693, 16.535)),
         ("A4", (8.268, 11.693)),
-        ("a4", (8.268, 11.693)),  # if lowercase works for A4 it'll work everywhere
+        ("a4", (8.268, 11.693)),  # if lowercase works for A4, it'll work everywhere
     ],
 )
 def test_format_to_wh(fmt: str, expected: tuple[float, float]):
