@@ -2,6 +2,7 @@
 from datetime import UTC, datetime, timedelta
 from itertools import chain
 from pathlib import Path
+from warnings import catch_warnings
 
 # third party
 import matplotlib.pyplot as plt
@@ -130,6 +131,11 @@ def generate_and_save_graph(
 
     ax1.tick_params(top=True, labeltop=True, bottom=True, labelbottom=True)
     ax1.invert_xaxis()
+
+    with catch_warnings(action="ignore", category=UserWarning):
+        # UserWarning: set_ticklabels() should only be used with a fixed number of ticks, i.e. after set_ticks() or
+        # using a FixedLocator.
+        ax2.set_yticklabels(ax2.get_yticklabels(), weight="semibold")  # make months bolder
 
     ax1.set_zorder(max(a.get_zorder() for a in (ax2, ax3)) + 1)  # move ax1 to foreground
     for ax in (ax1, ax2, ax3):
