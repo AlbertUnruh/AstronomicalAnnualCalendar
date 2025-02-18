@@ -1,6 +1,7 @@
 # standard library
 import re
 from datetime import timedelta
+from pathlib import Path
 from typing import Literal, SupportsFloat
 
 # third party
@@ -23,6 +24,7 @@ from AstronomicalAnnualCalendar.utils import (
     extract_pattern_from_regex,
     format_to_wh,
     issue19_note_on_validation_error,
+    merge_pdfs,
     observable_object_from_alias,
     optional_hm_str_to_timedelta,
     raw_delta_t_to_timedelta,
@@ -229,3 +231,36 @@ def test_issue19_note_on_validation_error():
     issue19 = re.compile(r"https://github\.com/AlbertUnruh/AstronomicalAnnualCalendar/issues/19")
     with pytest.raises(ValidationError, match=issue19), issue19_note_on_validation_error():
         raise ValidationError("test", [])
+
+
+@pytest.mark.parametrize("use_first_pdf_as_destination", [False, True])
+@pytest.mark.parametrize(
+    ("pdf_path_fixtures", "expected_pdf_path_fixture"),
+    [
+        (["path_test_0_pdf", "path_test_1_pdf"], "path_test_expected_pdf"),
+    ],
+)
+def test_merge_pdfs(
+    use_first_pdf_as_destination: bool,
+    pdf_path_fixtures: list[str],
+    expected_pdf_path_fixture: str,
+    tmp_path: Path,
+    request: pytest.FixtureRequest,
+):
+    pdfs: list[Path] = [request.getfixturevalue(pdf_path_fixture) for pdf_path_fixture in pdf_path_fixtures]
+    destination = tmp_path / "out.pdf"
+    expected_pdf_path: Path = request.getfixturevalue(expected_pdf_path_fixture)
+
+    if use_first_pdf_as_destination:
+        destination.write_bytes(pdfs[0].read_bytes())  # copy contents of first PDF to `destination`
+        pdfs[0] = destination  # set `destination` as first PDF
+
+    merge_pdfs(*pdfs, destination=destination)
+
+    # expected_pdf = PdfReader(expected_pdf_path)
+    # actual_pdf = PdfReader(destination)
+
+    # assert actual_pdf.metadata == expected_pdf.metadata
+    # assert actual_pdf.get_num_pages() == expected_pdf.get_num_pages()
+
+    assert destination.read_bytes() == expected_pdf_path.read_bytes()  # very strict

@@ -77,12 +77,30 @@ def path_sun_moon_saturn_d1_2_everything() -> Path:
     return _BASE_PATH / Path("sample_data/d1+2/sun,moon,saturn.txt")
 
 
+@pytest.fixture
+def path_test_0_pdf() -> Path:
+    """Path for PDF #0."""
+    return _BASE_PATH / Path("test_pdfs/test_0.pdf")
+
+
+@pytest.fixture
+def path_test_1_pdf() -> Path:
+    """Path for PDF #1."""
+    return _BASE_PATH / Path("test_pdfs/test_1.pdf")
+
+
+@pytest.fixture
+def path_test_expected_pdf() -> Path:
+    """Path for expected resulting PDF from #0 and #1."""
+    return _BASE_PATH / Path("test_pdfs/test_expected.pdf")
+
+
 @pytest.fixture(scope="session")
 def get_text() -> GetTextCallable:
     """
     Equivalent to ``get_text()`` (aka. ``_()``) from AstronomicalAnnualCalendar.
 
-    This functions refers to static translations for testing and is independent on translations for the actual project.
+    This function refers to static translations for testing and is independent of translations for the actual project.
     """
     # first party
     from AstronomicalAnnualCalendar import translations
