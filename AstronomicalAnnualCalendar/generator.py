@@ -18,7 +18,7 @@ from .models import DataModel, ObservableObjectModel
 from .monkey import WrapText
 from .translations import get_explanation
 from .translations import get_text as _
-from .utils import format_to_wh, generate_metadata, get_aac_title, optional_hm_str_to_timedelta, split_data
+from .utils import format_to_wh, generate_metadata, get_aac_title, split_data
 
 
 __all__ = ("generate_and_save_explanation", "generate_and_save_graph")
@@ -82,7 +82,7 @@ def generate_and_save_graph(
 
         x, y = [], []
         for row in d.rows:
-            if (t := optional_hm_str_to_timedelta(row.culmination)) is not None:
+            if (t := row.culmination) is not None:
                 x.append(_BASE_DATE + t)
                 y.append(row.date_and_time)
 

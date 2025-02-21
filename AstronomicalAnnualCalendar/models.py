@@ -5,7 +5,7 @@ from typing import Self
 
 # third party
 from annotated_types import LowerCase
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 from pydantic.config import ConfigDict
 from pydantic.fields import Field
 from pydantic.functional_validators import model_validator
@@ -14,15 +14,8 @@ from pydantic_extra_types.color import Color
 
 # local
 from .errors import EvaluatedHeaderValidationError
-from .regex import (
-    DEGREE_180_REGEX,
-    DEGREE_360_REGEX,
-    DMS_ANGLE_90_REGEX,
-    DMS_ANGLE_360_REGEX,
-    HMS_ANGLE_REGEX,
-    OPTIONAL_HM_TIME_REGEX,
-)
 from .translations import get_text
+from .utils import optional_hm_str_to_timedelta
 
 
 __all__ = (
@@ -194,71 +187,26 @@ class EvaluatedHeaderModel(BoundToObservableObjectBaseModel, BaseModel):
 
 
 class RowModel(BoundToObservableObjectBaseModel, BaseModel):
-    """Represents a single row from the csv-like data/table."""
+    """Represents a single row/set of data."""
 
-    model_config = ConfigDict(frozen=True)
+    model_config = ConfigDict(frozen=True, extra="ignore")
 
-    date_and_time: datetime  # "Datum" & "MEZ"/"MESZ"/"UTC"
-    right_ascension: str | None = Field(default=None, pattern=HMS_ANGLE_REGEX)  # "Rektasz."
-    declination: str | None = Field(default=None, pattern=DMS_ANGLE_90_REGEX)  # "Deklin."
-    ecliptic_longitude: str | None = Field(default=None, pattern=DMS_ANGLE_360_REGEX)  # "Ekl. Lg."
-    ecliptic_latitude: str | None = Field(default=None, pattern=DMS_ANGLE_90_REGEX)  # "Ekl. Br"
-    rise: str | None = Field(default=None, pattern=OPTIONAL_HM_TIME_REGEX)  # "Aufg."
-    culmination: str | None = Field(default=None, pattern=OPTIONAL_HM_TIME_REGEX)  # "Kulm."
-    set: str | None = Field(default=None, pattern=OPTIONAL_HM_TIME_REGEX)  # "Unterg"
-    azimut_rise: str | None = Field(default=None, pattern=DEGREE_180_REGEX)  # "Az Auf"
-    azimut_set: str | None = Field(default=None, pattern=DEGREE_360_REGEX)  # "[Az ]Unt."
-    distance: float | None = Field(default=None)  # "Entf."
-    distance_unit_: str | None = Field(default=None, alias="distance_unit")  # reverse engineered (from observations)
-    brightness: float | None = Field(default=None)  # "Hell."
-    diameter: float | None = Field(default=None, gt=0)  # "Ø [\"]"
-    diameter_unit_: str | None = Field(default="arc second", alias="diameter_unit")  # provided as "[\"]"
-    diameter_ring: float | None = Field(default=None, gt=0)  # "Ø Ring"
-    diameter_ring_unit_: str | None = Field(
-        default="arc second", alias="diameter_ring_unit"
-    )  # should be like ``diameter``
-    dawn: str | None = Field(default=None, pattern=OPTIONAL_HM_TIME_REGEX)  # "ADämm"  # sun only
-    dusk: str | None = Field(default=None, pattern=OPTIONAL_HM_TIME_REGEX)  # "EDämm"  # sun only
-    phase: float | None = Field(default=None, ge=-1, le=1)  # "Phase"  # moon only
-    age: float | None = Field(default=None)  # "Alter"  # moon only
-    elongation: float | None = Field(default=None)  # "Elong"  # planet only  # -180° <-> 180°
+    date_and_time: datetime = Field(
+        title="Date & Time",
+        description="The date and time for the specific row/set of data.",
+    )
+    culmination: timedelta | None = Field(
+        default=None,
+        title="Culmination",
+        description="The culmination relative to ``.date_and_time`` based on the observing position.",
+    )
 
-    # Unclear *what* they really are...
-    phas_w: str | None = Field(default=None)  # [2]  # "Phas.W."  # unit appears to be 180° signed
-    physical_ephemeris__np__or__pa_n: str | None = Field(
-        default=None
-    )  # NP | PA_N in degrees (°) [1]  # [2]  # "Pos.W."
-    physical_ephemeris__sep_delta: str | None = Field(default=None)  # SEP(δ) in degrees (°) [1]  # [2]  # "BrErde"
-    physical_ephemeris__sep_omega: str | None = Field(
-        default=None
-    )  # SEP(ω) in degrees (°) [1]  # [2]  # "ZM"  # 0° <-> 360°
-    moon_specific_lib_longitude: str | None = Field(default=None)  # [2]  # "Lib Lg."
-    moon_specific_lib_latitude: str | None = Field(default=None)  # [2]  # "[Lib ]Br."
-    moon_specific_colong: str | None = Field(default=None)  # [2]  # "Colong."  # 0° <-> 360°
-    moon_specific_br: str | None = Field(default=None)  # [2]  # "Br."
-    # [1]: This was the only (remotely) helpful page I've found: https://ssp.imcce.fr/forms/physical-ephemeris
-    # [2]: When and if they are used, these specific arguments will get deprecated and replaced
-
-    @property
-    def distance_unit(self) -> str | None:  # pragma: no cover
-        """Returns the unit of ``distance`` if ``distance`` is set."""
-        if self.distance is None:  # no distance set
-            return None
-        return self.distance_unit_ or "km" if self.bound_object.is_moon else "AU"
-
-    @property
-    def diameter_unit(self) -> str | None:  # pragma: no cover
-        """Returns the unit of ``diameter`` if ``diameter`` is set."""
-        if self.diameter is None:  # no diameter set
-            return None
-        return self.diameter_unit_
-
-    @property
-    def diameter_ring_unit(self) -> str | None:  # pragma: no cover
-        """Returns the unit of ``diameter_ring`` if ``diameter_ring`` is set."""
-        if self.diameter_ring is None:  # no diameter set
-            return None
-        return self.diameter_ring_unit_
+    @field_validator("culmination", mode="before")
+    def optional_hm_time_regex_to_timedelta_object(cls, v: timedelta | None | str) -> timedelta | None:  # noqa: N805
+        """Allow fields with expected timedelta-objects to be populated with str-objects."""
+        if isinstance(v, str):
+            v = optional_hm_str_to_timedelta(v)
+        return v
 
 
 class DataModel(BoundToObservableObjectBaseModel, BaseModel):
