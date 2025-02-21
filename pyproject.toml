@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "AstronomicalAnnualCalendar"
-version = "0.2.2"
+version = "0.3.0"
 description = "A tool to help to generate the astronomical annual calendar"
 license = "MIT"
 authors = ["AlbertUnruh <AlbertUnruh@pm.me>"]
