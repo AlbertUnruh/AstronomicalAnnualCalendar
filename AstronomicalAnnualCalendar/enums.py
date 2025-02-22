@@ -64,40 +64,4 @@ class HeaderEnum(UniqueEnum, metaclass=DirectValueMeta):
     DATE = HModel(name="date", regex=re.compile(r"Datum"), length=10, offset=2)
     TIME = HModel(name="time", regex=re.compile(r"MEZ |MESZ|UTC "), length=8, offset=2)
     # space after "MEZ" and "UTC" required to obtain a total length of 4 for the match
-    RIGHT_ASCENSION = HModel(name="right_ascension", regex=re.compile(r"Rektasz\."), length=11)
-    DECLINATION = HModel(name="declination", regex=re.compile(r"Deklin\."), length=10)
-    ECLIPTIC_LONGITUDE = HModel(name="ecliptic_longitude", regex=re.compile(r"Ekl\. Lg\."), length=10)
-    ECLIPTIC_LATITUDE = HModel(name="ecliptic_latitude", regex=re.compile(r"Ekl\. Br"), length=10)
-    RISE = HModel(name="rise", regex=re.compile(r"Aufg\."), length=6)
     CULMINATION = HModel(name="culmination", regex=re.compile(r"Kulm\."), length=6)
-    SET = HModel(name="set", regex=re.compile(r"Unterg"), length=6)
-    AZIMUT_RIZE = HModel(name="azimut_rise", regex=re.compile(r"(?<=Az )Auf"), length=4)
-    AZIMUT_SET = HModel(name="azimut_set", regex=re.compile(r"(?<=Az Auf )Unt\."), length=4)
-    DISTANCE = HModel(name="distance", regex=re.compile(r"Entf\."), length=8, offset=1)
-    BRIGHTNESS = HModel(name="brightness", regex=re.compile(r"Hell\."), length=5)
-    DIAMETER = HModel(name="diameter", regex=re.compile(r"Ø \[\"]"), length=6)
-    DIAMETER_RING = HModel(name="diameter_ring", regex=re.compile(r"Ø Ring"), length=4)
-    DAWN = HModel(name="dawn", regex=re.compile(r"ADämm"), length=6)
-    DUSK = HModel(name="dusk", regex=re.compile(r"EDämm"), length=6)
-    PHASE = HModel(name="phase", regex=re.compile(r"Phase"), length=5)
-    AGE = HModel(name="age", regex=re.compile(r"Alter"), length=5)
-    ELONGATION = HModel(name="elongation", regex=re.compile(r"Elong"), length=6)
-
-    # following attribute-names aren't worked out yet -> they may get deprecated and replaced
-    # *see AstronomicalAnnualCalendar.models.RowModel for more
-    PHAS_W = HModel(name="phas_w", regex=re.compile(r"Phas\.W\."), length=6)
-    PHYSICAL_EPHEMERIS__NP__OR__PA_N = HModel(
-        name="physical_ephemeris__np__or__pa_n", regex=re.compile(r"Pos\.W\."), length=6
-    )
-    PHYSICAL_EPHEMERIS__SEP_DELTA = HModel(name="physical_ephemeris__sep_delta", regex=re.compile(r"BrErde"), length=6)
-    PHYSICAL_EPHEMERIS__SEP_OMEGA = HModel(
-        name="physical_ephemeris__sep_omega", regex=re.compile(r"ZM"), length=5, offset=1
-    )
-    MOON_SPECIFIC_LIB_LONGITUDE = HModel(
-        name="moon_specific_lib_longitude", regex=re.compile(r"Lib Lg\."), length=4, offset=-1
-    )
-    MOON_SPECIFIC_LIB_LATITUDE = HModel(
-        name="moon_specific_lib_latitude", regex=re.compile(r"(?<=Lib Lg\. {2})Br\."), length=4
-    )
-    MOON_SPECIFIC_COLONG = HModel(name="moon_specific_colong", regex=re.compile(r"Colong\."), length=5)
-    MOON_SPECIFIC_BR = HModel(name="moon_specific_br", regex=re.compile(r"(?<=Colong\. {2})Br\."), length=4)
