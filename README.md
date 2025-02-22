@@ -22,4 +22,11 @@
 
 
 ### You want to feed your own data to the program?
-Then have a look at the [specification](SPECIFICATION.md)!
+
+Then have a look at the specifications over at ``python AstronomicalAnnualCalendar specification``!
+
+The command will give you an overview over the currently implemented parsers
+*(even though they may not technically parse...)*
+which allows you to view the specific specification for any selected parser.
+
+All parsers have to respect the annotations given by the ABC. Otherwise, it will lead to unexpected runtime errors!
