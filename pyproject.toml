@@ -125,7 +125,7 @@ ignore = [
     "G004",   # Logging statement uses f-string
     "N999",   # Invalid module name: '{name}' # I know, it should be snake_case, but who cares? I don't :P  ~AlbertUnruh
 ]
-per-file-ignores = {"AstronomicalAnnualCalendar/regex.py" = ["UP031"], "AstronomicalAnnualCalendar/cli/*.py" = ["D103"], "tests/*.py" = ["D103", "S101", "FBT001"], "tests/conftest.py" = ["D400"]}
+per-file-ignores = {"AstronomicalAnnualCalendar/regex.py" = ["UP031"], "AstronomicalAnnualCalendar/cli/*.py" = ["D103"], "tests/*.py" = ["D103", "S101", "FBT001"], "tests/conftest.py" = ["D400"], "update_translations.py" = ["LOG015"]}
 
 [tool.ruff.lint.flake8-annotations]
 mypy-init-return = true
