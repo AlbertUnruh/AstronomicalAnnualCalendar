@@ -7,7 +7,6 @@ import pytest
 # first party
 from tests.typehints import GetTextCallable
 
-
 _BASE_PATH: Path = Path(__file__).parent
 
 
@@ -105,4 +104,4 @@ def get_text() -> GetTextCallable:
     # first party
     from AstronomicalAnnualCalendar import translations
 
-    return translations._Translations(_BASE_PATH / Path("test_locales")).get_text  # type:ignore  # noqa: SLF001
+    return translations._Translations(_BASE_PATH / Path("test_locales")).get_text  # type: ignore  # noqa: SLF001

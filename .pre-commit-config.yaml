@@ -2,7 +2,7 @@
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
   - repo: https://github.com/python-poetry/poetry-plugin-export
-    rev: '1.9.0'
+    rev: '1.10.0'
     hooks:
       - id: poetry-export
         entry: poetry export
@@ -12,7 +12,7 @@ repos:
         args: [--without-hashes, -f, requirements.txt, -o, requirements.txt]
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: 'v5.0.0'
+    rev: 'v6.0.0'
     hooks:
       - id: check-toml
       - id: check-yaml
@@ -26,26 +26,26 @@ repos:
         args: [--markdown-linebreak-ext=md]
 
   - repo: https://github.com/PyCQA/autoflake
-    rev: 'v2.3.1'
+    rev: 'v2.4.0'
     hooks:
       - id: autoflake
         args: [--remove-all-unused-imports, --in-place, --ignore-init-module-imports]
 
   - repo: https://github.com/pycqa/isort
-    rev: '6.0.1'
+    rev: '9.0.1'
     hooks:
       - id: isort
         language: python
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: 'v0.11.6'
+    rev: 'v0.16.6'
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
         language: python
 
-  - repo: https://github.com/psf/black
-    rev: '25.1.0'
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: '26.5.1'
     hooks:
       - id: black
         language_version: python3.12
