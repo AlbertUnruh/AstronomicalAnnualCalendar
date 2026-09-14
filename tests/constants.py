@@ -5,7 +5,6 @@ from datetime import datetime, timedelta, timezone
 from AstronomicalAnnualCalendar.enums import ObservableObjectEnum
 from AstronomicalAnnualCalendar.models import CoordinateModel, DataModel, MetaDataModel, RowModel
 
-
 __all__ = (
     "sample_data_metadata_w_equinox",
     "sample_data_metadata_wo_equinox",
