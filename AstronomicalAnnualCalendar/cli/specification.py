@@ -11,7 +11,6 @@ from ..parser import get_all_parsers
 from ..parser._base import ABCParser
 from .cli import cli
 
-
 __all__ = ("specification",)
 
 
