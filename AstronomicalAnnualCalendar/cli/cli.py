@@ -10,7 +10,6 @@ from ..flags import CLIFlags
 from ..logger import get_logger
 from ..translations import locale
 
-
 __all__ = (
     "cli",
     "flags",

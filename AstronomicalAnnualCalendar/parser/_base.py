@@ -11,7 +11,6 @@ from pydantic.types import FilePath
 from ..models import DataModel, MetaDataModel, ObservableObjectModel
 from ..utils import classproperty
 
-
 __all__ = ("ABCParser",)
 
 
