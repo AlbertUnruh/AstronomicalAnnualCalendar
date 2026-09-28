@@ -5,7 +5,6 @@ from operator import or_
 # third party
 from aenum import IntFlag, auto
 
-
 __all__ = ("CLIFlags",)
 
 
