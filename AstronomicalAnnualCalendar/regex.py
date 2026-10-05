@@ -4,7 +4,6 @@ import re
 # local
 from .utils import append_name_to_all_pattern_groups, extract_pattern_from_regex
 
-
 __all__ = (
     "DEGREE_180_REGEX",
     "DEGREE_360_REGEX",
