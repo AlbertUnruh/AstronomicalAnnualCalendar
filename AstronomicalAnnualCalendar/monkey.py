@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING
 from matplotlib.text import Text
 from matplotlib.transforms import Transform
 
-
 if TYPE_CHECKING:
     # third party
     import numpy as np
