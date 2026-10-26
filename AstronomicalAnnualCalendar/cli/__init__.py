@@ -5,7 +5,6 @@ from pathlib import Path
 from . import cli as _cli  # preserve access to cli.py  # noqa: F401
 from .cli import cli, flags
 
-
 __all__ = ("cli", "flags")
 
 

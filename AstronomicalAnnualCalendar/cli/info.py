@@ -12,7 +12,6 @@ from ..logger import get_logger
 from ..translations import get_text as _
 from .cli import cli
 
-
 if TYPE_CHECKING:
     # standard library
     from http.client import HTTPResponse
@@ -36,7 +35,7 @@ def info():
     latest_version: str
 
     try:
-        response: HTTPResponse = urlopen(latest_release_url)  # noqa: S310
+        response: HTTPResponse = urlopen(latest_release_url)
     except HTTPError as e:
         logger.debug(f"encountered an exceptions whilst requesting latest release-data: {e.code} - {e.reason}")
         latest_version = "0.0.0"

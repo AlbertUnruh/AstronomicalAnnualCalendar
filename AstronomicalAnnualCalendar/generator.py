@@ -20,7 +20,6 @@ from .translations import get_explanation
 from .translations import get_text as _
 from .utils import format_to_wh, generate_metadata, get_aac_title, split_data
 
-
 __all__ = ("generate_and_save_explanation", "generate_and_save_graph")
 
 
