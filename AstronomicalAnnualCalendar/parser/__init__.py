@@ -2,7 +2,6 @@
 from ._base import ABCParser
 from .astrowin import AstroWinParser
 
-
 __all__ = ("AstroWinParser", "get_all_parsers")
 
 
