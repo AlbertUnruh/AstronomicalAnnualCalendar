@@ -1,7 +1,6 @@
 # standard library
 from pathlib import Path
 
-
 __all__ = (
     "AliasNotAssignedError",
     "AstronomicalAnnualCalendarException",
