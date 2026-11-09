@@ -18,7 +18,6 @@ from .constants import (
     sample_data_sun,
 )
 
-
 if TYPE_CHECKING:
     # standard library
     from pathlib import Path

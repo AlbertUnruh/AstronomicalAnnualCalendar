@@ -6,7 +6,6 @@ import sys
 import typing
 from logging import Formatter, Logger, StreamHandler, getLogger
 
-
 __all__ = ("get_logger",)
 
 
