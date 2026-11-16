@@ -26,7 +26,6 @@ from hashlib import sha1  # only used for key/id generation
 from logging import basicConfig, debug, info
 from pathlib import Path
 
-
 #
 # logging
 #

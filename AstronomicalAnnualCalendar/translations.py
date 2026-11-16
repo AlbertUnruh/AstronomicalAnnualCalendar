@@ -8,7 +8,6 @@ from pathlib import Path
 # first party
 from AstronomicalAnnualCalendar.errors import TranslationsDirNotADirectoryError
 
-
 __all__ = (
     "get_explanation",
     "get_text",
