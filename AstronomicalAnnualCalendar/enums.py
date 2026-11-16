@@ -9,7 +9,6 @@ from pydantic_extra_types.color import Color
 from .models import HeaderModel as HModel
 from .models import ObservableObjectModel as OOModel
 
-
 __all__ = (
     "HeaderEnum",
     "ObservableObjectEnum",

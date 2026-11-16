@@ -1,7 +1,6 @@
 # standard library
 from typing import Protocol
 
-
 __all__ = ("GetTextCallable",)
 
 
