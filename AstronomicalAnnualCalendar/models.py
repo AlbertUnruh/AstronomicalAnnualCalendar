@@ -17,7 +17,6 @@ from .errors import EvaluatedHeaderValidationError
 from .translations import get_text
 from .utils import optional_hm_str_to_timedelta
 
-
 __all__ = (
     "CoordinateModel",
     "DataModel",

@@ -25,7 +25,6 @@ from ..utils import (
 )
 from ._base import ABCParser
 
-
 __all__ = ("AstroWinParser",)
 
 

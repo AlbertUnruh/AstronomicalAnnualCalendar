@@ -13,7 +13,6 @@ from ..translations import get_text as _
 from ..utils import format_to_wh, merge_pdfs
 from . import cli
 
-
 if TYPE_CHECKING:
     # local
     from ..models import DataModel, ObservableObjectModel
